@@ -1,6 +1,6 @@
 # FieldProof
 
-**Fresh physical proof for machine-to-machine commerce.**
+**Paid physical checks for AI agents.**
 
 **Try FieldProof:** [public receipt inspector](https://epicexcelsior.github.io/fieldproof/) · [interactive guide](https://epicexcelsior.github.io/fieldproof/guide.html) · [captioned 2:30 technical walkthrough](https://epicexcelsior.github.io/fieldproof/assets/fieldproof-signed-receipt.webm).
 
@@ -11,8 +11,10 @@ No hosted action creates a payment or reads hardware. Use [Run without hardware]
 
 **Deployment:** Solana Devnet, 0.001 Devnet USDC per real observation. No custom Solana program.
 
-Machines can pay online. Payment does not tell a visiting robot whether another operator's gate is open now.
-FieldProof purchases a contact observation on Solana and verifies the device's signed answer before a demo `DISPATCH` or `WAIT` recommendation.
+An AI agent can request a fresh physical check and pay the device operator for the answer.
+FieldProof buys a signed contact observation through Solana x402 and checks the key, challenge, samples, and age.
+The buyer's demo policy produces `DISPATCH` or `WAIT`. Both honest contact states fulfill the requested observation.
+The initial user hypothesis is an AI builder who operates equipment at another location. Demand remains unvalidated.
 
 **A confirmed payment and a valid signature can outlive the answer's useful window. The buyer must still check its age.**
 
@@ -36,7 +38,25 @@ See [the actual Solana transaction](https://explorer.solana.com/tx/5Rqq2o1GeAX2T
 BOOT represents the gate contact. The signature authenticates the device's claim, not physical truth or safe passage.
 The device signs the question and answer. The gateway ledger associates that question with the purchase.
 Payment and delivery remain separate. This MVP controls no gate and moves no robot.
-The phone acts as a second browser verifier, not another sensor or payer.
+The proven phone role is a second browser verifier.
+The new [requested-photo extension](mobile/seeker-inspector/README.md) builds offline. Installation and capture remain unverified.
+It does not take payments or join the paid provider catalog.
+
+## peaq-linked job implementation
+
+The new job path resolves an approved Agung identity and registered receipt key before the buyer starts payment.
+It preserves the original device signature and links the request, identity snapshot, and Solana transaction in one job envelope.
+A durable activity outbox stores exact evidence bytes. Interrupted submissions require reconciliation before another write.
+The operator workflow adds bounded activation, event submission, independent inspection, and payment-query recovery commands.
+
+**Live activation and activity submission remain pending.** No peaq identity or event exists for the demonstration yet.
+Offline tests verify the new interfaces and rejection paths. The current sandbox blocks live RPC, Bluetooth, and ADB checks.
+The job workbench labels imported snapshots as recorded evidence and keeps chain verification separate.
+
+Read the [paid-job runbook](docs/JOBS.md) for the identity policy, bounded agent command, exact event bytes, and recovery procedure.
+The [competition materials](docs/competition/README.md) include a five-slide deck, recording scripts, tester instructions, and three entry drafts.
+Open `/jobs` on the repository gateway to inspect a job file or the existing historical paid reading.
+The standalone export includes `jobs.html`. A file or page load starts no payment.
 
 **Learn:** [illustrated guide](docs/HOW_IT_WORKS.html). **Record:** [one founder-led walkthrough](docs/RECORDING_SCRIPT.md).
 **Submit:** [remaining human tasks](docs/SUBMISSION.md#required-fields-that-remain-incomplete).
@@ -44,11 +64,11 @@ The [documentation map](docs/README.md) routes specific questions. The [verifica
 
 ## Where this goes
 
-The company hypothesis is one integration for fleets to transact with physical infrastructure another operator owns.
-Test one fleet and one authorized facility, then a second facility to measure integration reuse.
-Paid integration and support come first. Recurring software fees and service-transaction fees follow demonstrated demand.
+The company hypothesis is a common request-and-verification interface for devices that independent operators own.
+First test whether AI builders need fresh evidence that their existing telemetry cannot supply reliably.
+Measure useful completed checks and integration effort before testing paid pilots or a marketplace.
 Customer demand, pricing, access control, completed-service evidence, and network effects remain unvalidated.
-See [the strategy and existing alternatives](docs/STRATEGY.md).
+The prototype sells observations. It supplies no escrow, automatic refund, physical-truth guarantee, or production equipment control.
 
 ## Run without hardware
 

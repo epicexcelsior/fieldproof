@@ -1,9 +1,21 @@
 # FieldProof bounty execution plan
 
-**Current status: October 9, 2026.** The Germany MVP technical package is complete and its recorded deadline passed.
-Human submission remains unverified. Select the next bounty through [current focus](FOCUS.md).
+**Current status: October 10, 2026.** Build one peaq-linked paid physical check for an AI agent.
+The [current focus](FOCUS.md) owns the frozen scope. The [paid-job runbook](JOBS.md) owns execution and recovery.
+Live Agung activation, registry binding, event submission, and fresh device tests remain pending.
 
-The requirements and dates below preserve the October 2–5 preparation. Recheck the official listing before a new commitment.
+The internal submission target is October 12, 18:00 CEST.
+Record the core on Sunday. Freeze features Monday at 12:00 CEST.
+The main Colosseum rules specify October 12, 23:59 Pacific, which equals October 13, 08:59 CEST.
+The recorded peaq cutoff is October 13, 08:59 CEST. Verify each authenticated form before submission.
+The Germany Colosseum track requires separate Earn and Colosseum submissions and Germany country selection when eligible.
+[peaq listing](https://superteam.fun/earn/listing/build-solutions-advancing-the-machine-economy-with-peaq),
+[Germany Colosseum listing](https://superteam.fun/earn/listing/colosseum-crypto-worlds-fair-hackathon-superteam-germany-track/),
+[Colosseum rules, section 5](https://colosseum.com/legal/Crypto%20World%27s%20Fair%20Hackathon%20Rules.pdf).
+
+## Historical October 2–5 preparation
+
+The requirements and dates below preserve the October 2–5 preparation. They do not define the current implementation scope.
 The [adversarial research](research/2026-10-02-fieldproof.md) supports this bounded build and records commercial uncertainty.
 The October 4 [product story](STRATEGY.md#the-story-to-explain) connects this observation purchase to cross-operator physical services.
 Keep the implemented purchase scope explicit. Access, reservations, actuation, and completed-service verification remain future work.

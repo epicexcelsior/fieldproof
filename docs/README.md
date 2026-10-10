@@ -2,7 +2,8 @@
 
 **Open [the illustrated founder guide](HOW_IT_WORKS.html) first.**
 Its short path explains one transaction and leads your own rehearsal. The detailed reference stays collapsed until you need it.
-The current prototype buys and verifies a contact observation. Physical-service commerce is the company hypothesis.
+The current prototype buys and verifies a contact observation. The competition story is paid physical checks for AI agents.
+Start the new identity-linked path with [the paid-job runbook](JOBS.md). Live Agung execution remains pending.
 
 ## Learn and demonstrate in one rehearsal
 
@@ -24,6 +25,9 @@ You do not need to read every reference file before the demonstration.
 | Choose the next action | [Current focus](FOCUS.md) |
 | Explain and rehearse the demo | [Rehearsal](REHEARSAL.md) |
 | Run or record the technical demo | [Demo runbook](DEMO.md) |
+| Run identity checks, paid jobs, activity submission, or recovery | [Paid-job runbook](JOBS.md) |
+| Prepare the pitch, recording, and entry text | [Competition materials](competition/README.md) |
+| Build and verify the operator-assisted phone extension | [Seeker photo inspector](../mobile/seeker-inspector/README.md) |
 | Explain the buyer, wedge, alternatives, and commercial path | [Strategy](STRATEGY.md) |
 | Check dates and acceptance gates | [Bounty execution plan](BOUNTY_PLAN.md) |
 | Complete human submission fields and publish review links | [Submission preparation](SUBMISSION.md) |
@@ -36,6 +40,8 @@ You do not need to read every reference file before the demonstration.
 | Inspect the wire format and trust boundaries | [Protocol](PROTOCOL.md), [receipt identity](RECEIPT_IDENTITY.md) |
 
 ## Browser pages
+
+- [Paid job workbench](jobs.html): inspect unchanged device signatures, fixed payment terms, receipt digests, and recorded job state.
 
 - [How it works](HOW_IT_WORKS.html): illustrated explanation and technical reference.
 - [Dispatch desk](overview.html): use through the local gateway for an interactive purchase rehearsal.

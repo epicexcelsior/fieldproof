@@ -1,0 +1,3 @@
+# Presentation artifacts require regeneration instead of text merging.
+docs/competition/*.pdf binary
+docs/competition/*.pptx binary

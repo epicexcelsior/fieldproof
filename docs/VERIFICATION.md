@@ -1,8 +1,43 @@
 # FieldProof verification record
 
-Current continuation: October 9, 2026, Europe/Berlin. Public paid evidence dates to October 1 and October 5.
-The local MVP completes a public Devnet purchase, a real ESP32 observation, and both human-controlled contact states.
+Current continuation: October 10, 2026, Europe/Berlin. Public paid evidence dates to October 1 and October 5.
+The historical local MVP completes a public Devnet purchase, a real ESP32 observation, and both human-controlled contact states.
 This record does not claim production security, safety certification, or standards compliance.
+
+## October 10 peaq-linked job implementation
+
+New software checks a finalized Agung identity before the existing Solana x402 purchase.
+It binds the unchanged P-256 receipt, request, identity snapshot, and full Solana signature in canonical job bytes.
+The durable outbox saves evidence before independent payment verification.
+Only independently verified jobs enter submission. Atomic claims prevent two workers from submitting one job.
+Interrupted writes require explicit read-only reconciliation. No automatic payment or event retry exists.
+The operator journals signed transaction bytes before broadcast and enforces exact calls, chain 9990, and aggregate gas bounds.
+The job workbench verifies the installed pin and labels imported chain metadata as recorded evidence.
+
+Focused checks executed in this restricted session:
+
+- New gateway suites: 18 passed. Including the existing independent settlement suite, the safe check runs 25 gateway tests and all pass.
+- New Python identity/event/operator/registry, phone, and export suites: 27 passed, 7 optional SDK checks skipped in the core host environment.
+- The same Python suites with the isolated peaq SDK on `PYTHONPATH`: 34 passed.
+- Cross-language Node job bytes and Python event preparation matched receipt and job hashes. The inputs were synthetic test fixtures.
+- Android source compiled with local SDK 35 tools. Debug APK v3 signature verification passed. No install or capture occurred.
+- Phone verifier replay regression first failed, then passed. Request identity rejects a second valid ECDSA signature for the same challenge.
+- Numeric-key canonical JSON ordering first failed, then passed. Direct sorted serialization matches the Python encoding.
+- `python3 scripts/competition_check.py --build-phone` passed the focused gateway/Python checks and built the APK. It made no payment or installation.
+- The standalone public inspector/workbench export completed. Its whitelist excludes wallets, journals, databases, and local reports.
+
+The broader declared Python suite ran and returned 211 passed, 11 skipped, 7 failures, and 7 errors.
+Socket and child-process restrictions blocked those integration checks. Do not report the complete suite as green.
+The broader gateway run without process isolation was interrupted after restricted server/child-process checks failed. No complete result exists.
+An additional focused gateway run returned 27 passed and one blocked existing loopback test with `listen EPERM`.
+No separate formatter, linter, or type-check command is declared by the repository.
+
+Current restrictions block loopback servers, external RPC, Chromium, ADB, Bluetooth, and Tailscale daemon access.
+USB controller presence does not establish a usable serial device. F5 reachability remains unverified.
+No fresh paid observation, live peaq preview, activation, event, phone capture, public deployment, or account submission occurred.
+The founder authorized disposable Agung wallet creation. Funding remains unchecked and no chain spending occurred.
+The missing live EventRegistry address and deployment relationship also remain acceptance gates.
+The [job runbook](JOBS.md) supplies the exact continuation and recovery commands.
 
 ## October 9 repository wrapup
 

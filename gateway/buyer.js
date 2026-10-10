@@ -11,6 +11,7 @@ import { NETWORK, USDC, PAY_TO } from './server.js';
 import { contactContract, DEFAULT_CONTACT, loadReceiptPins, receiptKey } from './contact.js';
 import { saveBuyerRun } from './buyer-output.js';
 import { contactPolicy } from '../docs/settlement.mjs';
+import { checkIdentity, validateProviderPolicy } from './peaq.js';
 
 const provisionedKey = loadReceiptPins()[DEFAULT_CONTACT.provider];
 
@@ -60,6 +61,14 @@ export async function buyObservation(signer, origin = 'http://127.0.0.1:4021', o
   contactPolicy(purpose, contact.sensor); // Reject incompatible local policy before any request or payment.
   const receiptPublicKey = options.receiptPublicKey ?? loadReceiptPins(options.pinsPath)[contact.provider];
   receiptKey(receiptPublicKey); // Buyer configuration, never a key from the gateway response.
+  let identity;
+  if (options.peaq !== undefined) {
+    const policy = validateProviderPolicy(options.peaq.policy);
+    if (policy.provider !== contact.provider || policy.sensor !== contact.sensor || policy.receipt_public_key !== receiptPublicKey ||
+        typeof options.peaq.resolve !== 'function') throw new Error('peaq policy does not match the trusted buyer contact and key');
+    identity = checkIdentity(await options.peaq.resolve(), policy);
+    options.onProgress?.({ phase: 'identity', machine_id: identity.machine_id });
+  }
   const url = new URL(origin);
   if (url.protocol !== 'http:' || url.hostname !== '127.0.0.1') throw new Error('The prototype buyer accepts only a loopback gateway');
   const nonce = randomInt(1, 0x7fffffff);
@@ -98,7 +107,8 @@ export async function buyObservation(signer, origin = 'http://127.0.0.1:4021', o
     const result = { purchase_id: purchase.id, challenge: { id: purchase.id, nonce, created_at: createdAt,
       location: purchase.location, max_age_seconds: purchase.max_age_seconds, contact }, settlement,
       ...checkEvidence(body, purchase, Math.floor(Date.now() / 1000), receiptPublicKey, contact, purpose),
-      ...(purpose === 'package-pickup' ? { purpose } : {}), receipt: body.receipt };
+      ...(purpose === 'package-pickup' ? { purpose } : {}), receipt: body.receipt,
+      ...(identity ? { peaq_identity: identity } : {}) };
     options.onProgress?.({ phase: 'verified', purchase_id: purchase.id, transaction: settlement.transaction });
     return result;
   } catch { throw new Error(`Payment response or evidence failed verification. Keep purchase ID ${purchase.id} for review before another payment.`); }

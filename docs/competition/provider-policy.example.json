@@ -1,0 +1,17 @@
+{
+  "schema": "fieldproof-provider-policy-v1",
+  "chain_id": 9990,
+  "deployment_id": "agung-2026-08-28",
+  "machine_id": "2044618828586167349407969644236800133676464971368659651643404080491769435145",
+  "provider": "esp32-c6-96a2",
+  "sensor": "gpio9-contact",
+  "owner": "0xAFAC49c440f32a6a7bd4a717cCB95e60cE4D7C12",
+  "controller": "0xAFAC49c440f32a6a7bd4a717cCB95e60cE4D7C12",
+  "receipt_public_key": "046218c52391433f9a687743192c5558a121320b8fa664931e5aaa1b6e5fbf342f9411913c8b72c91a3e7b9762e34e77955ed6035b81fa27ab7770dd8d4922ed63",
+  "verification_method_id": "#receipt-key",
+  "service_id": "#contact-observation",
+  "service_type": "FieldProofBLEContactV1",
+  "service_endpoint": "urn:fieldproof:ble-contact:esp32-c6-96a2:gpio9-contact:state.observe",
+  "pay_to": "CaQAKBcwf7G5vXeu2RNuNGJafnJ8724Uj4wv9ivfxfQA",
+  "max_identity_age_seconds": 120
+}

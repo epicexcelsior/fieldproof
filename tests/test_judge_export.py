@@ -26,6 +26,7 @@ def test_judge_package_contains_only_public_assets_and_works_under_a_url_prefix(
                                          '</main><script src="/proof.js"></script>')
     (root / "docs/HOW_IT_WORKS.html").write_text('<a href="http://127.0.0.1:4022/proof?present=1">Inspect</a>'
                                               '<a href="PROTOCOL.md#request">Protocol</a>')
+    (root / "docs/jobs.html").write_text('<a href="/proof">Inspect</a><a href="/learn">Learn</a><script src="/jobs.mjs"></script>')
     (root / "secret.keypair.json").write_text("PRIVATE FIXTURE")
     monkeypatch.setattr(module, "ROOT", root)
     output = tmp_path / "site"
@@ -34,6 +35,10 @@ def test_judge_package_contains_only_public_assets_and_works_under_a_url_prefix(
     assert 'href="./index.html"' in (output / "index.html").read_text()
     assert 'href="./guide.html"' in (output / "index.html").read_text()
     assert '?live=1' not in (output / "index.html").read_text()
+    job_page = (output / "jobs.html").read_text()
+    assert 'href="./index.html"' in job_page
+    assert 'href="./guide.html"' in job_page
+    assert 'src="./jobs.mjs"' in job_page
     assert 'Live monitoring requires the repository gateway.' in (output / "index.html").read_text()
     guide = (output / "guide.html").read_text()
     assert 'href="./index.html?present=1"' in guide
@@ -71,3 +76,5 @@ def test_current_founder_guide_has_only_supported_export_links():
     assert 'href="./index.html?present=1"' in guide
     assert 'href="HARDWARE_NEXT.md"' not in guide
     assert 'src="assets/fieldproof-service-boundaries.svg"' in guide
+    assert 'href="./jobs.html"' in guide
+    assert 'href="https://github.com/epicexcelsior/fieldproof/blob/main/docs/JOBS.md"' in guide

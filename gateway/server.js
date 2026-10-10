@@ -13,11 +13,10 @@ import { PurchaseStore } from './store.js';
 import { contactContract, DEFAULT_CONTACT, loadReceiptPins, receiptKey } from './contact.js';
 import { publicBuyerRun, contactPolicy } from '../docs/settlement.mjs';
 
-export const NETWORK = 'solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1';
-export const USDC = '4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU';
-export const PAY_TO = 'CaQAKBcwf7G5vXeu2RNuNGJafnJ8724Uj4wv9ivfxfQA';
+import { NETWORK, USDC, PAY_TO } from './constants.js';
+export { NETWORK, USDC, PAY_TO } from './constants.js';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const guideReferences = new Set(['README.md', 'FOCUS.md', 'REHEARSAL.md', 'STRATEGY.md', 'VERIFICATION.md', 'DEMO.md',
+const guideReferences = new Set(['README.md', 'FOCUS.md', 'REHEARSAL.md', 'STRATEGY.md', 'VERIFICATION.md', 'DEMO.md', 'JOBS.md',
   'SUBMISSION.md', 'BOUNTY_PLAN.md', 'PEAQ_INTEGRATION.md', 'CONTACT_SETUP.md', 'HARDWARE_NEXT.md',
   'CORROBORATION.md', 'PROTOCOL.md', 'RECEIPT_IDENTITY.md', 'OVERVIEW.md', 'diagnostics.html']);
 
@@ -51,7 +50,7 @@ export async function createGateway({ paymentServer, store, observe = observeHar
     origin = 'http://127.0.0.1:4021', payTo = PAY_TO, simulated = false,
     sensor = simulated ? 'simulated-contact' : 'gpio9-contact',
     provider = sensor === 'simulated-contact' ? 'sim-contact-01' : DEFAULT_CONTACT.provider, assetsRoot = root,
-    receiptPins = loadReceiptPins(process.env.FIELDPROOF_RECEIPT_PINS), buyerRunPath, buyerPurpose = 'gate-access' } = {}) {
+    receiptPins = loadReceiptPins(process.env.FIELDPROOF_RECEIPT_PINS), buyerRunPath, buyerPurpose = 'gate-access', events } = {}) {
   const contact = contactContract({ provider, sensor }, { simulated });
   contactPolicy(buyerPurpose, sensor);
   const publicKey = sensor === 'simulated-contact' ? null : receiptPins[provider];
@@ -78,6 +77,7 @@ export async function createGateway({ paymentServer, store, observe = observeHar
   // Check only these relative asset names for dotfiles, not the trusted checkout path.
   for (const [route, file] of Object.entries({
     '/': 'docs/overview.html', '/proof': 'docs/proof.html', '/proof.js': 'docs/proof.js',
+    '/jobs': 'docs/jobs.html', '/jobs.mjs': 'docs/jobs.mjs',
     '/settlement.mjs': 'docs/settlement.mjs',
     '/receipt-keys.json': 'host/capmesh/protocol/receipt_keys.json',
     '/evidence/device-signed-purchase.json': 'docs/evidence/device-signed-purchase.json',
@@ -92,6 +92,14 @@ export async function createGateway({ paymentServer, store, observe = observeHar
     '/evidence/devnet-purchase.json': 'docs/evidence/devnet-purchase.json',
     '/evidence/contact-states.json': 'docs/evidence/contact-states.json',
   })) app.get(route, (_req, res) => res.sendFile(file, { root: assetsRoot }));
+  app.get('/jobs/:id', (req, res) => {
+    if (!/^[0-9a-f]{16}$/.test(req.params.id)) return res.status(400).json({ error: 'Use a valid job ID.' });
+    const saved = events?.get(req.params.id);
+    if (!saved) return res.status(404).json({ error: 'No peaq-linked job exists for this purchase.' });
+    res.json({ job: JSON.parse(saved.job_utf8), event: { state: saved.state,
+      transaction_hash: saved.transaction_hash, data_hash: saved.data_hash,
+      confirmation: saved.confirmation ? JSON.parse(saved.confirmation) : null } });
+  });
   app.get('/health', (_req, res) => res.json({ ready: true, network: NETWORK, payTo,
     capability: 'state.observe', location: 'demo-gate', price_base_units: '1000',
     provider, sensor, contact, receipt_public_key: publicKey,

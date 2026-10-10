@@ -14,6 +14,8 @@ ASSETS = {
     "guide.html": "docs/HOW_IT_WORKS.html",
     "proof.js": "docs/proof.js",
     "settlement.mjs": "docs/settlement.mjs",
+    "jobs.html": "docs/jobs.html",
+    "jobs.mjs": "docs/jobs.mjs",
     "receipt-keys.json": "host/capmesh/protocol/receipt_keys.json",
     "evidence/device-signed-purchase.json": "docs/evidence/device-signed-purchase.json",
     "evidence/device-signed-purchase-20261005.json": "docs/evidence/device-signed-purchase-20261005.json",
@@ -32,13 +34,15 @@ def guide_links(page):
         target = match.group(1)
         if target == "http://127.0.0.1:4022/proof?present=1":
             return 'href="./index.html?present=1"'
+        if target == "/jobs":
+            return 'href="./jobs.html"'
         if target.startswith(("#", "https://", "http://")) or target.split("#")[0] in ASSETS:
             return match.group(0)
         # References stay in the public repository. Copy no linked directories or local state.
         allowed = {"README.md", "FOCUS.md", "REHEARSAL.md", "STRATEGY.md", "VERIFICATION.md", "DEMO.md",
                    "SUBMISSION.md", "BOUNTY_PLAN.md", "PEAQ_INTEGRATION.md", "CONTACT_SETUP.md", "HARDWARE_NEXT.md",
                    "CORROBORATION.md", "PROTOCOL.md", "RECEIPT_IDENTITY.md", "OVERVIEW.md",
-                   "overview.html", "diagnostics.html", "evidence/contact-states.json", "evidence/devnet-purchase.json"}
+                   "overview.html", "diagnostics.html", "JOBS.md", "evidence/contact-states.json", "evidence/devnet-purchase.json"}
         if target.split("#")[0] not in allowed:
             raise ValueError(f"The guide contains an unsupported local link: {target}")
         return f'href="https://github.com/epicexcelsior/fieldproof/blob/main/docs/{target}"'
@@ -58,6 +62,11 @@ def export(output):
             destination = stage / target
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / source, destination)
+        job_page = (stage / "jobs.html").read_text()
+        for old, new in [('href="/"', 'href="./index.html"'), ('href="/proof"', 'href="./index.html"'),
+                         ('href="/learn"', 'href="./guide.html"'), ('src="/jobs.mjs"', 'src="./jobs.mjs"')]:
+            job_page = job_page.replace(old, new)
+        (stage / "jobs.html").write_text(job_page)
         page = (ROOT / "docs/proof.html").read_text()
         page = page.replace('src="/proof.js"', 'src="./proof.js"')
         page = page.replace('<a href="/">Back to dispatch desk</a>', '<a href="./index.html">Restart inspection</a>')
@@ -76,6 +85,8 @@ def export(output):
             "4. Select Verify recorded payment for a read-only Solana Devnet RPC query.\n"
             "5. Inspect the separately signed BOOT held/released input pair. Those checks moved no funds.\n"
             "6. Watch assets/fieldproof-signed-receipt.webm.\n\n"
+            "Open jobs.html for the job workbench. Import a reviewed saved job or evidence manifest.\n"
+            "Imported peaq snapshots remain recorded evidence, not a live registry query.\n\n"
             "For the October 5 real purchase, open Inspect a new paid buyer run.\n"
             "Select evidence/device-signed-purchase-20261005.json, then Verify buyer payment.\n"
             "The later one-click purchase is evidence/device-signed-purchase-click-20261005.json.\n"

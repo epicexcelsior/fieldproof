@@ -1,8 +1,9 @@
 # peaq integration decision
 
-**October 4, 2026: Agung readiness passed. Offline key/service input preparation exists. No peaq transaction occurred.**
-Preserve the verified Solana contact MVP while defining the next integration acceptance gates.
-The next peaq flow connects the observer's identity to its public signing key and permitted observation service.
+**October 10, 2026: the peaq-linked job and bounded operator paths exist in code. Live activation and event submission remain pending.**
+The [paid-job runbook](JOBS.md) owns execution commands, current policy, event bytes, and recovery.
+This document records the SDK/deployment decision and historical readiness evidence.
+The buyer now connects the observer identity to its pinned receipt key and service before payment.
 This document owns peaq interfaces, readiness, and activation gates.
 
 ## What the diagnostic establishes
@@ -117,7 +118,9 @@ The intended completed flow is:
 5. Verify the delivered device receipt independently.
 6. Record a permitted activity event with the observation evidence hash.
 
-Steps 1–6 remain integration work. The existing Solana purchase already works independently.
+Steps 1–6 have software adapters and offline contract tests. Their connected live execution remains unverified.
+The existing Solana purchase has historical physical evidence.
+The Agung EventRegistry address and its InfoDesk and MachineRegistry relationships still require live verification.
 Do not represent a test-token payment as revenue in a machine history.
 Do not publish private location or customer data as event metadata.
 
@@ -159,7 +162,8 @@ The readiness run used that wheel in an isolated environment. The command above 
 
 ## Decision required before a write
 
-After the MVP package, authorize one permanent Agung test identity and select its operator wallet.
+The founder authorized a new disposable Agung operator wallet. Its private key stays in ignored local state.
+Wallet creation authorizes no funding, bond, gas, activation, or event submission.
 Review exact public identity inputs and the current bounded bond and gas cost first.
 Activation creates permanent public state. The SDK describes no deactivation or bond refund.
 No mainnet funds or activation belong in the October 5 critical path.

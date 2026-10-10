@@ -1,68 +1,54 @@
 # FieldProof: start here
 
-**Current focus: preserve the verified MVP and define the next bounty's acceptance gates.**
-As of October 9, 2026. The recorded Germany MVP deadline was October 5.
-No submission confirmation exists in this repository. Do not infer submission from completed technical packaging.
-The repository, recorded inspector, guide, and technical video have public links in [submission preparation](SUBMISSION.md).
-Open [the documentation map](README.md) for the runbook, evidence, and remaining tasks.
+**Current focus: finish one peaq-linked paid physical check and record it.**
+As of October 10, 2026. Primary entry: peaq Germany. Secondary entries: Superteam Germany Colosseum track and Colosseum.
+The internal submission target is Monday, October 12, 18:00 CEST.
+No submission confirmation exists in this repository.
 
-## The thesis to keep
+## Explain one transaction
 
-FieldProof: fresh physical proof for machine-to-machine commerce.
-The demo's central moment is a confirmed payment and valid signature with expired evidence and WAIT.
-The buyer checks an answer's useful lifetime independently of payment and authentication.
+FieldProof sells fresh physical checks to AI agents.
+An agent requests a contact observation from a selected ESP32.
+The buyer resolves its peaq identity and compares its registered key with an independently provisioned pin.
+Solana Devnet x402 prepays 0.001 test USDC. The ESP32 measures and signs the answer.
+The buyer verifies the request, signature, sample agreement, and age.
+A durable outbox links that job to an attributed peaq activity event.
 
-Company target: one integration for machines to transact with physical infrastructure another operator owns.
-The current prototype purchases and verifies a fresh contact observation. Access, actuation, reservation, and completed-service evidence remain future work.
+This is the implemented software path. Its connected live Agung execution remains unverified.
+Both OPEN and CLOSED fulfill a valid observation. The buyer's operational decision remains separate from payment.
+The signature authenticates a device claim. It does not prove physical truth or authorize equipment use.
 
-The first buyer hypothesis is a fleet software operator with repeated interactions at independent facilities.
-Start with one fleet and one authorized facility. A second facility tests integration reuse.
-Test paid integration and support before recurring software fees, transaction fees, or a marketplace.
-No customer, sustainable price, avoided-cost result, or commercial network exists today.
+## Know what is verified
 
-## The wedge to test
+| Part | Verified result | Remaining gap |
+|---|---|---|
+| Solana and ESP32 | Historical paid Devnet checks and original P-256 receipts | Fresh integrated rehearsal |
+| peaq | Historical Agung readiness, new strict resolver, bounded operator, and offline tests | Funded operator, current preview, activation, registry binding, finalized event |
+| Jobs | Canonical evidence, payment-query recovery, durable outbox, independent-inspection workflow | Live RPC and physical acceptance test |
+| Seeker | Browser verification history and an offline-built requested-photo app | Install, capture, trusted key transfer, and independent verification |
+| Submission | Public historical inspector and local editable package | Founder narration, current public links, eligibility, final forms |
 
-A visiting robot reaches an external loading gate and needs a current contact answer for its next decision.
-Its buyer selects the device, trusted key, question, budget, and useful-time limit.
-The demo checks that contract. A contact answer alone cannot authorize safe passage.
-
-Open-RMF already connects fleets and infrastructure. Machine-service markets also exist.
-The proposed additional value is independent acceptance of transaction-associated physical evidence across operators.
-The receipt signs the challenge. The gateway ledger associates that challenge with the purchase.
-Neither a signature nor a payment establishes physical truth, atomic delivery, or a defensible company.
-The [strategy](STRATEGY.md#the-wedge-to-test-first) owns the pilot, alternatives, economics, and falsification test.
-
-## What works and what remains open
-
-| Working result | Remaining limit |
-|---|---|
-| Public Solana Devnet purchases and real ESP32-signed receipts. Laptop and Seeker verified the October 5 fresh result and expiry. | Test tokens establish no revenue. Payment and measurement remain separate. |
-| Both held/released BOOT states | BOOT represents a contact. No external gate is installed. |
-| Browser signature, challenge, expiry, and attack checks | The installed buyer pin remains the trust root. The device key is not protected against flash extraction. |
-| No-hardware simulator and standalone recorded inspector | Public inspector and technical-video links exist. Human registration and founder narration remain unverified. |
-| Agung readiness and offline key/service input preparation | No peaq identity is activated. Full preflight and explicit write approval remain open. |
-| Two-observer software policy and bounded BLE runner | Actual paired hardware timing and independent sensing remain unverified. |
-
-The [verification record](VERIFICATION.md) owns exact tests and discovery reliability limits.
-The [short rehearsal](REHEARSAL.md) provides timed recording cues. The HTML guide keeps the detailed reference collapsed.
+The current session blocks local servers, RPC, ADB, Bluetooth, and Tailscale access.
+The [verification record](VERIFICATION.md) separates offline checks from those blocked live steps.
 
 ## Do next
 
-1. Select the next bounty and check its current eligibility, deadline, required integration, and submission fields.
-2. Record those acceptance gates in [the bounty plan](BOUNTY_PLAN.md) before changing the implementation.
-3. Reuse the simulator, recorded inspector, and existing paid evidence for the starting demonstration.
-4. Implement only the gap between the verified prototype and the selected bounty's requirements.
-5. Complete the founder presentation, project page, and contact fields in [submission preparation](SUBMISSION.md).
+1. Use a session with network and device access. Preserve the current key, firmware, and purchase database.
+2. Run the read-only Agung preview and resolve the EventRegistry deployment relationship.
+3. Review and approve the exact test-token bond and gas ceilings before any chain write.
+4. Follow [the paid-job runbook](JOBS.md) for activation, purchase, activity, and independent readback.
+5. Complete three runs. Record one altered receipt rejection and one stale receipt rejection.
+6. Record the physical device and founder narration. Complete each eligible submission as the founder.
 
-The historical plan lists a peaq deadline on October 13. Recheck that listing before using the date for a new commitment.
-The [peaq integration decision](PEAQ_INTEGRATION.md) records read-only readiness and the remaining activation gates.
-No peaq transaction, protected device identity, external gate installation, or paired physical verification exists.
+Keep the existing signed `gate.closed` contract and BOOT fallback.
+Do not make new hardware, a paid phone provider, or a marketplace a prerequisite.
+The [phone extension](../mobile/seeker-inspector/README.md) remains optional.
 
-Keep the contact question, receipt format, payment rail, buyer trust root, and recorded fallback stable.
-External contacts remain optional until their physical checks pass.
-Use [contact setup](CONTACT_SETUP.md) and [the hardware plan](HARDWARE_NEXT.md) for those checks.
-The Seeker acts as a browser verifier. It supplies no sensor data and signs no payment.
-Use [the demo runbook](DEMO.md) for local rehearsal and recovery.
+## Test the business hypothesis
 
-A buyer test remains open: one actual incident, current workaround, operator permission, useful-time limit, and pilot budget.
-The [strategy](STRATEGY.md) owns that test. More endpoint types do not establish demand.
+The initial user is an AI builder who operates equipment remotely.
+Test one repeated decision that existing telemetry cannot answer reliably.
+Record the current workaround, useful evidence age, integration effort, and budget before proposing a paid pilot.
+No paying customer, commercial revenue, validated price, or network effect exists in the verified record.
+Earlier fleet/facility research remains in [the strategy document](STRATEGY.md).
+The competition prototype does not validate that earlier segment.

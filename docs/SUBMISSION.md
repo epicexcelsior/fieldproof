@@ -6,6 +6,23 @@ Public inspector, guide, and technical-video links are available. Eligibility co
 Use [one 150-second recording route](REHEARSAL.md#record-one-150-second-walkthrough), then complete the fields below.
 The [bounty execution plan](BOUNTY_PLAN.md) owns deadlines and acceptance gates.
 
+## Current entries: October 10
+
+Prioritize the peaq Germany entry, then the Germany Colosseum track and main Colosseum entry.
+The story is paid physical checks for AI agents. The [job runbook](JOBS.md) owns the connected software path.
+Live peaq activation and event readback remain pending. Do not claim either from an offline test.
+The phone photo app is an operator-assisted extension. It supplies no paid-provider demonstration yet.
+
+The Germany Colosseum track requires a Solana project, both portal submissions, and Germany country selection when eligible.
+This differs from the historical Germany MVP listing below.
+[Current Germany track](https://superteam.fun/earn/listing/colosseum-crypto-worlds-fair-hackathon-superteam-germany-track/).
+
+Prepare three separate recordings: a two-minute peaq transaction, a founder pitch, and a technical walkthrough.
+Verify actual form time limits before exporting. The supporting deck contains five slides.
+Every finished video must distinguish historical evidence, live capture, simulation, and planned work.
+The internal submission target is Monday, October 12, 18:00 CEST.
+Use [the editable deck, recording scripts, tester guide, and tailored form drafts](competition/README.md).
+
 ## Requirements and deadlines recorded October 4–5
 
 Requirements and deadlines were checked again from both complete public `__NEXT_DATA__` listing payloads on October 4, 2026.
@@ -37,25 +54,26 @@ Verify both deadlines again before submission. Eligibility and acceptance remain
 
 **FieldProof**
 
-Fresh physical proof for machine-to-machine commerce.
+Paid physical checks for AI agents.
 
 ## One-line description
 
-FieldProof lets a machine buy a physical observation on Solana and verify the signed answer's identity, question, and age before acting.
-The [company hypothesis](STRATEGY.md#the-story-to-explain) is machines buying and verifying physical services from infrastructure another operator owns.
+FieldProof lets an AI agent buy a fresh physical check on Solana and verify the device's signed answer before using it.
+The new software checks peaq identity before payment and prepares attributable activity after delivery.
+Its live chain integration remains pending.
 
 ## The point to demonstrate
 
-Payment does not tell a visiting robot whether another operator's gate is open now.
-The robot needs an answer from the selected device, for this question, within its useful-time limit.
+An agent needs a current physical answer from a selected device.
+It needs evidence for this question, within its useful-time limit.
 The demo shows a confirmed payment and valid device signature alongside expired evidence and WAIT.
 The ten-second limit is buyer policy, not a property of Solana or a guarantee that the gate remains open.
 The signature authenticates the device's claim. The gateway ledger associates its signed challenge with the purchase.
 
 ## Problem and buyer
 
-The first buyer hypothesis is a fleet software operator that needs repeated interactions with independent facilities.
-It needs permitted service terms, payment, and useful evidence before it relies on the interaction.
+The first buyer hypothesis is an AI builder who operates equipment at another location.
+Test one repeated decision that its current telemetry cannot answer reliably.
 The implemented first step purchases a current contact observation with an explicit age limit and budget.
 Access rights, actuation, reservations, and completed-service verification remain future work.
 Existing facility APIs and Open-RMF integrations remain alternatives. Customer demand and avoided costs remain unvalidated.
@@ -107,7 +125,8 @@ No peaq identity or revenue event is activated.
 The current [Solana onboarding guide](https://docs.peaq.xyz/peaqos/guides/onboard-on-solana) reports paused onboarding and a mainnet-only flow.
 The read-only Agung registry check now verifies deployment peers and activation flags and derives a proposed observer ID from the public key.
 No machine activation or activity event exists. The [peaq integration decision](PEAQ_INTEGRATION.md) records the bounded native testnet path and remaining inputs.
-The next useful peaq step is an activated observer identity and honest activity history after an explicit operator and funding decision.
+The software now includes identity resolution, bounded activation, activity submission, and independent inspection.
+Their live results remain unverified. Follow [the job runbook](JOBS.md) after current preview and explicit bond/gas approval.
 The public command HMAC key does not provide private authorization. Physical receipts use buyer-pinned P-256 identity with unencrypted device storage.
 Simulated payments and Devnet tokens do not establish real revenue.
 
