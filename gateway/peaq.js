@@ -29,7 +29,7 @@ export function validateProviderPolicy(input) {
     throw new Error('Use an explicit Agung provider policy with a canonical uint256 machine ID');
   }
   contactContract({ provider: input.provider, sensor: input.sensor });
-  if (!['gpio9-contact', 'gpio18-contact'].includes(input.sensor)) throw new Error('Select the approved GPIO9 or GPIO18 contact profile');
+  if (input.sensor !== 'gpio9-contact') throw new Error('The competition job uses the installed GPIO9 contact profile');
   receiptKey(input.receipt_public_key);
   for (const role of ['owner', 'controller']) {
     if (!evm.test(input[role]) || BigInt(input[role]) === 0n) throw new Error(`Configure a nonzero public ${role} address`);

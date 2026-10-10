@@ -16,13 +16,15 @@ The job workbench verifies the installed pin and labels imported chain metadata 
 
 Focused checks executed in this restricted session:
 
-- New gateway suites: 18 passed. Including the existing independent settlement suite, the safe check runs 25 gateway tests and all pass.
+- New gateway suites: 18 passed. Including settlement and buyer-recovery checks, the safe command runs 28 gateway tests and all pass.
 - New Python identity/event/operator/registry, phone, and export suites: 27 passed, 7 optional SDK checks skipped in the core host environment.
 - The same Python suites with the isolated peaq SDK on `PYTHONPATH`: 34 passed.
 - Cross-language Node job bytes and Python event preparation matched receipt and job hashes. The inputs were synthetic test fixtures.
 - Android source compiled with local SDK 35 tools. Debug APK v3 signature verification passed. No install or capture occurred.
 - Phone verifier replay regression first failed, then passed. Request identity rejects a second valid ECDSA signature for the same challenge.
 - Numeric-key canonical JSON ordering first failed, then passed. Direct sorted serialization matches the Python encoding.
+- An unsupported GPIO18 policy first passed validation incorrectly. The competition path now rejects it before purchase and uses installed GPIO9 only.
+- Reviewed buyer recovery verifies the existing payment and immutable job. It restores the matching operation without another purchase or budget reset.
 - `python3 scripts/competition_check.py --build-phone` passed the focused gateway/Python checks and built the APK. It made no payment or installation.
 - The standalone public inspector/workbench export completed. Its whitelist excludes wallets, journals, databases, and local reports.
 

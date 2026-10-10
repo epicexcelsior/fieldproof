@@ -95,6 +95,25 @@ export function createLocalBuyer({ directory, payer, payTo, buy, maximum = 10, r
       })();
       return { code: 202, value: this.status(id) };
     },
+    completeReviewed(id, result) {
+      // Local recovery only. The caller verifies immutable job evidence and the existing payment first.
+      if (active) throw new Error('Stop the active purchase before completing review.');
+      const record = read(id), run = publicBuyerRun(result);
+      if (!record || record.operation_id !== id || record.purchase_id !== run.purchase_id ||
+          run.settlement.payer !== payer || readPurchaseState?.(run.purchase_id) !== 'delivered') {
+        throw new Error('Reviewed result does not match the preserved operation and delivered purchase.');
+      }
+      if (record.status === 'done') {
+        if (JSON.stringify(publicBuyerRun(record.result)) !== JSON.stringify(run)) throw new Error('Completed operation binds another result.');
+        return this.status(id);
+      }
+      if (!['pending', 'review'].includes(record.status)) throw new Error('Only an unresolved operation can complete review.');
+      const final = { ...record, status: 'done', result: run, recovered_at: new Date().toISOString(),
+        events: [...(record.events ?? []), { phase: 'review-completed', elapsed_ms: record.elapsed_ms ?? 0 }] };
+      delete final.error;
+      replacePrivate(join(directory, id + '.json'), final);
+      return this.status(id);
+    },
     close() {
       if (active) return false;
       unlinkSync(lock);

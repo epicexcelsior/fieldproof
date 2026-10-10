@@ -43,7 +43,8 @@ def snapshot(now=1000):
 def test_policy_rejects_unknown_fields_and_authority_changes():
     validate_policy(policy())
     for change in ({"extra": True}, {"max_identity_age_seconds": 500}, {"pay_to": "11111111111111111111111111111111"},
-                   {"service_endpoint": "https://example.com"}, {"owner": "0x" + "0" * 40}):
+                   {"service_endpoint": "https://example.com"}, {"owner": "0x" + "0" * 40},
+                   {"sensor": "gpio18-contact", "service_endpoint": policy()["service_endpoint"].replace("gpio9-contact", "gpio18-contact")}):
         with pytest.raises(ValueError):
             validate_policy({**policy(), **change})
 

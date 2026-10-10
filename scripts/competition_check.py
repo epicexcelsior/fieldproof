@@ -13,7 +13,8 @@ PYTHON_TESTS = ["tests/test_peaq_job_identity.py", "tests/test_peaq_job_event.py
                 "tests/test_peaq_operator.py", "tests/test_peaq_registry_discovery.py",
                 "tests/test_phone_evidence.py", "tests/test_judge_export.py"]
 NODE_TESTS = ["gateway/test/job.test.js", "gateway/test/event-store.test.js", "gateway/test/paid-job.test.js",
-              "gateway/test/job-view.test.js", "gateway/test/peaq-event.test.js", "gateway/test/settlement.test.js"]
+              "gateway/test/job-view.test.js", "gateway/test/peaq-event.test.js", "gateway/test/settlement.test.js",
+              "gateway/test/buyer-recovery.test.js"]
 
 
 def main():

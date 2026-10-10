@@ -47,7 +47,7 @@ The policy has these required fields:
 | `chain_id` | `9990` |
 | `deployment_id` | `agung-2026-08-28` |
 | `machine_id` | Exact computed uint256 ID, as a decimal string |
-| `provider`, `sensor` | Approved provider and `gpio9-contact` or `gpio18-contact` |
+| `provider`, `sensor` | Approved provider and installed `gpio9-contact` |
 | `owner`, `controller` | Explicit nonzero public EVM addresses |
 | `receipt_public_key` | Independently provisioned lowercase uncompressed P-256 SEC1 point |
 | `verification_method_id` | `#receipt-key` |
@@ -177,6 +177,18 @@ node gateway/peaq-event.js --action verify-payment --purchase "$FIELDPROOF_PURCH
 ```
 
 This command starts no purchase. A failed query leaves the saved job pending.
+If the buyer operation still requires review, stop the buyer process and restore its saved result:
+
+```bash
+node gateway/peaq-event.js --action recover-buyer --purchase "$FIELDPROOF_PURCHASE_ID" \
+  --operation "$FIELDPROOF_OPERATION_ID" --policy .local/competition/provider-policy.json
+```
+
+This command independently verifies the old payment and signed job. It acquires the existing buyer lock.
+It restores only the matching delivered operation. It retains the operation count, original receipt, and capture time.
+It never starts a payment or makes old evidence fresh. A running or stale lock blocks recovery.
+After a process crash, inspect the lock's PID and every saved purchase before removing a confirmed stale lock.
+Never remove a live lock or delete operation records to reset the budget.
 Event submission repeats an independent finalized Solana check and rejects mismatched token balances or transfer instructions.
 
 The SDK's Agung deployment omits an EventRegistry address.

@@ -88,8 +88,8 @@ def validate_policy(policy):
     _machine_id(policy["machine_id"])
     if not isinstance(policy["provider"], str) or not re.fullmatch(r"[A-Za-z0-9_-]{1,31}\Z", policy["provider"]):
         raise ValueError("provider policy has an invalid provider")
-    if policy["sensor"] not in {"gpio9-contact", "gpio18-contact"}:
-        raise ValueError("provider policy has an unsupported sensor")
+    if policy["sensor"] != "gpio9-contact":
+        raise ValueError("the competition job uses the installed GPIO9 contact profile")
     _address(policy["owner"], "owner")
     _address(policy["controller"], "controller")
     _public_key(policy["receipt_public_key"])

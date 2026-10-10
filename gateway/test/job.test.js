@@ -14,6 +14,8 @@ test('machine IDs survive the uint256 boundary without Number conversion', () =>
     assert.throws(() => validateProviderPolicy({ ...policy, machine_id }));
   }
   assert.throws(() => validateProviderPolicy({ ...policy, pay_to: '11111111111111111111111111111111' }), /recipient/);
+  assert.throws(() => validateProviderPolicy({ ...policy, sensor: 'gpio18-contact',
+    service_endpoint: policy.service_endpoint.replace('gpio9-contact', 'gpio18-contact') }), /installed GPIO9/);
 });
 
 test('registry identity fails closed on key, owner, service, inactive state, and stale snapshots', () => {

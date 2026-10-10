@@ -10,6 +10,7 @@ import { EventStore } from './event-store.js';
 import { loadProviderPolicy } from './peaq.js';
 import { verifyJob, sha256 } from './job.js';
 import { querySettlement } from '../docs/settlement.mjs';
+import { createLocalBuyer } from './local-buyer.js';
 
 const ROOT = fileURLToPath(new URL('../', import.meta.url));
 const EVM_HASH = /^0x[0-9a-fA-F]{64}$/;
@@ -77,6 +78,23 @@ export async function verifySavedPayment({ events, id, policy, query = querySett
     transaction: job.payment.transaction, payer: job.payment.payer } });
   events.recordPayment(id, result);
   return { purchase_id: id, state: events.get(id).state, payment_verification: result, spending: false };
+}
+
+export async function recoverSavedBuyer({ events, id, policy, operation, query = querySettlement,
+    directory = join(ROOT, '.local', 'live-buyer', JSON.parse(checkedRow(events, id, policy).job_utf8).payment.payer) }) {
+  const row = checkedRow(events, id, policy), job = JSON.parse(row.job_utf8);
+  await verifySavedPayment({ events, id, policy, query }); // read the existing transfer, never buy again
+  const controller = createLocalBuyer({ directory, payer: job.payment.payer, payTo: policy.pay_to,
+    buy: () => { throw new Error('This recovery command cannot purchase.'); },
+    readPurchaseState: purchase => events.purchases.get(purchase)?.state });
+  try {
+    const run = { purchase_id: job.job_id, challenge: job.request, receipt: job.receipt,
+      settlement: { success: true, network: job.payment.network, transaction: job.payment.transaction, payer: job.payment.payer } };
+    const result = controller.completeReviewed(operation, run);
+    return { operation_id: result.operation_id, purchase_id: id, status: result.status,
+      recovered: true, spending: false, remaining: controller.config().remaining,
+      note: 'Original accepted job restored. Its receipt remains subject to current expiry.' };
+  } finally { controller.close(); }
 }
 
 function inspectionArgs({ policyPath, registry, transaction, index }, raw, policy) {
@@ -151,11 +169,11 @@ export function savedEvidenceManifest(events, id, policy) {
 async function main() {
   const { values } = parseArgs({ options: {
     action: { type: 'string', default: 'list' }, database: { type: 'string', default: '.local/purchases.sqlite' },
-    purchase: { type: 'string' }, policy: { type: 'string' }, registry: { type: 'string' }, transaction: { type: 'string' },
+    purchase: { type: 'string' }, operation: { type: 'string' }, policy: { type: 'string' }, registry: { type: 'string' }, transaction: { type: 'string' },
     index: { type: 'string' }, 'gas-cap-wei': { type: 'string' }, 'key-file': { type: 'string' },
     'execute-agung-test-write': { type: 'boolean', default: false }, 'workers-stopped': { type: 'boolean', default: false },
   } });
-  if (!['list', 'prepare', 'verify-payment', 'submit', 'inspect', 'recover', 'manifest'].includes(values.action)) throw new Error('Unsupported event action.');
+  if (!['list', 'prepare', 'verify-payment', 'recover-buyer', 'submit', 'inspect', 'recover', 'manifest'].includes(values.action)) throw new Error('Unsupported event action.');
   const purchases = new PurchaseStore(values.database), events = new EventStore(purchases);
   try {
     let result;
@@ -167,11 +185,12 @@ async function main() {
     } else {
       if (!values.policy || !/^[0-9a-f]{16}$/.test(values.purchase || '')) throw new Error('Use --policy FILE and --purchase 16-hex-ID.');
       const policyPath = resolve(values.policy), policy = await loadProviderPolicy(policyPath);
-      const options = { events, id: values.purchase, policy, policyPath, registry: values.registry,
+      const options = { events, id: values.purchase, operation: values.operation, policy, policyPath, registry: values.registry,
         transaction: values.transaction, index: values.index === undefined ? undefined : Number(values.index),
         execute: values['execute-agung-test-write'], gasCap: values['gas-cap-wei'], keyFile: values['key-file'] && resolve(values['key-file']) };
       if (values.action === 'prepare') result = await prepareSavedEvent(options);
       else if (values.action === 'verify-payment') result = await verifySavedPayment(options);
+      else if (values.action === 'recover-buyer') result = await recoverSavedBuyer(options);
       else if (values.action === 'submit') result = await submitSavedEvent(options);
       else if (values.action === 'inspect') result = await inspectSavedEvent(options);
       else result = savedEvidenceManifest(events, values.purchase, policy);
