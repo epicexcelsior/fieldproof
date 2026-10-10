@@ -13,6 +13,21 @@ If the independent payment query fails, record the exact message and time. A tem
 
 For a local complete purchase without funds, run `python3 scripts/demo.py sim` from the repository root after its prerequisites. Open `http://127.0.0.1:4022`, request a quote, then run simulation. It exercises purchase behavior with a fake facilitator and does not move funds. See `README.md` for prerequisites.
 
+## Review a new linked-job export
+
+Use this route only when the coordinator supplies a reviewed export that includes `evidence/current-job.json`.
+
+1. Open `jobs.html` in that export over localhost or HTTPS.
+2. Select **Load reviewed job from this export**.
+3. Verify the original signature, request terms, and capture age.
+4. Read the machine identity and recorded peaq event state.
+5. Select **Verify transfer on Devnet** for a separate read-only payment query.
+6. Alter the contact state locally. Expect signature rejection and WAIT.
+7. Restore the original. Expect the transfer button to reset.
+
+The export contains recorded chain readbacks. It does not establish a current peaq registry read.
+Payment verification cannot refresh an expired contact answer. Neither result establishes equipment safety.
+
 ## Feedback template
 
 Copy the answers without names or private account data into the project feedback record.

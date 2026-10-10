@@ -156,19 +156,36 @@ export function paymentQueryInput(source) {
     transaction: source.job.payment.transaction, payer: source.job.payment.payer } };
 }
 
+export function decisionAt(inspection, paymentVerified, now = Math.floor(Date.now() / 1000)) {
+  if (!Number.isSafeInteger(now) || now < 1) throw new Error('Inspection time is invalid');
+  const r = inspection.source.receipt, q = inspection.source.request;
+  const ageSeconds = Number.isSafeInteger(r.completed_at) ? now - r.completed_at : null;
+  const fresh = Boolean(inspection.terms && ageSeconds !== null && ageSeconds >= -2 && ageSeconds <= q.max_age_seconds);
+  return { fresh, ageSeconds,
+    decision: paymentVerified && inspection.signature && inspection.terms && fresh && r.result.closed === false ? 'DISPATCH' : 'WAIT' };
+}
+
 if (typeof document !== 'undefined') {
   const el = id => document.getElementById(id);
-  let original = null, shown = null, inspection = null, pin = INSTALLED_PIN, paymentVerified = false;
-  let localConfig = null, lastOperation = null;
+  let original = null, inspection = null, pin = INSTALLED_PIN, paymentVerified = false;
+  let localConfig = null, lastOperation = null, publishedJob = null;
+  let generation = 0;
   const text = (id, value) => { el(id).textContent = value; };
   const mark = (id, value, cls) => { text(id, value); el(id).className = cls; };
   const status = (value, cls = '') => { text('status', value); el('status').className = 'statusline ' + cls; };
   const safeDate = seconds => Number.isSafeInteger(seconds) ? new Date(seconds * 1000).toISOString().replace('T',' ').replace('.000Z',' UTC') : 'Unavailable';
 
   async function render(input, label = 'Imported local file', replaceOriginal = true) {
+    const version = ++generation;
+    inspection = null; paymentVerified = false;
+    el('verify-payment').disabled = true;
+    text('decision', 'WAIT');
+    el('decision').className = 'result warn';
+    const checked = await inspectSource(input, { pin });
+    if (version !== generation) return;
     if (replaceOriginal) original = structuredClone(input);
-    shown = input; paymentVerified = false;
-    inspection = await inspectSource(input, { pin });
+    inspection = checked;
+    el('verify-payment').disabled = false;
     const { source, signature, terms, fresh, ageSeconds } = inspection;
     const { request: q, receipt: r, job } = source;
     el('ticket').hidden = false;
@@ -233,6 +250,11 @@ if (typeof document !== 'undefined') {
       await importText(await response.text(), 'October 1, 2026 · recorded Devnet payment and ESP32 check');
     } catch (error) { status(error.message, 'error'); }
   };
+  el('published').onclick = async () => {
+    if (!publishedJob) return;
+    try { await render(publishedJob, 'Reviewed exported job · recorded chain readbacks'); }
+    catch (error) { status(error.message, 'error'); }
+  };
   el('tamper').onclick = async () => {
     if (!original) return;
     const changed = structuredClone(original), source = normalizeSource(changed);
@@ -244,17 +266,46 @@ if (typeof document !== 'undefined') {
   el('restore').onclick = async () => { if (original) await render(original, 'Restored original file'); };
   el('verify-payment').onclick = async () => {
     if (!inspection || paymentVerified) return;
+    const version = generation, selected = inspection;
     el('verify-payment').disabled = true; mark('payment-check','QUERYING','warn');
     try {
-      const result = await querySettlement(paymentQueryInput(inspection.source));
+      const result = await querySettlement(paymentQueryInput(selected.source));
+      // A slow query belongs to its original ticket. Import, tamper, or restore invalidates it.
+      if (version !== generation || inspection !== selected) return;
       paymentVerified = true; mark('payment-check',`VERIFIED · SLOT ${result.slot}`,'ok');
-      const updated = await inspectSource(shown,{pin});
-      text('decision',updated.receiptDecision);
-      el('decision').className = 'result ' + (updated.receiptDecision === 'DISPATCH' ? 'ok' : 'warn');
+      refreshDecision();
       status('The historical Devnet transfer matches the fixed mint, recipient, amount, and buyer debit.');
-    } catch (error) { mark('payment-check','NOT VERIFIED','bad'); status(error.message,'error'); }
-    finally { el('verify-payment').disabled = paymentVerified; }
+    } catch (error) {
+      if (version !== generation || inspection !== selected) return;
+      mark('payment-check','NOT VERIFIED','bad'); status(error.message,'error');
+    }
+    finally { if (version === generation) el('verify-payment').disabled = paymentVerified; }
   };
+
+  function refreshDecision() {
+    if (!inspection) return;
+    const current = decisionAt(inspection, paymentVerified);
+    mark('age-check', current.fresh ? `FRESH · ${Math.max(0, current.ageSeconds)}s` : 'EXPIRED / UNAVAILABLE', current.fresh ? 'ok' : 'warn');
+    text('decision', current.decision);
+    el('decision').className = 'result ' + (current.decision === 'DISPATCH' ? 'ok' : 'warn');
+    text('decision-note', !inspection.signature ? 'The original receipt signature failed against the installed public pin.' :
+      !inspection.terms ? 'The request, payment terms, receipt digest, or recorded identity does not match.' :
+        !current.fresh ? 'The signed answer is too old for the ten-second buyer policy.' :
+          !paymentVerified ? 'Signature and terms match. Verify the Devnet transfer separately before relying on this paid run.' :
+            current.decision === 'DISPATCH' ? 'The transfer and fresh signed OPEN contact are verified. This demonstration decision does not prove safe equipment use.' :
+              'The transfer and signed CLOSED contact are verified. The gate-access demonstration policy remains WAIT.');
+  }
+  if (typeof window !== 'undefined') {
+    let refresh = null;
+    const resumeExpiry = () => {
+      if (refresh === null) refresh = window.setInterval(refreshDecision, 1000);
+      refreshDecision();
+    };
+    resumeExpiry();
+    window.addEventListener('pagehide', () => { window.clearInterval(refresh); refresh = null; });
+    window.addEventListener('pageshow', resumeExpiry);
+    document.addEventListener('visibilitychange', refreshDecision);
+  }
 
   async function showOperation(id) {
     lastOperation = id;
@@ -300,6 +351,20 @@ if (typeof document !== 'undefined') {
     const previous = config.active_operation_id ?? config.last_operation_id;
     if (previous) { lastOperation = previous; el('resume').hidden = false; text('operation',`Last operation ID: ${previous}`); }
   }
+  async function configurePublishedJob() {
+    const response = await fetch(new URL('./evidence/current-job.json', import.meta.url), { cache: 'no-store' });
+    if (response.status === 404) return;
+    if (!response.ok) throw new Error('Reviewed exported job is unavailable');
+    const raw = await response.text();
+    if (raw.length > 65536) throw new Error('Reviewed exported job exceeds 64 KB');
+    const candidate = JSON.parse(raw);
+    if (candidate.schema !== 'fieldproof-evidence-manifest-v1' || candidate.commercial_revenue !== false) {
+      throw new Error('Reviewed exported job has an unsupported evidence profile');
+    }
+    normalizeSource(candidate);
+    publishedJob = candidate;
+    el('published').hidden = false;
+  }
   el('buy').onclick = async () => {
     if (!localConfig || el('buy').disabled) return;
     el('buy').disabled = true;
@@ -316,6 +381,11 @@ if (typeof document !== 'undefined') {
     finally { try { await configureBuyer(); } catch {} }
   };
   el('resume').onclick = async () => { if (!lastOperation) return; try { await showOperation(lastOperation); } catch (error) { status(error.message,'error'); } };
-  void (async () => { try { pin = await loadTrustedPin(); await configureBuyer(); }
-    catch (error) { status(`Workbench configuration failed: ${error.message}`,'error'); el('historical').disabled=true; el('file').disabled=true; } })();
+  void (async () => {
+    try { pin = await loadTrustedPin(); await configureBuyer(); }
+    catch (error) { status(`Workbench configuration failed: ${error.message}`,'error'); el('historical').disabled=true; el('file').disabled=true; return; }
+    // An optional published packet cannot take down independent file inspection.
+    try { await configurePublishedJob(); }
+    catch (error) { status(`${error.message}. Recorded and manual file inspection remain available.`, 'error'); }
+  })();
 }

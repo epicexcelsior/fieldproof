@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
-import { canonicalJSON, inspectSource, loadTrustedPin, INSTALLED_PIN, paymentQueryInput } from '../../docs/jobs.mjs';
+import { canonicalJSON, inspectSource, loadTrustedPin, INSTALLED_PIN, paymentQueryInput, decisionAt } from '../../docs/jobs.mjs';
 
 const original = JSON.parse(readFileSync(new URL('../../docs/evidence/device-signed-purchase.json', import.meta.url)));
 const atCapture = original.purchase.receipt.completed_at + 7;
@@ -71,4 +71,13 @@ test('served pin mismatch fails instead of trusting changed configuration', asyn
   await assert.rejects(loadTrustedPin(async () => ({ ok: true, text: async () => JSON.stringify({
     algorithm: 'ecdsa-p256-sha256', providers: { 'esp32-c6-96a2': '04' + '00'.repeat(64) },
   }) })), /differs/);
+});
+
+test('a verified payment never keeps an expired contact decision usable', async () => {
+  const checked = await inspectSource(original, { now: atCapture });
+  assert.equal(decisionAt(checked, false, atCapture).decision, 'WAIT');
+  assert.equal(decisionAt(checked, true, atCapture).decision, 'DISPATCH');
+  assert.equal(decisionAt(checked, true, original.purchase.receipt.completed_at + 10).decision, 'DISPATCH');
+  assert.equal(decisionAt(checked, true, original.purchase.receipt.completed_at + 11).decision, 'WAIT');
+  assert.throws(() => decisionAt(checked, true, NaN), /time/);
 });

@@ -78,3 +78,79 @@ def test_current_founder_guide_has_only_supported_export_links():
     assert 'src="assets/fieldproof-service-boundaries.svg"' in guide
     assert 'href="./jobs.html"' in guide
     assert 'href="https://github.com/epicexcelsior/fieldproof/blob/main/docs/JOBS.md"' in guide
+
+
+def public_source(tmp_path, monkeypatch, module):
+    root = tmp_path / "source"
+    for relative in module.ASSETS.values():
+        path = root / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("public fixture")
+    (root / "docs/proof.html").write_text('<main>Original public inspector</main><script src="/proof.js"></script>')
+    (root / "docs/HOW_IT_WORKS.html").write_text('<a href="/jobs">Jobs</a>')
+    (root / "docs/jobs.html").write_text('<script src="/jobs.mjs"></script>')
+    from test_peaq_job_identity import policy
+    (root / "host/capmesh/protocol/receipt_keys.json").write_text(json.dumps({"providers": {
+        policy()["provider"]: policy()["receipt_public_key"]}}))
+    monkeypatch.setattr(module, "ROOT", root)
+
+
+def test_job_export_includes_one_reviewed_manifest_and_keeps_original_bytes(tmp_path, monkeypatch):
+    from test_public_job_evidence import manifest
+    from test_peaq_job_identity import policy
+    from scripts.prepare_peaq_event import canonical
+    module = load_exporter()
+    public_source(tmp_path, monkeypatch, module)
+    source = manifest()
+    manifest_path, policy_path = tmp_path / "saved-manifest.json", tmp_path / "public-policy.json"
+    manifest_path.write_text(json.dumps(source))
+    policy_path.write_text(json.dumps(policy()))
+    output = tmp_path / "site"
+    archive = module.export(output, job_manifest=manifest_path, provider_policy=policy_path)
+    exported = json.loads((output / "evidence/current-job.json").read_text())
+    assert canonical(exported["job"]) == canonical(source["job"])
+    assert "PRIVATE FIXTURE" not in (output / "evidence/current-job.json").read_text()
+    assert 'href="./jobs.html"' in (output / "index.html").read_text()
+    assert "Load reviewed job from this export" in (output / "README.txt").read_text()
+    with ZipFile(archive) as bundle:
+        assert "evidence/current-job.json" in bundle.namelist()
+        hashes = json.loads(bundle.read("manifest.json"))
+        import hashlib
+        assert hashes["evidence/current-job.json"] == hashlib.sha256(bundle.read("evidence/current-job.json")).hexdigest()
+
+
+def test_job_release_gate_rejects_unconfirmed_or_unapproved_evidence_before_writing(tmp_path, monkeypatch):
+    from test_public_job_evidence import manifest
+    from test_peaq_job_identity import policy
+    module = load_exporter()
+    public_source(tmp_path, monkeypatch, module)
+    manifest_path, policy_path = tmp_path / "saved-manifest.json", tmp_path / "public-policy.json"
+    manifest_path.write_text(json.dumps(manifest()))
+    policy_path.write_text(json.dumps(policy()))
+    output = tmp_path / "site"
+    with pytest.raises(ValueError, match="approved public provider policy"):
+        module.export(output, job_manifest=manifest_path)
+    with pytest.raises(ValueError, match="confirmed event"):
+        module.export(output, job_manifest=manifest_path, provider_policy=policy_path, require_peaq=True)
+    with pytest.raises(ValueError, match="saved job manifest"):
+        module.export(output, require_peaq=True)
+    assert not output.exists()
+    assert not output.with_suffix(".zip").exists()
+
+
+def test_confirmed_job_release_keeps_the_recorded_label_and_excludes_private_journal(tmp_path, monkeypatch):
+    pytest.importorskip("eth_utils", reason="The isolated SDK supplies event Keccak hashing")
+    from test_public_job_evidence import manifest
+    from test_peaq_job_identity import policy
+    module = load_exporter()
+    public_source(tmp_path, monkeypatch, module)
+    manifest_path, policy_path = tmp_path / "saved-manifest.json", tmp_path / "public-policy.json"
+    manifest_path.write_text(json.dumps(manifest(confirmed=True)))
+    policy_path.write_text(json.dumps(policy()))
+    output = tmp_path / "site"
+    archive = module.export(output, job_manifest=manifest_path, provider_policy=policy_path, require_peaq=True)
+    with ZipFile(archive) as bundle:
+        job = json.loads(bundle.read("evidence/current-job.json"))
+        assert job["peaq_event"]["state"] == "confirmed"
+        assert "no independent live chain read" in job["verification_note"]
+        assert "PRIVATE FIXTURE" not in json.dumps(job)

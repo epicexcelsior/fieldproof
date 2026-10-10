@@ -166,14 +166,23 @@ export function savedEvidenceManifest(events, id, policy) {
     commercial_revenue: false, verification_note: 'Saved evidence. Imported metadata does not establish a current independent chain read.' };
 }
 
+export async function saveEvidenceManifest(manifest, output) {
+  if (manifest?.schema !== 'fieldproof-evidence-manifest-v1' || manifest.commercial_revenue !== false) {
+    throw new Error('Only a saved test-token evidence manifest can use this output command.');
+  }
+  await writeFile(resolve(output), JSON.stringify(manifest, null, 2) + '\n', { flag: 'wx', mode: 0o600 });
+  return { saved: true, purchase_id: manifest.job.job_id, spending: false };
+}
+
 async function main() {
   const { values } = parseArgs({ options: {
     action: { type: 'string', default: 'list' }, database: { type: 'string', default: '.local/purchases.sqlite' },
-    purchase: { type: 'string' }, operation: { type: 'string' }, policy: { type: 'string' }, registry: { type: 'string' }, transaction: { type: 'string' },
+    purchase: { type: 'string' }, operation: { type: 'string' }, policy: { type: 'string' }, registry: { type: 'string' }, transaction: { type: 'string' }, output: { type: 'string' },
     index: { type: 'string' }, 'gas-cap-wei': { type: 'string' }, 'key-file': { type: 'string' },
     'execute-agung-test-write': { type: 'boolean', default: false }, 'workers-stopped': { type: 'boolean', default: false },
   } });
   if (!['list', 'prepare', 'verify-payment', 'recover-buyer', 'submit', 'inspect', 'recover', 'manifest'].includes(values.action)) throw new Error('Unsupported event action.');
+  if (values.output && values.action !== 'manifest') throw new Error('--output saves a manifest only. It cannot execute an event.');
   const purchases = new PurchaseStore(values.database), events = new EventStore(purchases);
   try {
     let result;
@@ -195,6 +204,7 @@ async function main() {
       else if (values.action === 'inspect') result = await inspectSavedEvent(options);
       else result = savedEvidenceManifest(events, values.purchase, policy);
     }
+    if (values.output) result = await saveEvidenceManifest(result, values.output);
     console.log(JSON.stringify(result, null, 2));
   } finally { purchases.close(); }
 }

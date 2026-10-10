@@ -49,7 +49,23 @@ def guide_links(page):
     return re.sub(r'href="([^"]+)"', rewrite, page)
 
 
-def export(output):
+def export(output, *, job_manifest=None, provider_policy=None, require_peaq=False):
+    public_job = None
+    if job_manifest is not None:
+        from scripts.peaq_rpc import load_policy
+        from scripts.public_job_evidence import public_evidence
+        if provider_policy is None:
+            raise ValueError("A job export requires its independently approved public provider policy.")
+        if job_manifest.stat().st_size > 65536:
+            raise ValueError("Saved job manifest exceeds the 64 KB limit.")
+        policy = load_policy(provider_policy)
+        pins = json.loads((ROOT / "host/capmesh/protocol/receipt_keys.json").read_text())
+        if (policy["provider"] != "esp32-c6-96a2" or policy["sensor"] != "gpio9-contact"
+                or pins.get("providers", {}).get(policy["provider"]) != policy["receipt_public_key"]):
+            raise ValueError("Public workbench export requires the installed GPIO9 provider and independently provisioned pin.")
+        public_job = public_evidence(json.loads(job_manifest.read_text()), policy, require_peaq=require_peaq)
+    elif provider_policy is not None or require_peaq:
+        raise ValueError("A policy or peaq release gate requires a saved job manifest.")
     output = output.resolve()
     archive = output.with_name(output.name + ".zip")
     if output.exists() or archive.exists():
@@ -73,6 +89,11 @@ def export(output):
         page = page.replace('href="/learn"', 'href="./guide.html"')
         page = page.replace('<a id="watch-run" href="?live=1&amp;present=1">Watch one new buyer run from the configured local gateway</a>', 'The static package supports file inspection. Live monitoring requires the repository gateway.')
         page = page.replace('</main>', '<p><a href="./assets/fieldproof-signed-receipt.webm">Watch the captioned 2:30 walkthrough</a></p></main>')
+        if public_job is not None:
+            (stage / "evidence/current-job.json").write_text(json.dumps(public_job, indent=2, ensure_ascii=False) + "\n")
+            page = page.replace('</main>',
+                '<p><a href="./jobs.html">Inspect the reviewed peaq-linked job</a> · '
+                '<a href="./evidence/current-job.json" download>Download original job and recorded readbacks</a></p></main>')
         (stage / "index.html").write_text(page)
         (stage / "guide.html").write_text(guide_links((stage / "guide.html").read_text()))
         (stage / "README.txt").write_text(
@@ -98,6 +119,11 @@ def export(output):
             "The optional RPC check needs internet access and trusts api.devnet.solana.com.\n"
             "The installed code and public pin are the buyer configuration trust root.\n"
             "Use the repository README for the complete live MVP and simulated purchase rehearsal.\n"
+            + ("\nA reviewed job is included at evidence/current-job.json.\n"
+               "Open jobs.html and select Load reviewed job from this export.\n"
+               "The saved readbacks are recorded evidence. This export made no live chain query.\n"
+               "The original capture timestamp remains unchanged. Old evidence remains expired.\n"
+               if public_job is not None else "")
         )
         manifest = {str(path.relative_to(stage)): hashlib.sha256(path.read_bytes()).hexdigest()
                     for path in sorted(stage.rglob("*")) if path.is_file()}
@@ -113,5 +139,8 @@ def export(output):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("output", type=Path, help="New output directory. Use an ignored .local path.")
+    parser.add_argument("--job-manifest", type=Path, help="Saved peaq-event manifest. No database, journal, or wallet is copied.")
+    parser.add_argument("--provider-policy", type=Path, help="Independently approved public provider policy for the saved job.")
+    parser.add_argument("--require-peaq", action="store_true", help="Require matching recorded payment and finalized peaq readbacks.")
     args = parser.parse_args()
-    print(export(args.output))
+    print(export(args.output, job_manifest=args.job_manifest, provider_policy=args.provider_policy, require_peaq=args.require_peaq))

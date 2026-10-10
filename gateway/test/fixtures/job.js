@@ -32,5 +32,5 @@ export function jobFixture(now = 1_800_000_000) {
   const paymentVerification = { network: 'Solana Devnet', slot: 100, transaction: run.settlement.transaction,
     mint: USDC, payer: run.settlement.payer, merchant: PAY_TO, payer_delta_base_units: '-1000',
     merchant_delta_base_units: '1000', decimals: 6 };
-  return { now, policy, identity, run, paymentVerification };
+  return { now, policy, identity, run, paymentVerification, privateKey: keys.privateKey };
 }

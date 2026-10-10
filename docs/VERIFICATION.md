@@ -16,9 +16,9 @@ The job workbench verifies the installed pin and labels imported chain metadata 
 
 Focused checks executed in this restricted session:
 
-- New gateway suites: 18 passed. Including settlement, buyer recovery, and key-file checks, the safe command runs 32 gateway tests and all pass.
-- New Python identity/event/operator/registry, phone, and export suites: 27 passed, 7 optional SDK checks skipped in the core host environment.
-- The same Python suites with the isolated peaq SDK on `PYTHONPATH`: 34 passed.
+- The safe competition command runs 39 gateway tests and all pass.
+- Python identity/event/operator/registry, phone, and export suites: 37 passed, 9 optional SDK checks skipped in the core host environment.
+- The same Python suites with the isolated peaq SDK on `PYTHONPATH`: 46 passed.
 - Cross-language Node job bytes and Python event preparation matched receipt and job hashes. The inputs were synthetic test fixtures.
 - Android source compiled with local SDK 35 tools. Debug APK v3 signature verification passed. No install or capture occurred.
 - Phone verifier replay regression first failed, then passed. Request identity rejects a second valid ECDSA signature for the same challenge.
@@ -26,7 +26,17 @@ Focused checks executed in this restricted session:
 - An unsupported GPIO18 policy first passed validation incorrectly. The competition path now rejects it before purchase and uses installed GPIO9 only.
 - Reviewed buyer recovery verifies the existing payment and immutable job. It restores the matching operation without another purchase or budget reset.
 - Key-file error tests first exposed JSON content and local paths. Safe errors now preserve valid-key loading and reject malformed keys. Four checks passed.
-- `python3 scripts/competition_check.py --build-phone` passed the focused gateway/Python checks and built the APK. It made no payment or installation.
+- Workbench interaction tests first exposed a transfer-query race and stale button state. Query results now bind only their original ticket. Restore resets verification.
+- The age decision expires independently of a completed payment query. A verified payment cannot keep an old contact answer usable.
+- A page-cache return first failed its expiry regression. The restored page now resumes one freshness timer without another transfer query.
+- An unavailable optional published packet first disabled manual inspection. The workbench now reports that failure and retains independent file inspection.
+- A connected controlled rehearsal uses the real Express handlers and x402 signing stack. It verifies the buyer's Ed25519 payment signature and P-256 receipt.
+- The same rehearsal preserves its job across SQLite restart, submits one fixture activity, reconciles it, and rejects a second write and altered evidence.
+- That rehearsal uses generated receipt keys and controlled physical/RPC fixtures. It made no payment or chain write.
+- Reviewed job export preserves original signed job bytes, rejects inconsistent authority and hashes, and removes private journal metadata.
+- The `--require-peaq` export gate rejects an unconfirmed job before writing any package.
+- Exclusive manifest output preserves earlier evidence and creates an owner-only file.
+- The safe command and offline Android build passed. APK v3 signature verification passed. No payment or installation occurred.
 - The standalone public inspector/workbench export completed. Its whitelist excludes wallets, journals, databases, and local reports.
 
 The broader declared Python suite ran and returned 211 passed, 11 skipped, 7 failures, and 7 errors.
@@ -41,6 +51,10 @@ USB controller presence does not establish a usable serial device. F5 reachabili
 No fresh paid observation, live peaq preview, activation, event, phone capture, public deployment, or account submission occurred.
 The founder authorized disposable Agung wallet creation. Funding remains unchecked and no chain spending occurred.
 The missing live EventRegistry address and deployment relationship also remain acceptance gates.
+The new read-only Agung preflight failed on DNS resolution for both deployment and EventRegistry reads.
+The workbench browser runner passed syntax validation. Playwright's bundled browser was absent.
+An attempt with installed Chrome failed on `setsockopt: Operation not permitted`. Its interaction and layout QA remain unverified.
+The browser runner uses controlled RPC responses and marks screenshots as QA-only. It cannot establish a live chain result.
 The [job runbook](JOBS.md) supplies the exact continuation and recovery commands.
 
 ## October 9 repository wrapup

@@ -1,11 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile, mkdtemp, rm, stat } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { PurchaseStore } from '../store.js';
 import { EventStore } from '../event-store.js';
 import { createJob, sha256 } from '../job.js';
 import { jobFixture } from './fixtures/job.js';
-import { prepareSavedEvent, verifySavedPayment, submitSavedEvent, inspectSavedEvent, savedEvidenceManifest } from '../peaq-event.js';
+import { prepareSavedEvent, verifySavedPayment, submitSavedEvent, inspectSavedEvent, savedEvidenceManifest, saveEvidenceManifest } from '../peaq-event.js';
 
 function fixture(t) {
   const f = jobFixture(), purchases = new PurchaseStore(':memory:'), events = new EventStore(purchases);
@@ -96,4 +98,17 @@ test('failed independent readback retains submitted references and blocks anothe
   const recovered = runner(f);
   await inspectSavedEvent({ ...f, run: recovered.run });
   assert.equal(f.events.get(f.id).state, 'confirmed');
+});
+
+test('saving a manifest creates a private file and never overwrites existing evidence', async t => {
+  const f = fixture(t);
+  const directory = await mkdtemp(join(tmpdir(), 'fieldproof-manifest-'));
+  t.after(() => rm(directory, { recursive: true, force: true }));
+  const path = join(directory, 'saved-manifest.json');
+  const manifest = savedEvidenceManifest(f.events, f.id, f.policy);
+  assert.deepEqual(await saveEvidenceManifest(manifest, path), { saved: true, purchase_id: f.id, spending: false });
+  assert.equal((await stat(path)).mode & 0o777, 0o600);
+  assert.deepEqual(JSON.parse(await readFile(path, 'utf8')), manifest);
+  await assert.rejects(saveEvidenceManifest(manifest, path), { code: 'EEXIST' });
+  assert.deepEqual(JSON.parse(await readFile(path, 'utf8')), manifest);
 });

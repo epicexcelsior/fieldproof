@@ -26,6 +26,8 @@ This runs focused gateway and Python checks. It creates private logs under `.loc
 It makes no payment, chain write, device request, or installation.
 Optional SDK checks skip in the core host environment. The log states each skip.
 Add `--build-phone` to compile and verify the local debug APK without installation.
+Before activation, add `--agung-preflight` to read the live deployment and discover its EventRegistry.
+This preflight needs `FIELDPROOF_PEAQ_PYTHON`. It reads no wallet and creates no machine.
 After configuring the isolated SDK and activating the approved identity, add `--live-read-only` to verify registry and identity reads.
 The live flag remains read-only. It cannot fund or activate the machine.
 
@@ -249,11 +251,36 @@ Export a public evidence manifest after reviewing its contents:
 
 ```bash
 node gateway/peaq-event.js --action manifest --purchase "$FIELDPROOF_PURCHASE_ID" \
-  --policy .local/competition/provider-policy.json > .local/job-manifest.json
+  --policy .local/competition/provider-policy.json --output .local/competition/job-manifest.json
 ```
 
+The command creates an owner-only file. An existing file blocks the write. Select a new name to preserve earlier evidence.
 The manifest contains the signed receipt, identity snapshot, payment readback, and event state.
 The workbench accepts this file. Importing it does not establish current chain state.
+
+## Include the reviewed job in the judge export
+
+Run this command with the isolated peaq SDK after the saved event has a matching finalized readback:
+
+```bash
+"$FIELDPROOF_PEAQ_PYTHON" -m scripts.export_judge_demo .local/competition/judge-final \
+  --job-manifest .local/competition/job-manifest.json \
+  --provider-policy .local/competition/provider-policy.json --require-peaq
+```
+
+The command builds a new local directory and ZIP. It does not publish or submit either artifact.
+The release gate checks the original signature, canonical job hash, payment terms, event Keccak hash, and recorded authority bindings.
+It rejects pending events, mismatched readbacks, private receipt fields, and a different installed device key.
+It preserves the original job bytes. It removes the private journal reference from the public packet.
+These checks do not query either chain. Imported readbacks remain recorded evidence.
+
+Open `jobs.html` in the export. Select **Load reviewed job from this export**.
+The inspector retains the original capture time. Expired evidence remains WAIT.
+No payment starts on page load, file import, transfer inspection, or packet export.
+An in-flight transfer query cannot apply its result to another imported ticket.
+The browser refreshes the age decision every second. A verified transfer does not keep an expired answer usable.
+The browser resumes that timer after a page-cache return. It does not repeat the transfer query.
+If the optional published packet fails to load, the workbench reports the error. Manual file inspection remains available.
 
 Independent event inspection requires an explicitly approved Agung EventRegistry address.
 Do not reuse a mainnet address or the legacy registry.
@@ -275,6 +302,20 @@ node --test --test-isolation=none gateway/test/*.test.js
 
 Socket-dependent integration tests still require loopback access.
 Do not report a live hardware, chain, or visual pass from offline tests.
+
+The safe competition command includes a connected, controlled rehearsal.
+It exercises the real Express handlers, x402 buyer signing, original receipt checks, SQLite restart, and event workflow.
+Its physical reading and chain responses are fixtures. It cannot establish a live hardware or chain result.
+
+For browser interaction and layout QA, use an installed Playwright package and browser:
+
+```bash
+node scripts/check_jobs_ui.cjs /path/to/installed/playwright .local/competition/judge-final
+```
+
+Set `FIELDPROOF_BROWSER_EXECUTABLE` if Playwright needs an existing Chromium executable.
+The runner intercepts static and RPC requests locally. It sends no payment or live chain query.
+Its screenshots carry a QA-only label. Keep them separate from demonstration evidence.
 
 ## Record and release
 
