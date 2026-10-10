@@ -1,6 +1,6 @@
 # FieldProof verification record
 
-Current continuation: October 10, 2026, Europe/Berlin. Public paid evidence dates to October 1 and October 5.
+Current continuation: October 11, 2026, Europe/Berlin. Public paid evidence dates to October 1 and October 5.
 The historical local MVP completes a public Devnet purchase, a real ESP32 observation, and both human-controlled contact states.
 This record does not claim production security, safety certification, or standards compliance.
 
@@ -16,7 +16,7 @@ The job workbench verifies the installed pin and labels imported chain metadata 
 
 Focused checks executed in this restricted session:
 
-- New gateway suites: 18 passed. Including settlement and buyer-recovery checks, the safe command runs 28 gateway tests and all pass.
+- New gateway suites: 18 passed. Including settlement, buyer recovery, and key-file checks, the safe command runs 32 gateway tests and all pass.
 - New Python identity/event/operator/registry, phone, and export suites: 27 passed, 7 optional SDK checks skipped in the core host environment.
 - The same Python suites with the isolated peaq SDK on `PYTHONPATH`: 34 passed.
 - Cross-language Node job bytes and Python event preparation matched receipt and job hashes. The inputs were synthetic test fixtures.
@@ -25,6 +25,7 @@ Focused checks executed in this restricted session:
 - Numeric-key canonical JSON ordering first failed, then passed. Direct sorted serialization matches the Python encoding.
 - An unsupported GPIO18 policy first passed validation incorrectly. The competition path now rejects it before purchase and uses installed GPIO9 only.
 - Reviewed buyer recovery verifies the existing payment and immutable job. It restores the matching operation without another purchase or budget reset.
+- Key-file error tests first exposed JSON content and local paths. Safe errors now preserve valid-key loading and reject malformed keys. Four checks passed.
 - `python3 scripts/competition_check.py --build-phone` passed the focused gateway/Python checks and built the APK. It made no payment or installation.
 - The standalone public inspector/workbench export completed. Its whitelist excludes wallets, journals, databases, and local reports.
 
@@ -32,6 +33,7 @@ The broader declared Python suite ran and returned 211 passed, 11 skipped, 7 fai
 Socket and child-process restrictions blocked those integration checks. Do not report the complete suite as green.
 The broader gateway run without process isolation was interrupted after restricted server/child-process checks failed. No complete result exists.
 An additional focused gateway run returned 27 passed and one blocked existing loopback test with `listen EPERM`.
+A later buyer/key-file run returned 17 passed and one blocked existing loopback test with `listen EPERM`.
 No separate formatter, linter, or type-check command is declared by the repository.
 
 Current restrictions block loopback servers, external RPC, Chromium, ADB, Bluetooth, and Tailscale daemon access.

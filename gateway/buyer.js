@@ -21,11 +21,17 @@ export function allowedOffers(offers, payTo = PAY_TO) {
 }
 
 export async function loadBuyerSigner(path) {
-  const bytes = JSON.parse(await readFile(path, 'utf8'));
+  let contents;
+  try { contents = await readFile(path, 'utf8'); }
+  catch { throw new Error('Buyer keypair file cannot be read. Verify its location and read permissions.'); }
+  let bytes;
+  try { bytes = JSON.parse(contents); }
+  catch { throw new Error('Buyer keypair file must contain valid JSON for a 64-byte Solana CLI keypair.'); }
   if (!Array.isArray(bytes) || bytes.length !== 64 || !bytes.every(v => Number.isInteger(v) && v >= 0 && v <= 255)) {
     throw new Error('Use a 64-byte Solana CLI keypair file');
   }
-  return createKeyPairSignerFromBytes(Uint8Array.from(bytes));
+  try { return await createKeyPairSignerFromBytes(Uint8Array.from(bytes)); }
+  catch { throw new Error('Buyer keypair bytes are invalid. Use a 64-byte Solana CLI keypair file.'); }
 }
 
 export function checkEvidence(body, purchase, now = Math.floor(Date.now() / 1000), publicKey = provisionedKey, selectedContact = DEFAULT_CONTACT, purpose = 'gate-access') {

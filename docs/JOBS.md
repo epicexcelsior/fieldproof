@@ -79,6 +79,7 @@ No offline snapshot replaces a failed live identity lookup.
 ## Run an explicitly approved test purchase
 
 Use a funded disposable Devnet buyer. Never use a mainnet wallet.
+Key-file errors state the failure without logging file contents or local paths.
 Start the existing local gateway with the same purchase database as the agent tool.
 
 ```bash
