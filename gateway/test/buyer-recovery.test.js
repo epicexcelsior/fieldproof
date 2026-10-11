@@ -28,8 +28,8 @@ test('reviewed recovery keeps the original job, never buys, and retains the oper
   const f = fixture(t);
   const result = await recoverSavedBuyer(f);
   assert.equal(result.spending, false);
-  assert.equal(result.remaining, 9);
-  assert.equal((await recoverSavedBuyer(f)).remaining, 9);
+  assert.equal(result.remaining, 99);
+  assert.equal((await recoverSavedBuyer(f)).remaining, 99);
   let purchases = 0;
   const controller = createLocalBuyer({ directory: f.directory, payer: f.run.settlement.payer, payTo: f.policy.pay_to,
     maximum: 1, readPurchaseState: () => 'delivered', buy: () => { purchases++; } });

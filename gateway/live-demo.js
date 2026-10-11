@@ -6,7 +6,7 @@ import { HTTPFacilitatorClient } from '@x402/core/server';
 import { createGateway, createPaymentServer, PAY_TO } from './server.js';
 import { buyObservation, loadBuyerSigner } from './buyer.js';
 import { PurchaseStore } from './store.js';
-import { createLocalBuyer, mountLocalBuyer } from './local-buyer.js';
+import { createLocalBuyer, mountLocalBuyer, DEFAULT_BUYER_MAXIMUM } from './local-buyer.js';
 import { EventStore } from './event-store.js';
 import { performPaidJob } from './paid-job.js';
 
@@ -38,7 +38,7 @@ const controller = createLocalBuyer({ directory, payer: signer.address, payTo: P
 mountLocalBuyer(app, controller, origin);
 const server = app.listen(port, '127.0.0.1', () => {
   console.log(`FieldProof real Devnet buyer: ${origin}/${events ? 'jobs' : 'proof?present=1'}`);
-  console.log(`Buyer ${signer.address}. Each click pays up to 0.001 Devnet USDC. Maximum 10 purchases.`);
+  console.log(`Buyer ${signer.address}. Each click pays up to 0.001 Devnet USDC. Maximum ${DEFAULT_BUYER_MAXIMUM} shared lifetime purchases (${(DEFAULT_BUYER_MAXIMUM / 1000).toFixed(3)} test USDC).`);
   console.log('The private key remains in this process. No purchase starts until the local button is selected.');
 });
 server.on('error', error => { controller.close(); throw error; });

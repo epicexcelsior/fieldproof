@@ -12,7 +12,7 @@ import { checkEvidence, loadBuyerSigner } from './buyer.js';
 import { contactToolPreview, runContactOperation } from './agent-contact.js';
 import { PurchaseStore } from './store.js';
 import { saveBuyerRun } from './buyer-output.js';
-import { buyerLockMessage, inspectLocalBuyer, recoverCompletedBuyerLock } from './local-buyer.js';
+import { buyerLockMessage, inspectLocalBuyer, recoverCompletedBuyerLock, DEFAULT_BUYER_MAXIMUM } from './local-buyer.js';
 import { DEVNET_RPC } from '../docs/settlement.mjs';
 import { USDC } from './constants.js';
 
@@ -25,7 +25,7 @@ function privateJSON(path, value) {
 }
 
 function checkCount(count) {
-  if (!Number.isSafeInteger(count) || count < 1 || count > 3) throw new Error('Select one to three paid checks within the existing shared ten-operation limit.');
+  if (!Number.isSafeInteger(count) || count < 1 || count > 3) throw new Error(`Select one to three paid checks within the shared ${DEFAULT_BUYER_MAXIMUM}-operation limit.`);
 }
 
 function deviceFailure(error) {
@@ -43,9 +43,10 @@ export async function checkBuyerReadiness({ keyPath = resolve(root, '.local/disp
   const next_steps = state.blocked ? ['Preserve unresolved buyer records. Review their original purchases before another payment.']
     : state.recovery_active ? ['Preserve the recovery marker. Inspect its original owner before another buyer starts.']
     : state.locked ? [buyerLockMessage(state)]
-    : state.remaining < 1 ? ['The shared ten-operation limit is reached. Existing receipts remain available for review.']
+    : state.remaining < 1 ? [`The shared ${DEFAULT_BUYER_MAXIMUM}-operation limit is reached. Existing receipts remain available for review.`]
     : ['The buyer lock is clear. Run --execute --count 1 for one bounded real-device test payment.'];
   return { schema: 'fieldproof-buyer-readiness-v1', payer: signer.address, ...state,
+    maximum_operations: DEFAULT_BUYER_MAXIMUM, maximum_total_base_units: String(DEFAULT_BUYER_MAXIMUM * 1000),
     spending: false, device_request: false, network_request: false,
     funds_verified: false, next_steps,
     note: 'This command derives the wallet public address and reads local metadata. It creates no lock and signs no transaction. Process status applies only to this process namespace.' };
@@ -232,7 +233,7 @@ async function main() {
         try { state = inspectLocalBuyer({ directory }); }
         catch { throw new BuyerSetupError('buyer_records', 'The existing buyer records cannot be inspected. Preserve them for review.'); }
         if (state.blocked) throw new BuyerSetupError('buyer_records', 'An earlier purchase needs review. Preserve its records before another payment.');
-        if (state.remaining < count) throw new BuyerSetupError('buyer_budget', `Only ${state.remaining} operations remain in the shared ten-operation limit. Reduce --count.`);
+        if (state.remaining < count) throw new BuyerSetupError('buyer_budget', `Only ${state.remaining} operations remain in the shared ${DEFAULT_BUYER_MAXIMUM}-operation limit. Reduce --count.`);
         if (state.recovery_active) throw new BuyerSetupError('buyer_lock', 'Buyer lock recovery is active or incomplete. Preserve its files for review.');
         if (state.locked && (state.owner_state !== 'absent' || !values['recover-stale-lock'])) {
           throw new BuyerSetupError('buyer_lock', buyerLockMessage(state));

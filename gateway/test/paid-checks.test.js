@@ -20,7 +20,7 @@ test('buyer diagnosis identifies an active browser buyer without exposing its co
   assert.equal(state.owner.started_at, '2026-10-05T21:05:52.880Z');
   assert.equal(state.owner.role, 'browser_buyer');
   assert.equal(state.owner_state, 'alive');
-  assert.equal(state.remaining, 10);
+  assert.equal(state.remaining, 100);
 });
 
 test('buyer diagnosis gives the active-owner next step without a device request, payment, or lock change', async () => {
@@ -28,12 +28,14 @@ test('buyer diagnosis gives the active-owner next step without a device request,
     loadSigner: async path => { assert.equal(path, 'private-local-wallet'); return { address: 'fixture-public-payer' }; },
     inspect: ({ directory }) => {
       assert.ok(directory.endsWith('/.local/live-buyer/fixture-public-payer'));
-      return { operations: 7, remaining: 3, blocked: false, locked: true, owner_state: 'alive',
+      return { operations: 7, remaining: 93, blocked: false, locked: true, owner_state: 'alive',
         owner: { pid: 1824662, role: 'browser_buyer' } };
     } });
   assert.equal(result.spending, false);
   assert.equal(result.device_request, false);
   assert.equal(result.network_request, false);
+  assert.equal(result.maximum_operations, 100);
+  assert.equal(result.maximum_total_base_units, '100000');
   assert.equal(result.schema, 'fieldproof-buyer-readiness-v1');
   assert.equal(typeof result.payer, 'string');
   assert.equal(Array.isArray(result.next_steps), true);
@@ -136,11 +138,11 @@ test('explicit stale-lock recovery archives the old lock and preserves every com
   const lock = JSON.stringify({ pid: 12345, started_at: '2026-10-05T00:00:00Z' });
   await writeFile(join(directory, '.lock'), lock, { mode: 0o600 });
   const result = recoverCompletedBuyerLock({ directory, ownerState: () => 'absent' });
-  assert.equal(result.spending, false); assert.equal(result.remaining, 9); assert.equal(result.operations, 1);
+  assert.equal(result.spending, false); assert.equal(result.remaining, 99); assert.equal(result.operations, 1);
   assert.equal(await readFile(join(directory, result.archive), 'utf8'), lock);
   assert.equal(await readFile(join(directory, operation + '.json'), 'utf8'), contents);
   await assert.rejects(readFile(join(directory, '.lock')), { code: 'ENOENT' });
-  assert.equal(inspectLocalBuyer({ directory }).remaining, 9);
+  assert.equal(inspectLocalBuyer({ directory }).remaining, 99);
   const controller = createLocalBuyer({ directory, payer: purchase.settlement.payer, payTo: PAY_TO, maximum: 1,
     buy: () => assert.fail('No purchase after exhausted limit') });
   try { assert.equal(controller.start(randomUUID()).code, 429); }

@@ -6,7 +6,7 @@ import { loadBuyerSigner } from './buyer.js';
 import { loadProviderPolicy, resolveIdentity, checkIdentity } from './peaq.js';
 import { PurchaseStore } from './store.js';
 import { EventStore } from './event-store.js';
-import { createLocalBuyer } from './local-buyer.js';
+import { createLocalBuyer, DEFAULT_BUYER_MAXIMUM } from './local-buyer.js';
 import { performPaidJob } from './paid-job.js';
 
 async function main() {
@@ -21,6 +21,7 @@ const policy = await loadProviderPolicy(policyPath);
 if (!values.execute) {
   const identity = checkIdentity(await resolveIdentity(policyPath), policy);
   console.log(JSON.stringify({ ready: true, spending: false, identity, price_base_units: '1000',
+    maximum_operations: DEFAULT_BUYER_MAXIMUM, maximum_total_base_units: String(DEFAULT_BUYER_MAXIMUM * 1000),
     token: 'Devnet USDC (test tokens)', action: 'check-contact' }, null, 2));
 } else {
   if (!values.keypair) throw new Error('Explicit execution requires a disposable Devnet keypair file');
@@ -28,7 +29,7 @@ if (!values.execute) {
   const purchases = new PurchaseStore(values.database);
   const events = new EventStore(purchases);
   const controller = createLocalBuyer({ directory: resolve('.local/live-buyer', signer.address), payer: signer.address,
-    payTo: policy.pay_to, maximum: 10, readPurchaseState: id => purchases.get(id)?.state,
+    payTo: policy.pay_to, readPurchaseState: id => purchases.get(id)?.state,
     buy: onProgress => performPaidJob({ signer, origin: values.origin, policyPath, events, onProgress }) });
   try {
     const id = values.operation ?? randomUUID();

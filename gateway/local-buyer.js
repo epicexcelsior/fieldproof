@@ -4,6 +4,9 @@ import { mkdirSync, openSync, writeFileSync, fsyncSync, closeSync, readdirSync, 
 import { join } from 'node:path';
 import { publicBuyerRun } from '../docs/settlement.mjs';
 
+// Shared lifetime cap for the browser, agent, and batch buyer using one wallet journal.
+export const DEFAULT_BUYER_MAXIMUM = 100;
+
 const operationId = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 
 function writePrivate(path, value, exclusive = false) {
@@ -50,7 +53,7 @@ export function buyerLockMessage(state) {
 }
 
 // Readiness is advisory. The controller still acquires its exclusive lock before a signer can act.
-export function inspectLocalBuyer({ directory, maximum = 10, ownerState = processState, ownerDetails = describeBuyerProcess }) {
+export function inspectLocalBuyer({ directory, maximum = DEFAULT_BUYER_MAXIMUM, ownerState = processState, ownerDetails = describeBuyerProcess }) {
   if (!existsSync(directory)) return { operations: 0, remaining: maximum, blocked: false, locked: false };
   const files = readdirSync(directory).filter(name => operationId.test(name.slice(0, -5)) && name.endsWith('.json'));
   let blocked = false;
@@ -79,7 +82,7 @@ export function inspectLocalBuyer({ directory, maximum = 10, ownerState = proces
 }
 
 // Explicit host-terminal recovery only. Never clear pending records or reset the operation count.
-export function recoverCompletedBuyerLock({ directory, maximum = 10, ownerState = processState }) {
+export function recoverCompletedBuyerLock({ directory, maximum = DEFAULT_BUYER_MAXIMUM, ownerState = processState }) {
   const mutex = join(directory, '.lock-recovery');
   writePrivate(mutex, { pid: process.pid, started_at: new Date().toISOString() }, true);
   try {
@@ -93,8 +96,10 @@ export function recoverCompletedBuyerLock({ directory, maximum = 10, ownerState 
   } finally { unlinkSync(mutex); }
 }
 
-export function createLocalBuyer({ directory, payer, payTo, buy, maximum = 10, readPurchaseState }) {
-  if (!Number.isInteger(maximum) || maximum < 1 || maximum > 20) throw new Error('Use a maximum from 1 to 20 test purchases');
+export function createLocalBuyer({ directory, payer, payTo, buy, maximum = DEFAULT_BUYER_MAXIMUM, readPurchaseState }) {
+  if (!Number.isInteger(maximum) || maximum < 1 || maximum > DEFAULT_BUYER_MAXIMUM) {
+    throw new Error(`Use a maximum from 1 to ${DEFAULT_BUYER_MAXIMUM} test purchases`);
+  }
   mkdirSync(directory, { recursive: true, mode: 0o700 });
   if (existsSync(join(directory, '.lock-recovery'))) throw new Error('Buyer lock recovery is active. No new payment started.');
   const lock = join(directory, '.lock');
@@ -116,7 +121,8 @@ export function createLocalBuyer({ directory, payer, payTo, buy, maximum = 10, r
     ...(record.status === 'done' ? { run: publicBuyerRun(record.result) } : {}),
     ...(record.status === 'review' ? { error: 'Purchase requires review. Preserve the purchase ID. No automatic paid retry.' } : {}) });
   return {
-    config: () => ({ payer, payTo, price_usdc: '0.001', maximum, remaining: Math.max(0, maximum - files().length),
+    config: () => ({ payer, payTo, price_usdc: '0.001', maximum, maximum_payment_base_units: String(maximum * 1000),
+      maximum_test_usdc: (maximum / 1000).toFixed(3), remaining: Math.max(0, maximum - files().length),
       busy: !!active, blocked: !active && needsReview(), active_operation_id: active?.operation_id ?? null,
       last_operation_id: lastId() }),
     status(id) {

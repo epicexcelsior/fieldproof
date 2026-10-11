@@ -27,7 +27,8 @@ test('agent no-spend preview pins Devnet, recipient, device key, budget and no p
   const preview = contactToolPreview();
   assert.equal(preview.status, 'configuration_checked'); assert.equal(preview.spending, false);
   assert.deepEqual(preview.payment, { network: NETWORK, asset: USDC, recipient: PAY_TO, maximum_base_units: '1000', kind: 'test-token' });
-  assert.equal(preview.maximum_operations, 10); assert.equal(preview.max_age_seconds, 10);
+  assert.equal(preview.maximum_operations, 100); assert.equal(preview.maximum_total_base_units, '100000');
+  assert.equal(preview.max_age_seconds, 10);
   assert.match(preview.receipt_public_key, /^04[0-9a-f]{128}$/); assert.equal(preview.peaq, 'not_used');
   for (const origin of ['https://127.0.0.1:4021', 'http://example.com', 'http://user:password@127.0.0.1:4021',
     'http://127.0.0.1:4021/path', 'http://127.0.0.1:4021?query=true']) assert.throws(() => contactToolPreview(origin));

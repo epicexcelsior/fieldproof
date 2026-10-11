@@ -31,7 +31,7 @@ Use stale-lock recovery only when the normal host reports the original owner abs
 The October 11 host diagnosis identified PID 1824662 as the original idle browser buyer from October 5.
 That active process caused the recovery refusal. It was not a missing key, board failure, or reused PID.
 The coordinator verified its idle status and stopped it with SIGTERM. It removed its own lock.
-The next real paid check passed. Eight completed operations now leave two under the original ten-operation limit.
+The next real paid check passed. The founder authorized 100 operations. Eight completed operations leave 92 available. The original records remain intact.
 
 ## Check without payment
 
@@ -102,7 +102,7 @@ These are setup checks. Their failures report `buyer_setup_failed`, zero purchas
 The funds check counts the source associated token account that x402 actually uses. It does not count unrelated owned accounts.
 No Solana mainnet RPC or asset enters this route.
 It then purchases the requested readings in sequence and independently queries each Devnet transfer.
-Each purchase uses the same per-wallet controller as the browser and agent. Its shared lifetime limit remains ten operations.
+Each purchase uses the same per-wallet controller as the browser and agent. Its shared lifetime limit is 100 operations, totaling at most 0.100 Devnet USDC.
 The hardware bridge uses installed Python dependencies without package downloads during delivery.
 No manual gateway startup or BOOT press is required. The command never selects the simulator or drives a GPIO output.
 
@@ -112,7 +112,7 @@ If the previous owner process still exists or its status is unknown, the command
 If an operation is pending, damaged, or under review, the command preserves the lock and stops.
 If all records are complete and the host reports the owner absent, it archives the old lock.
 Recovery preserves every operation and its original receipt. It does not reset the shared spending limit.
-The latest October 11 paid check leaves two operations under that limit. Use `--count 1` or `--count 2`.
+The current ledger contains eight completed operations. Use `--count 1` for a take or `--count 3` for a useful batch.
 An archived lock is local recovery evidence. It does not verify a new payment.
 
 Expected files in the new output directory:
@@ -142,7 +142,7 @@ The later setup checks keep this known configuration failure separate from an un
 ## Record the browser purchase
 
 Prerequisites: working BLE input, a funded disposable Devnet buyer, and approval for the displayed test-token budget.
-Each purchase costs at most 0.001 Devnet USDC. The shared controller permits at most ten operations.
+Each purchase costs at most 0.001 Devnet USDC. The shared controller permits at most 100 operations. Keep each take to one useful check.
 
 1. Start the browser buyer with your local wallet path.
 

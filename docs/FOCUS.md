@@ -27,7 +27,7 @@ Colosseum also judges business viability and traction. No validated customer or 
 | Entries | Requirements verified against current official pages | Completed forms, video uploads, and saved submission confirmations |
 
 The October 11 no-spend check found the deployed GPIO9 board OPEN with a valid signature.
-It found no buyer lock and no unresolved operation. Eight operations leave **two** under the original ten-operation cap.
+It found no buyer lock and no unresolved operation. The founder authorized a 100-operation cap. Eight operations leave **92** available, with no ledger reset.
 Recheck readiness before recording. This snapshot does not guarantee the next payment succeeds.
 The Seeker was asleep and locked during the audit. The founder can now unlock it.
 

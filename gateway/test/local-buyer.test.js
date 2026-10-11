@@ -7,7 +7,7 @@ import { join } from 'node:path';
 import { once } from 'node:events';
 import { request } from 'node:http';
 import express from 'express';
-import { createLocalBuyer, mountLocalBuyer } from '../local-buyer.js';
+import { createLocalBuyer, inspectLocalBuyer, mountLocalBuyer, DEFAULT_BUYER_MAXIMUM } from '../local-buyer.js';
 import { PAY_TO } from '../server.js';
 
 const run = JSON.parse(readFileSync(new URL('../../docs/evidence/device-signed-purchase.json', import.meta.url), 'utf8')).purchase;
@@ -129,6 +129,73 @@ test('the configured purchase limit survives completed operations', async t => {
   controller.close();
 });
 
+test('the expanded shared budget preserves eight existing journals and permits useful checks beyond ten', async t => {
+  const directory = mkdtempSync(join(tmpdir(), 'fieldproof-expanded-buyer-'));
+  t.after(() => rmSync(directory, { recursive: true, force: true }));
+  const original = new Map();
+  for (let i = 0; i < 8; i++) {
+    const id = randomUUID(), contents = JSON.stringify({ operation_id: id, status: 'done', result: run });
+    writeFileSync(join(directory, id + '.json'), contents, { mode: 0o600 });
+    original.set(id, contents);
+  }
+  let purchases = 0;
+  const options = { directory, payer, payTo: PAY_TO, buy: async () => { purchases++; return run; } };
+  const controller = createLocalBuyer(options);
+  assert.equal(DEFAULT_BUYER_MAXIMUM, 100);
+  assert.equal(inspectLocalBuyer({ directory }).remaining, 92);
+  assert.equal(controller.config().maximum, 100);
+  assert.equal(controller.config().maximum_payment_base_units, '100000');
+  assert.equal(controller.config().maximum_test_usdc, '0.100');
+  assert.equal(controller.config().remaining, 92);
+  for (let i = 0; i < 3; i++) {
+    const id = randomUUID();
+    assert.equal(controller.start(id).code, 202);
+    assert.equal((await finish(controller, id)).status, 'done');
+  }
+  assert.equal(purchases, 3);
+  assert.equal(controller.config().remaining, 89);
+  controller.close();
+  const restarted = createLocalBuyer(options);
+  try {
+    assert.equal(restarted.config().remaining, 89);
+    assert.equal(inspectLocalBuyer({ directory }).operations, 11);
+    for (const [id, contents] of original) assert.equal(readFileSync(join(directory, id + '.json'), 'utf8'), contents);
+  } finally { restarted.close(); }
+});
+
+test('the shared default blocks operation 101 and retains completed operation reuse after restart', async t => {
+  const directory = mkdtempSync(join(tmpdir(), 'fieldproof-exhausted-buyer-'));
+  t.after(() => rmSync(directory, { recursive: true, force: true }));
+  for (let i = 0; i < 99; i++) {
+    const id = randomUUID();
+    writeFileSync(join(directory, id + '.json'), JSON.stringify({ operation_id: id, status: 'done', result: run }));
+  }
+  let purchases = 0;
+  const options = { directory, payer, payTo: PAY_TO, buy: async () => { purchases++; return run; } };
+  const controller = createLocalBuyer(options), finalOperation = randomUUID();
+  assert.equal(controller.config().remaining, 1);
+  assert.equal(controller.start(finalOperation).code, 202);
+  assert.equal((await finish(controller, finalOperation)).status, 'done');
+  assert.equal(controller.start(randomUUID()).code, 429);
+  controller.close();
+  const restarted = createLocalBuyer(options);
+  try {
+    assert.equal(restarted.config().remaining, 0);
+    assert.equal(restarted.start(randomUUID()).code, 429);
+    assert.equal(restarted.start(finalOperation).code, 200);
+    assert.equal(purchases, 1);
+  } finally { restarted.close(); }
+});
+
+test('a trusted caller cannot configure a cap above the authorized shared maximum', t => {
+  const directory = mkdtempSync(join(tmpdir(), 'fieldproof-budget-bound-'));
+  t.after(() => rmSync(directory, { recursive: true, force: true }));
+  for (const maximum of [0, 101, 1.5, NaN]) {
+    assert.throws(() => createLocalBuyer({ directory, payer, payTo: PAY_TO, maximum,
+      buy: () => assert.fail('No payment is allowed') }), /1 to 100/);
+  }
+});
+
 test('local HTTP control requires the exact origin and token and accepts no payment overrides', async t => {
   let calls = 0;
   const { controller } = fixture(t, async () => { calls++; return run; });
@@ -156,7 +223,7 @@ test('local HTTP control requires the exact origin and token and accepts no paym
   });
   assert.equal(foreignHostStatus, 403);
   assert.equal((await send({ ...validHeaders, 'Sec-Fetch-Site': 'cross-site' })).status, 403);
-  for (const field of ['amount', 'recipient', 'key', 'gateway', 'output']) {
+  for (const field of ['amount', 'recipient', 'key', 'gateway', 'output', 'maximum', 'maximum_operations']) {
     assert.equal((await send(validHeaders, { operation_id: randomUUID(), [field]: 'override' })).status, 400);
   }
   assert.equal((await send(validHeaders, { operation_id: '../private.json' })).status, 400);

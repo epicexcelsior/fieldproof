@@ -6,7 +6,7 @@ import { buyObservation, checkEvidence, loadBuyerSigner } from './buyer.js';
 import { DEFAULT_CONTACT, loadReceiptPins, receiptKey } from './contact.js';
 import { NETWORK, USDC, PAY_TO } from './constants.js';
 import { PurchaseStore } from './store.js';
-import { createLocalBuyer } from './local-buyer.js';
+import { createLocalBuyer, DEFAULT_BUYER_MAXIMUM } from './local-buyer.js';
 import { querySettlement } from '../docs/settlement.mjs';
 import { saveBuyerRun } from './buyer-output.js';
 
@@ -26,7 +26,8 @@ export function contactToolPreview(origin = 'http://127.0.0.1:4021') {
   return { schema: 'fieldproof-agent-contact-v1', status: 'configuration_checked', spending: false,
     gateway: localOrigin(origin), contact: DEFAULT_CONTACT, receipt_public_key: pin,
     payment: { network: NETWORK, asset: USDC, recipient: PAY_TO, maximum_base_units: '1000', kind: 'test-token' },
-    max_age_seconds: 10, maximum_operations: 10, peaq: 'not_used',
+    max_age_seconds: 10, maximum_operations: DEFAULT_BUYER_MAXIMUM,
+    maximum_total_base_units: String(DEFAULT_BUYER_MAXIMUM * 1000), peaq: 'not_used',
     note: 'Local configuration only. Network, device, funds, and customer demand remain unverified.' };
 }
 
@@ -35,7 +36,7 @@ export async function runContactOperation({ signer, operation, origin = 'http://
     now = () => Math.floor(Date.now() / 1000), report = () => {} }) {
   if (!operationPattern.test(operation ?? '')) throw new Error('Supply one UUID v4 operation ID. Reuse it to inspect the same purchase.');
   const terms = contactToolPreview(origin);
-  const controller = createLocalBuyer({ directory, payer: signer.address, payTo: PAY_TO, maximum: 10,
+  const controller = createLocalBuyer({ directory, payer: signer.address, payTo: PAY_TO,
     readPurchaseState, buy: onProgress => buy(signer, terms.gateway,
       { contact: DEFAULT_CONTACT, receiptPublicKey: terms.receipt_public_key, onProgress }) });
   try {
