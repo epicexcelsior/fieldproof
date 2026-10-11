@@ -4,6 +4,47 @@ Current continuation: October 11, 2026, Europe/Berlin. Public paid evidence date
 The historical local MVP completes a public Devnet purchase, a real ESP32 observation, and both human-controlled contact states.
 This record does not claim production security, safety certification, or standards compliance.
 
+## October 11 real-host failure and buyer setup correction
+
+The founder ran the real-only batch in the normal laptop terminal. Its signed OPEN preflight passed.
+Independent inspection of the saved bytes passed the installed P-256 pin and original request binding.
+That inspection used the signed capture timestamp. It verified historical authenticity, not current freshness.
+The later purchase callback failed because the literal example wallet path did not exist.
+Its saved error was `Buyer keypair file cannot be read`. No signer or buyer-controller operation started.
+The generic batch error incorrectly presented this known setup failure as an uncertain payment.
+The original run files remain unchanged. A private `diagnosis.json` records the cause beside them.
+
+The runner now completes wallet, shared-controller, test-USDC balance, and gateway setup before purchase attempts.
+Setup failures report their safe cause, zero attempts, and `buyer_setup_failed`. They create no payment-review operation.
+The default execution wallet is the existing ignored `.local/disposable-buyer.keypair.json` file.
+Its derived public address matched the existing buyer history. No private bytes entered output or source.
+Default execution generates a new output directory. It does not overwrite a previous run.
+The read-only funds check pins Solana Devnet and its USDC mint. It counts only the associated account x402 uses.
+It rejects insufficient, duplicate, frozen, unsupported, or mismatched account responses before payment.
+
+The wallet directory contains seven completed records and an older lock. Three operations remain under its original limit.
+The current sandbox cannot establish host-process liveness. No real lock recovery occurred in this session.
+Explicit `--recover-stale-lock` requires the normal host terminal, an absent owner, and complete validated records.
+Recovery archives the lock. It preserves every operation, original receipt, and remaining budget.
+An exclusive recovery marker blocks another cooperative buyer during recovery.
+Active owners, unknown owners, pending records, malformed records, and an existing recovery marker block recovery.
+
+The wallet regression failed before the fix and passed afterward.
+Five new tests cover setup diagnosis, error redaction, associated-account funding, archive recovery, and recovery rejection.
+The expected source account matched the installed x402 2.27.0 PDA helper before entering the fixture.
+Controlled funding tests make no RPC or payment. Lock tests use temporary directories.
+The focused command passed 59 gateway tests and 41 Python tests, with nine optional SDK skips.
+Logs: `.local/competition/checks/cad28702-2d2a-43e9-a331-95180a6b6fc8`.
+The declared `npm --prefix gateway test` run reached restricted integration failures and timed out after 30 seconds.
+It has no complete suite result. Logs: `.local/competition/checks/9696e4ff-a476-4162-9ea8-31b399a7c029/gateway-full.log`.
+
+The corrected CLI attempted real BLE here and stopped with `runtime_access_denied` before wallet loading or recovery.
+Report: `.local/competition/live-attempts/1361a968-55b4-4bf2-ba25-fd86f56393a6/result.json`.
+A direct read-only Devnet balance attempt also failed. This session still denies network and loopback sockets, Bluetooth, ADB, and Tailscale.
+Access report: `.local/competition/access-checks/6b3c4655-9bdb-42e4-adcd-7ed392d8f8f5.json`.
+No new payment, live balance result, or paid receipt occurred here.
+The [corrected host command](competition/REHEARSAL.md#run-three-real-paid-checks-without-a-button-press) needs no example wallet path or BOOT press.
+
 ## October 11 unattended real-device paid checks
 
 The new `gateway/paid-checks.js` route makes one unpaid board observation before wallet access.

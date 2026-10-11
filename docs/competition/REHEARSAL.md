@@ -54,22 +54,40 @@ Keep the board powered. Run from the laptop's normal terminal if the agent acces
 
 ```bash
 node gateway/paid-checks.js --execute \
-  --keypair /path/to/disposable-devnet.keypair.json \
   --count 3 \
-  --output-directory .local/paid-checks/run-001
+  --recover-stale-lock
 ```
+
+The default wallet is the existing ignored `.local/disposable-buyer.keypair.json` file.
+The command generates a new private output directory and prints its path. It preserves earlier runs.
+Use `--keypair` only to select another real Solana CLI keypair file. Never enter the example `/path/to/...` literally.
+Use `--output-directory` only to select a new directory yourself. An existing directory remains protected.
 
 The maximum batch cost is 0.003 Devnet USDC. These are test tokens, not customer revenue.
 The command saves three recovery IDs before device work. It verifies one unpaid signed reading before reading the wallet.
+It then verifies the wallet, the shared operation budget, the associated test-USDC balance, and gateway startup.
+These are setup checks. Their failures report `buyer_setup_failed`, zero purchase attempts, and an actionable error.
+The funds check counts the source associated token account that x402 actually uses. It does not count unrelated owned accounts.
+No Solana mainnet RPC or asset enters this route.
 It then purchases three distinct readings in sequence and independently queries each Devnet transfer.
 Each purchase uses the same per-wallet controller as the browser and agent. Its shared lifetime limit remains ten operations.
 The hardware bridge uses installed Python dependencies without package downloads during delivery.
 No manual gateway startup or BOOT press is required. The command never selects the simulator or drives a GPIO output.
 
+The explicit `--recover-stale-lock` flag runs only after the board, wallet, funds, and gateway checks pass.
+Run recovery in the normal host terminal that can see the original process IDs.
+If the previous owner process still exists or its status is unknown, the command preserves the lock and stops.
+If an operation is pending, damaged, or under review, the command preserves the lock and stops.
+If all records are complete and the host reports the owner absent, it archives the old lock.
+Recovery preserves every operation and its original receipt. It does not reset the shared spending limit.
+The October 11 wallet inspection found seven completed records. Three operations remained under that limit.
+An archived lock is local recovery evidence. It does not verify a new payment.
+
 Expected files in the new output directory:
 
 - `plan.json`: recovery IDs, maximum batch budget, and disabled automatic paid retries.
 - `preflight.json`: the unpaid signed board reading.
+- `buyer-preflight.json`: the read-only Devnet balance check, remaining operation count, and optional lock archive reference.
 - `check-1.json` through `check-3.json`: original paid receipts and independently verified payment results.
 - `result.json`: completed count, transfer references, contact states, and purchase durations.
 
@@ -83,6 +101,11 @@ An existing output directory blocks execution before device or wallet work.
 Import one `check-N.json` into `/jobs` on a separately started local gateway to inspect the original signed evidence.
 The batch closes its gateway on completion. Review saved public addresses and evidence before publication.
 This route declares `peaq: not_used`. It does not activate a peaq identity or submit an activity event.
+
+If an earlier run failed with the placeholder keypair path, retain its files and use the corrected command above.
+The founder's October 11 `run-001` failed before the buyer controller started. It made no payment and created no review operation.
+Its signed board preflight passed. Its saved failure was `Buyer keypair file cannot be read`.
+The later setup checks keep this known configuration failure separate from an uncertain payment outcome.
 
 ## Record the browser purchase
 

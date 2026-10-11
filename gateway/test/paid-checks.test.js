@@ -1,10 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, readFile, rm, stat } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
-import { checkPhysicalContact, runPaidChecks } from '../paid-checks.js';
+import { BuyerSetupError, checkDevnetFunds, checkPhysicalContact, runPaidChecks } from '../paid-checks.js';
 import { contactToolPreview } from '../agent-contact.js';
+import { loadBuyerSigner } from '../buyer.js';
+import { inspectLocalBuyer, recoverCompletedBuyerLock, createLocalBuyer } from '../local-buyer.js';
+import { USDC, PAY_TO } from '../constants.js';
+import { TOKEN_PROGRAM_ADDRESS } from '@x402/svm';
+import { randomUUID } from 'node:crypto';
 
 // Controlled collaborators test sequencing and recovery. These are not new device captures or chain transactions.
 const physical = () => ({ schema: 'fieldproof-physical-preflight-v1', payment: 'none',
@@ -23,6 +28,108 @@ async function config(t, extra = {}) {
   return { directory: join(parent, 'run'), preflight: async () => physical(), ...extra };
 }
 const json = async (directory, file) => JSON.parse(await readFile(join(directory, file), 'utf8'));
+
+test('unreadable wallet is a setup failure with zero purchase attempts and an actionable error', async t => {
+  let attempts = 0;
+  const options = await config(t, { prepare: () => loadBuyerSigner(join(tmpdir(), 'fieldproof-key-file-does-not-exist')),
+    purchase: async operation => paidResult(operation, ++attempts) });
+  await assert.rejects(runPaidChecks(options), /Buyer keypair file cannot be read/);
+  const result = await json(options.directory, 'result.json');
+  assert.equal(attempts, 0); assert.equal(result.attempted, 0); assert.equal(result.completed, 0);
+  assert.equal(result.reason, 'buyer_setup_failed');
+  assert.equal(Object.hasOwn(result, 'review_operation_id'), false);
+  await assert.rejects(readFile(join(options.directory, 'check-1.json')), { code: 'ENOENT' });
+});
+
+test('funding setup failure reports its cause before purchase and keeps private unknown errors out', async t => {
+  for (const error of [new BuyerSetupError('devnet_funds', 'Insufficient Devnet test USDC.'),
+    new Error('PRIVATE-WALLET-SENTINEL')]) {
+    let attempts = 0;
+    const options = await config(t, { prepare: async () => { throw error; },
+      purchase: async operation => paidResult(operation, ++attempts) });
+    await assert.rejects(runPaidChecks(options), /No payment started/);
+    const result = await json(options.directory, 'result.json');
+    assert.equal(attempts, 0); assert.equal(result.attempted, 0);
+    assert.equal(result.reason, 'buyer_setup_failed');
+    assert.equal(JSON.stringify(result).includes('PRIVATE-WALLET-SENTINEL'), false);
+    assert.equal(Object.hasOwn(result, 'review_operation_id'), false);
+  }
+});
+
+test('Devnet funding check matches the x402 associated token account and excludes other owned balances', async () => {
+  const payer = '2U7Bz5u4bVMsUtNcF4b4xdWG7K3N7WmbsGCqMQmjevMf';
+  // Expected source ATA from the installed x402 2.27.0 client's findAssociatedTokenPda helper.
+  const ata = 'B55G2a3NKe9s2R9avLfW9EKqhLELjyQvFY5DQggBPejm';
+  const item = (pubkey, amount = '3000') => ({ pubkey, account: { owner: TOKEN_PROGRAM_ADDRESS,
+    data: { program: 'spl-token', parsed: { type: 'account', info: { owner: payer, mint: USDC, state: 'initialized',
+      tokenAmount: { decimals: 6, amount } } } } } });
+  let accounts = [item(ata), item('another-owned-account', '999999')];
+  const rpc = { getTokenAccountsByOwner: (owner, filter, config) => {
+    assert.equal(owner, payer); assert.deepEqual(filter, { mint: USDC });
+    assert.deepEqual(config, { encoding: 'jsonParsed', commitment: 'confirmed' });
+    return { send: async options => { assert.ok(options.abortSignal); return { value: accounts }; } };
+  } };
+  const ready = await checkDevnetFunds(payer, 3, rpc);
+  assert.equal(ready.spending, false); assert.equal(ready.available_base_units, '3000');
+  assert.equal(ready.token_account, ata); assert.equal(ready.network, 'Solana Devnet');
+  for (const defect of ['absent', 'insufficient', 'frozen', 'duplicate', 'merchant']) {
+    accounts = [item(ata)];
+    if (defect === 'absent') accounts = [item('another-owned-account', '999999')];
+    if (defect === 'insufficient') accounts[0].account.data.parsed.info.tokenAmount.amount = '2999';
+    if (defect === 'frozen') accounts[0].account.data.parsed.info.state = 'frozen';
+    if (defect === 'duplicate') accounts.push(item(ata));
+    if (defect === 'merchant') accounts[0].account.data.parsed.info.owner = PAY_TO;
+    await assert.rejects(checkDevnetFunds(payer, 3, rpc), BuyerSetupError);
+  }
+  await assert.rejects(checkDevnetFunds(payer, 3, { getTokenAccountsByOwner: () => ({
+    send: async () => { throw new Error('PRIVATE-RPC-SENTINEL'); } }) }), error => {
+    assert.equal(error.stage, 'devnet_funds'); assert.equal(error.message.includes('PRIVATE-RPC'), false); return true;
+  });
+});
+
+test('explicit stale-lock recovery archives the old lock and preserves every completed operation and its budget', async t => {
+  const options = await config(t), directory = options.directory;
+  await mkdir(directory);
+  const { purchase } = JSON.parse(await readFile(new URL('../../docs/evidence/device-signed-purchase.json', import.meta.url), 'utf8'));
+  const operation = randomUUID(), contents = JSON.stringify({ operation_id: operation, status: 'done', result: purchase });
+  await writeFile(join(directory, operation + '.json'), contents, { mode: 0o600 });
+  const lock = JSON.stringify({ pid: 12345, started_at: '2026-10-05T00:00:00Z' });
+  await writeFile(join(directory, '.lock'), lock, { mode: 0o600 });
+  const result = recoverCompletedBuyerLock({ directory, ownerState: () => 'absent' });
+  assert.equal(result.spending, false); assert.equal(result.remaining, 9); assert.equal(result.operations, 1);
+  assert.equal(await readFile(join(directory, result.archive), 'utf8'), lock);
+  assert.equal(await readFile(join(directory, operation + '.json'), 'utf8'), contents);
+  await assert.rejects(readFile(join(directory, '.lock')), { code: 'ENOENT' });
+  assert.equal(inspectLocalBuyer({ directory }).remaining, 9);
+  const controller = createLocalBuyer({ directory, payer: purchase.settlement.payer, payTo: PAY_TO, maximum: 1,
+    buy: () => assert.fail('No purchase after exhausted limit') });
+  try { assert.equal(controller.start(randomUUID()).code, 429); }
+  finally { controller.close(); }
+});
+
+test('active or unknown lock owner and unresolved records block recovery without changing the lock', async t => {
+  const options = await config(t), directory = options.directory;
+  await mkdir(directory);
+  const lock = JSON.stringify({ pid: 12345, started_at: '2026-10-05T00:00:00Z' });
+  await writeFile(join(directory, '.lock'), lock, { mode: 0o600 });
+  for (const owner_state of ['alive', 'unknown']) {
+    assert.throws(() => recoverCompletedBuyerLock({ directory, ownerState: () => owner_state }), /active or unknown/);
+    assert.equal(await readFile(join(directory, '.lock'), 'utf8'), lock);
+  }
+  const operation = randomUUID();
+  await writeFile(join(directory, operation + '.json'), JSON.stringify({ operation_id: operation, status: 'pending' }));
+  assert.throws(() => recoverCompletedBuyerLock({ directory, ownerState: () => 'absent' }), /needs review/);
+  assert.equal(await readFile(join(directory, '.lock'), 'utf8'), lock);
+  await rm(join(directory, operation + '.json'));
+  await writeFile(join(directory, operation + '.json'), 'incomplete JSON');
+  assert.throws(() => recoverCompletedBuyerLock({ directory, ownerState: () => 'absent' }), /needs review/);
+  assert.equal(await readFile(join(directory, '.lock'), 'utf8'), lock);
+  await rm(join(directory, operation + '.json'));
+  await writeFile(join(directory, '.lock-recovery'), '{}');
+  assert.throws(() => recoverCompletedBuyerLock({ directory, ownerState: () => 'absent' }), { code: 'EEXIST' });
+  assert.throws(() => createLocalBuyer({ directory, payer: 'unused', payTo: PAY_TO, buy: () => {} }), /recovery is active/);
+  assert.equal(await readFile(join(directory, '.lock'), 'utf8'), lock);
+});
 
 test('three unchanged OPEN readings use distinct operations and preserve the explicit test-token cap', async t => {
   let attempts = 0;

@@ -1,5 +1,5 @@
 // Optional loopback demo control. It never accepts a key, recipient, amount, or gateway from HTTP.
-import { randomBytes } from 'node:crypto';
+import { randomBytes, randomUUID } from 'node:crypto';
 import { mkdirSync, openSync, writeFileSync, fsyncSync, closeSync, readdirSync, readFileSync, existsSync, renameSync, unlinkSync } from 'node:fs';
 import { join } from 'node:path';
 import { publicBuyerRun } from '../docs/settlement.mjs';
@@ -18,9 +18,53 @@ function replacePrivate(path, value) {
   renameSync(temporary, path);
 }
 
+function processState(pid) {
+  try { process.kill(pid, 0); return 'alive'; }
+  catch (error) { return error.code === 'ESRCH' ? 'absent' : 'unknown'; }
+}
+
+// Readiness is advisory. The controller still acquires its exclusive lock before a signer can act.
+export function inspectLocalBuyer({ directory, maximum = 10, ownerState = processState }) {
+  if (!existsSync(directory)) return { operations: 0, remaining: maximum, blocked: false, locked: false };
+  const files = readdirSync(directory).filter(name => operationId.test(name.slice(0, -5)) && name.endsWith('.json'));
+  let blocked = false;
+  for (const name of files) {
+    try {
+      const record = JSON.parse(readFileSync(join(directory, name), 'utf8'));
+      if (record.operation_id !== name.slice(0, -5) || record.status !== 'done') blocked = true;
+      else publicBuyerRun(record.result);
+    } catch { blocked = true; }
+  }
+  const result = { operations: files.length, remaining: Math.max(0, maximum - files.length), blocked,
+    locked: existsSync(join(directory, '.lock')), recovery_active: existsSync(join(directory, '.lock-recovery')) };
+  if (result.locked) {
+    try {
+      const owner = JSON.parse(readFileSync(join(directory, '.lock'), 'utf8'));
+      result.owner_state = Number.isSafeInteger(owner.pid) && owner.pid > 0 ? ownerState(owner.pid) : 'unknown';
+    } catch { result.owner_state = 'unknown'; }
+  }
+  return result;
+}
+
+// Explicit host-terminal recovery only. Never clear pending records or reset the operation count.
+export function recoverCompletedBuyerLock({ directory, maximum = 10, ownerState = processState }) {
+  const mutex = join(directory, '.lock-recovery');
+  writePrivate(mutex, { pid: process.pid, started_at: new Date().toISOString() }, true);
+  try {
+    const state = inspectLocalBuyer({ directory, maximum, ownerState });
+    if (state.blocked) throw new Error('An earlier purchase needs review. The buyer lock remains unchanged.');
+    if (!state.locked) return { recovered: false, remaining: state.remaining, spending: false };
+    if (state.owner_state !== 'absent') throw new Error('The buyer owner is active or unknown. Stop its original process. The lock remains unchanged.');
+    const archive = `.lock.recovered-${randomUUID()}.json`;
+    renameSync(join(directory, '.lock'), join(directory, archive));
+    return { recovered: true, archive, operations: state.operations, remaining: state.remaining, spending: false };
+  } finally { unlinkSync(mutex); }
+}
+
 export function createLocalBuyer({ directory, payer, payTo, buy, maximum = 10, readPurchaseState }) {
   if (!Number.isInteger(maximum) || maximum < 1 || maximum > 20) throw new Error('Use a maximum from 1 to 20 test purchases');
   mkdirSync(directory, { recursive: true, mode: 0o700 });
+  if (existsSync(join(directory, '.lock-recovery'))) throw new Error('Buyer lock recovery is active. No new payment started.');
   const lock = join(directory, '.lock');
   writePrivate(lock, { pid: process.pid, started_at: new Date().toISOString() }, true);
   let active = null;
