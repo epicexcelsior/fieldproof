@@ -15,7 +15,7 @@ Do not imply a validated equipment operator or customer in this prototype.
 
 **0:15–0:35 — identity.** Show the finalized peaq identity readback only if active. “The buyer checks this peaq machine identity, its public receipt key, and its offered service before it accepts the price.” **If pending, say instead:** “The peaq identity check is in integration. Today I can show the existing paid contact prototype.” Do not show a prepared identity draft as activation.
 
-**0:35–1:05 — payment and capture.** Show the quoted terms, 0.001 Devnet USDC transfer, physical BOOT action, and fresh result in one legible sequence. “The x402 request settles on Solana Devnet before the ESP32 samples the contact. The board signs the request and result with its P-256 key.” If the footage uses simulation or a recorded purchase, say so on screen and in speech.
+**0:35–1:05 — payment and capture.** Show the quoted terms, 0.001 Devnet USDC transfer, actual contact input, and fresh result in one legible sequence. “The x402 request settles on Solana Devnet before the ESP32 samples the contact. The board signs the request and result with its P-256 key.” If the footage uses simulation or a recorded purchase, say so on screen and in speech.
 
 **1:05–1:30 — acceptance.** Show signature and age, then WAIT after expiry or on a changed answer. “The buyer accepts a matching signed answer only within its ten-second policy window. An authentic old answer is still too old for this decision.” Both OPEN and CLOSED can fulfill a paid check. The buyer policy controls the next action.
 

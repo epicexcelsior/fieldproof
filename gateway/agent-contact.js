@@ -51,6 +51,7 @@ export async function runContactOperation({ signer, operation, origin = 'http://
     if (status.status !== 'done') throw new Error(`Keep operation ${operation} and purchase ${status.purchase_id ?? 'not created'} for review. No automatic paid retry.`);
     // The original run is durable before this read-only RPC query. Reuse never pays again.
     const result = { schema: terms.schema, operation_id: operation, status: 'done',
+      purchase_duration_ms: status.elapsed_ms,
       purchase: status.run, peaq: 'not_used', commercial_revenue: false,
       payment_verification: { state: 'unavailable' }, current_decision: 'WAIT',
       current_evidence: 'unusable', note: 'DISPATCH is a demo policy result, not permission to operate equipment.' };

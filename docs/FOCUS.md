@@ -5,6 +5,8 @@ As of October 11, 2026. Primary entry: peaq Germany. Secondary entries: Supertea
 The internal submission target is Monday, October 12, 18:00 CEST.
 No submission confirmation exists in this repository.
 Use the [return-to-laptop rehearsal](competition/REHEARSAL.md) for today's actions.
+Its [unattended paid batch](competition/REHEARSAL.md#run-three-real-paid-checks-without-a-button-press) needs no BOOT press or separate gateway terminal.
+It checks the real board before reading the wallet and stops on any uncertain payment. New live batch results remain pending.
 Use the [current requirements](competition/REQUIREMENTS.md) for dates, sources, and form checks.
 
 ## Explain one transaction

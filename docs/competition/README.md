@@ -6,7 +6,7 @@ Live peaq activation and event readback remain pending. Preserve that label unti
 - [Recording scripts](VIDEO_SCRIPTS.md): peaq transaction, founder pitch, and technical demo.
 - [Submission drafts](SUBMISSION_DRAFTS.md): separate Colosseum, Germany, and peaq entries.
 - [Tester guide](TESTER_GUIDE.md): a no-wallet review of historical signed evidence.
-- [Return-to-laptop rehearsal](REHEARSAL.md): board checks, browser purchase, and the bounded Solana agent.
+- [Return-to-laptop rehearsal](REHEARSAL.md): real unattended paid checks, browser purchase, and the bounded Solana agent.
 - [Current requirements](REQUIREMENTS.md): verified dates, correct listings, and remaining authenticated form checks.
 - [Pilot questions](PILOT.md): a specific buyer test and candid answers to judging objections.
 - [Editable five-slide deck](fieldproof-pitch.pptx), [PDF review copy](fieldproof-pitch.pdf), and [HTML slides](slides.html).

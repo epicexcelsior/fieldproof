@@ -23,15 +23,20 @@ Start from the repository root. Keep wallets, ledgers, and journals private.
    Expect `configuration_checked`, `spending: false`, fixed Devnet terms, and `peaq: not_used`.
    This command reads no wallet and makes no network or device request.
 
-3. Release BOOT and run one board observation.
+3. Run one real signed board observation. BOOT can remain released.
 
    ```bash
-   python3 scripts/demo.py board --expect open
+   node gateway/paid-checks.js --check-device
    ```
 
-   Expect device-signed OPEN. Close other BLE scans before this command.
+   Expect `transport: real-ble`, `receipt_identity: pinned-device-p256`, and a signed current contact reading.
+   Close other BLE clients before this command. It reads no wallet and makes no payment.
 
-4. Hold BOOT and run the opposite state.
+The board samples its current input for every request. BOOT does not need a press to produce a fresh answer.
+Three unchanged OPEN answers can contain three distinct fresh challenges and signed receipts.
+They do not demonstrate a physical state change.
+
+When physical access returns, hold BOOT to test the opposite state.
 
    ```bash
    python3 scripts/demo.py board --expect closed
@@ -40,6 +45,44 @@ Start from the repository root. Keep wallets, ledgers, and journals private.
    Expect device-signed CLOSED. Do not press Reset or change firmware for this rehearsal.
 
 If a board check fails, preserve its printed log. Resolve that failure before spending test tokens.
+
+## Run three real paid checks without a button press
+
+Prerequisites: successful signed board preflight, installed host and gateway dependencies, and a funded disposable Devnet buyer.
+Stop other buyers and BLE clients. This command starts its own hardware gateway on loopback port 4027.
+Keep the board powered. Run from the laptop's normal terminal if the agent access check reports runtime restrictions.
+
+```bash
+node gateway/paid-checks.js --execute \
+  --keypair /path/to/disposable-devnet.keypair.json \
+  --count 3 \
+  --output-directory .local/paid-checks/run-001
+```
+
+The maximum batch cost is 0.003 Devnet USDC. These are test tokens, not customer revenue.
+The command saves three recovery IDs before device work. It verifies one unpaid signed reading before reading the wallet.
+It then purchases three distinct readings in sequence and independently queries each Devnet transfer.
+Each purchase uses the same per-wallet controller as the browser and agent. Its shared lifetime limit remains ten operations.
+The hardware bridge uses installed Python dependencies without package downloads during delivery.
+No manual gateway startup or BOOT press is required. The command never selects the simulator or drives a GPIO output.
+
+Expected files in the new output directory:
+
+- `plan.json`: recovery IDs, maximum batch budget, and disabled automatic paid retries.
+- `preflight.json`: the unpaid signed board reading.
+- `check-1.json` through `check-3.json`: original paid receipts and independently verified payment results.
+- `result.json`: completed count, transfer references, contact states, and purchase durations.
+
+An unchanged contact state is valid. The summary states whether it observed a change.
+The output also preserves the current freshness decision. A receipt can expire during the independent payment query.
+An unavailable query, duplicate transfer, or uncertain purchase stops the next payment.
+Preserve `review_operation_id` and all run files. Use the same ID with `agent-contact.js` for inspection.
+Do not delete a failed run or unresolved controller record. A new directory does not clear the shared safety checks.
+An existing output directory blocks execution before device or wallet work.
+
+Import one `check-N.json` into `/jobs` on a separately started local gateway to inspect the original signed evidence.
+The batch closes its gateway on completion. Review saved public addresses and evidence before publication.
+This route declares `peaq: not_used`. It does not activate a peaq identity or submit an activity event.
 
 ## Record the browser purchase
 
@@ -60,7 +103,8 @@ Each purchase costs at most 0.001 Devnet USDC. The shared controller permits at 
 7. Use the changed-state attack control. Record signature rejection.
 8. Restore the original. Verify that the original signature result returns.
 
-Complete three distinct jobs across both contact states. These are founder test jobs, not customer traction.
+Complete three distinct paid checks. Test both contact states when physical access returns.
+These are founder test jobs, not customer traction. BOOT actuation is an optional visual scene, not a purchase prerequisite.
 Stop on any unknown payment outcome. Do not click again to diagnose it.
 The [demo runbook](../DEMO.md#pay-and-read-with-one-click) owns browser recovery.
 

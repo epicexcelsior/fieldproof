@@ -118,6 +118,13 @@ Explicit execution requires a disposable Devnet wallet and a supplied UUID opera
 Reusing that ID inspects the original purchase without another payment. The command claims no peaq identity or event.
 Follow the [agent rehearsal](docs/competition/REHEARSAL.md#run-the-headless-agent-route) for execution, shared budget, and recovery limits.
 
+For unattended real hardware checks, run `node gateway/paid-checks.js --check-device` without a wallet or payment.
+After that preflight passes, the [paid batch command](docs/competition/REHEARSAL.md#run-three-real-paid-checks-without-a-button-press) purchases up to three readings.
+It starts its own hardware gateway, saves recovery IDs and original receipts, and independently queries every Devnet transfer.
+The maximum batch cost is 0.003 test USDC. An uncertain result stops the next payment. No automatic paid retry exists.
+BOOT needs no press for fresh readings. Unchanged input yields distinct requested observations without claiming a physical state change.
+This new runner passed controlled software tests. A new live paid batch remains unverified in the restricted agent session.
+
 <details>
 <summary>CLI attack checks and optional two-observer rehearsal</summary>
 

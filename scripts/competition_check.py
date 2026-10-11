@@ -17,7 +17,8 @@ NODE_TESTS = ["gateway/test/job.test.js", "gateway/test/event-store.test.js", "g
               "gateway/test/job-view.test.js", "gateway/test/peaq-event.test.js", "gateway/test/settlement.test.js",
               "gateway/test/buyer-recovery.test.js", "gateway/test/buyer-key.test.js",
               "gateway/test/job-interaction.test.js", "gateway/test/workflow.test.js",
-              "gateway/test/buyer-http-boundary.test.js", "gateway/test/agent-contact.test.js"]
+              "gateway/test/buyer-http-boundary.test.js", "gateway/test/agent-contact.test.js",
+              "gateway/test/paid-checks.test.js"]
 
 
 def main():

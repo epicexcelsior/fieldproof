@@ -4,6 +4,41 @@ Current continuation: October 11, 2026, Europe/Berlin. Public paid evidence date
 The historical local MVP completes a public Devnet purchase, a real ESP32 observation, and both human-controlled contact states.
 This record does not claim production security, safety certification, or standards compliance.
 
+## October 11 unattended real-device paid checks
+
+The new `gateway/paid-checks.js` route makes one unpaid board observation before wallet access.
+It binds that reading to a new challenge and the installed P-256 pin. It accepts no simulation option.
+The firmware samples its current GPIO9 input on each request. BOOT needs no press for repeated fresh measurements.
+Unchanged input does not prove an input transition or independent corroboration.
+
+Explicit execution starts a real hardware gateway and runs one to three bounded Devnet purchases in sequence.
+The command saves recovery IDs before device work and reserves each output before its purchase.
+It independently queries each payment and rejects duplicate transfers or an inconsistent result before the next check.
+The existing per-wallet controller still enforces its shared ten-operation limit and unresolved-outcome block.
+The batch budget is at most 0.003 test USDC. No automatic paid retry exists.
+The bridge uses the installed Python environment with `uv run --offline --no-sync` during delivery.
+Original receipts, transfer references, purchase durations, and current freshness decisions remain in private output files.
+The command declares `peaq: not_used` and `commercial_revenue: false`.
+
+Six new controlled tests cover unchanged input, failed or simulated preflight, interruption, payment-query failures, duplicate transfers, and output preservation.
+The real preflight test rejects an old recorded signed answer because its request does not match the new challenge.
+The focused command passed 54 gateway tests and 41 core Python tests, with nine optional SDK skips.
+Logs: `.local/competition/checks/e37bf8a5-517d-4ec9-b9fc-e7b93124aff9`.
+The tests make no payment or new hardware capture.
+
+The real BLE board command reached BlueZ D-Bus and failed with `PermissionError: Operation not permitted`.
+Its log is `.local/soak/founder-20261011T085052Z-12a282.jsonl`.
+The batch CLI also attempted the real device preflight. It saved its plan and reported `runtime_access_denied`.
+This CLI check used the documented placeholder wallet path. The preflight stopped before any wallet read or purchase.
+No new paid receipt, payment, or physical state transition occurred.
+Its report is `.local/competition/live-attempts/dc3194ee-0e7c-4e98-9e1f-63090b3af8f0/result.json`.
+The renewed access probe is `.local/competition/access-checks/e061325b-ac6c-4c97-bfe7-b7b8ca6e95f3.json`.
+That probe also denied network sockets, loopback, ADB, and Tailscale. It found no visible serial mapping.
+
+The [unattended runbook](competition/REHEARSAL.md#run-three-real-paid-checks-without-a-button-press) owns execution and recovery.
+A normal laptop terminal can start the prepared batch after a successful signed preflight and wallet funding check.
+Fresh paid evidence, browser QA, phone capture, and live peaq activity remain acceptance gaps.
+
 ## October 11 Solana-first agent and judge review
 
 The new `agent-contact.js` command checks public configuration without a wallet, network call, or device request.

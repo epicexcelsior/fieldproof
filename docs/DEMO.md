@@ -225,6 +225,10 @@ Both changed from DISPATCH to WAIT after the useful-time window expired. No brow
 
 ## Show one new paid buyer run
 
+For an unattended three-check batch, use the [real paid batch](competition/REHEARSAL.md#run-three-real-paid-checks-without-a-button-press).
+It starts its own gateway and verifies the board before reading the wallet. BOOT needs no press for fresh measurements.
+Repeated input states are valid. Record an actual state change separately when physical access returns.
+
 This path spends 0.001 Devnet test USDC. It requires explicit approval, a funded disposable buyer, and the provisioned ESP32.
 Run commands from the repository root. Keep other BLE scans closed. Release BOOT for the OPEN demonstration.
 Port 4021 must be free for a new gateway. If it is occupied, stop only your own server or select a free `PORT`.

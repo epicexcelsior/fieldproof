@@ -28,7 +28,7 @@ export async function createPaymentServer(facilitator) {
 }
 export function observeHardware(purchase) {
   return new Promise((resolvePromise, rejectPromise) => {
-    const child = spawn('uv', ['run', '--project', 'host', 'python', 'gateway/bridge_call.py'], {
+    const child = spawn('uv', ['run', '--offline', '--no-sync', '--project', 'host', 'python', 'gateway/bridge_call.py'], {
       cwd: root, stdio: ['pipe', 'pipe', 'pipe'],
     });
     let output = '';
