@@ -1,16 +1,20 @@
 {
-  "README.txt": "cf36c92eb2fafe59eb4504b9d1643a53510c491869f7e916c57366a4ae882768",
+  "README.txt": "0666f3a41b90f0bcaa7e948289540017e807c07099f8dfeeebde6bdce20ac652",
   "assets/fieldproof-evidence-window.svg": "377b10402bb13bd2787cec33a72c8509e7e4615f282d0a582d909732aab476e9",
   "assets/fieldproof-payment-to-observation.svg": "faa42577ef796bc09332a848ac0d3d380e06c74eaf1fd0c77ec2d4e874b5034e",
   "assets/fieldproof-service-boundaries.svg": "62648320848115a211c6a4affe9ee2d3aa46df184f005164457d45f05102a3d5",
   "assets/fieldproof-signed-receipt.webm": "42e7ec97daacd0cb04d5af39d50ebae1c9dc127d6e552f47aa9219b49357159b",
+  "competition/assets/fieldproof-project.png": "e5dee407b2cee4921c79b1211552daf65ed1de91291f57af014045f90a2c0fd7",
+  "competition/fieldproof-pitch.pdf": "0529cbca91326e1bfaff95ae3124e9d3ddf5442b27f5d5ef9ea01165c723ff22",
+  "competition/fieldproof-pitch.pptx": "08e07e31bc2dcd29d67af9ec2e021090c5c89be1dd164167a3fa07de08b73e15",
+  "competition/slides.html": "5a5561d0f3264319fcb5fc9a896828f64aead91707d3d17a97c3f2b609352b5b",
   "evidence/device-signed-contact-states.json": "b4d541240fa2423cca36bb79f38c8cce4dab26f205269c51e693bff4383de863",
   "evidence/device-signed-purchase-20261005.json": "30e656d8c7e4d08f84cde6bc4ee31b90d481627b067ec848e7fdb05cdb6afd61",
   "evidence/device-signed-purchase-20261011.json": "20e6f1088e06e28233016c102aefaf2a16190a87d344fbbb018e04955cc511bf",
   "evidence/device-signed-purchase-click-20261005.json": "8875428bd7001ce4680a8f816f5a81542acb455ff9da28d658e86ced46fe35da",
   "evidence/device-signed-purchase-fast-20261005.json": "1c80d52f9d48949e9bae70ed8f259f627a12741846115e7a235deb9cd5b5845e",
   "evidence/device-signed-purchase.json": "a41601211bd21b9bc7abd48fdba621c794e895c22ba9cdac8ce01e76baf2f467",
-  "guide.html": "9419f84f8a4026b810c692c349945760f7330798609b9728c4a27fbdb9475726",
+  "guide.html": "d19e597898cc2c79bce5a0de0c444b559f3739ff92413a205f1defc48f15cea1",
   "index.html": "86ce04f5ef2ddcb75f00acf2f94c7f31d51b3a5361c728d2f4521bd950084a25",
   "jobs.html": "d749e3c060f5046ba484af32011caac03926826f6c19509e4441d28effb88f74",
   "jobs.mjs": "543e9f085d44cf04f092b825a96b6a5f63d1b64d62ac5a893fbebeae38b55be6",
@@ -18,5 +22,6 @@
   "receipt-keys.json": "0eb12edac38603bb3e7657147613037904f610fec7b3b5fda31322c65bed6662",
   "review.html": "c482522a36ca0c79a871fc98e1f0f9c3764bf3fac166fe342decf665adffc821",
   "review.mjs": "d34e6409a203e918e6b6165074bdb31daf9007ad898ba2b6a3f53decad5ae2f1",
-  "settlement.mjs": "144e5dac218d6644db90277f6ab5fcd9a771a93e01951115cb4b56ac3409000d"
+  "settlement.mjs": "144e5dac218d6644db90277f6ab5fcd9a771a93e01951115cb4b56ac3409000d",
+  "start.html": "b846853e5945138746a85d07fb33237411997ee1d622c79e8bbc9966cdbba4f0"
 }
