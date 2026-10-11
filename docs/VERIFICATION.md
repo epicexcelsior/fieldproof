@@ -4,6 +4,32 @@ Current continuation: October 11, 2026, Europe/Berlin. Public paid evidence date
 The historical local MVP completes a public Devnet purchase, a real ESP32 observation, and both human-controlled contact states.
 This record does not claim production security, safety certification, or standards compliance.
 
+## October 11 Solana-first agent and judge review
+
+The new `agent-contact.js` command checks public configuration without a wallet, network call, or device request.
+Explicit execution requires a supplied UUID and disposable Devnet signer. Fixed payment and device terms remain operator configuration.
+The existing private controller saves the result before independent payment verification. Reuse inspects the same operation without another payment.
+An unresolved payment blocks another operation. A slow query cannot keep an expired answer at DISPATCH.
+The command claims no peaq identity, event, or commercial revenue. The strict peaq-linked path remains separate.
+
+The focused competition command passed 48 gateway tests and 41 core Python tests, with nine optional SDK skips.
+Five new agent tests cover fixed terms, restart idempotency, RPC recovery, post-query expiry, and unresolved outcomes.
+The agent preview ran without a wallet and returned `configuration_checked`, `spending: false`, and `peaq: not_used`.
+Agent tests reuse historical recorded receipt bytes and controlled payment responses. They make no payment or new hardware capture.
+The resulting agent report passed the real workbench's original receipt and request inspection with a fixed historical test clock.
+The CLI rejected an existing output file before reading an absent wallet. The original file remained unchanged.
+Output options without explicit execution also failed before any file write.
+Final logs: `.local/competition/checks/d40d6931-c801-4ef9-bd8e-c16e39ccc7b2`.
+
+Current sponsor pages and World's Fair rules were retrieved through the web reader.
+The Colosseum cutoff conversion produced `2026-10-13T08:59:00+02:00` with Python's IANA time zones.
+The [requirements](competition/REQUIREMENTS.md) keep authenticated sponsor cutoffs and video limits unverified.
+The public GitHub reader still shows older source content. Both Pages URLs failed through this reader.
+These retrieval failures do not establish a public-site outage. Signed-out browser access remains a live acceptance gap.
+The npm offline helper command returned ENOTCACHED. A later search found installed copilot-connect version 0.2.3.
+Its supported `status --local` command failed because this session cannot write the protected credential store.
+No Copilot response, private project review, login reset, fresh hardware run, or submission occurred.
+
 ## October 10 peaq-linked job implementation
 
 New software checks a finalized Agung identity before the existing Solana x402 purchase.

@@ -14,7 +14,11 @@ No hosted action creates a payment or reads hardware. Use [Run without hardware]
 An AI agent can request a fresh physical check and pay the device operator for the answer.
 FieldProof buys a signed contact observation through Solana x402 and checks the key, challenge, samples, and age.
 The buyer's demo policy produces `DISPATCH` or `WAIT`. Both honest contact states fulfill the requested observation.
+Payment goes to the locally configured operator wallet. The ESP32 receipt key does not control that Solana wallet.
+The buyer is bounded software callable by an AI agent. This demo does not establish autonomous AI reasoning.
 The initial user hypothesis is an AI builder who operates equipment at another location. Demand remains unvalidated.
+The differentiated transaction is a commissioned measurement with a fresh challenge, rather than an existing data feed.
+The [pilot questions](docs/competition/PILOT.md) test whether that distinction solves a buyer's recurring problem.
 
 **A confirmed payment and a valid signature can outlive the answer's useful window. The buyer must still check its age.**
 
@@ -44,6 +48,8 @@ It does not take payments or join the paid provider catalog.
 
 ## peaq-linked job implementation
 
+The Solana purchase works separately from this optional integration route.
+The [current requirements](docs/competition/REQUIREMENTS.md) establish no general Agung transaction requirement for the peaq bounty.
 The new job path resolves an approved Agung identity and registered receipt key before the buyer starts payment.
 It preserves the original device signature and links the request, identity snapshot, and Solana transaction in one job envelope.
 A durable activity outbox stores exact evidence bytes. Interrupted submissions require reconciliation before another write.
@@ -106,6 +112,11 @@ Open `http://127.0.0.1:4026/proof?present=1`. Select **Pay 0.001 USDC**.
 The laptop signs once. The page shows the actual transfer, signed reading, elapsed time, and current evidence age.
 Simulation stays separate. See [setup, limits, and failure recovery](docs/DEMO.md#pay-and-read-with-one-click).
 The [latest verified October 5 click output](docs/evidence/device-signed-purchase-fast-20261005.json) records an actual paid OPEN reading and its unchanged signature.
+
+For a bounded headless buyer, run `node gateway/agent-contact.js` to check public configuration without a wallet or network request.
+Explicit execution requires a disposable Devnet wallet and a supplied UUID operation ID.
+Reusing that ID inspects the original purchase without another payment. The command claims no peaq identity or event.
+Follow the [agent rehearsal](docs/competition/REHEARSAL.md#run-the-headless-agent-route) for execution, shared budget, and recovery limits.
 
 <details>
 <summary>CLI attack checks and optional two-observer rehearsal</summary>

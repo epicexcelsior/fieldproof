@@ -2,6 +2,8 @@
 
 FieldProof preserves Solana Devnet x402 prepayment and the existing ESP32 P-256 contact receipt.
 The buyer checks a peaq identity before payment. It records one fulfilled observation as activity, not commercial revenue.
+This is the optional Agung route. Use the [Solana rehearsal](competition/REHEARSAL.md) when peaq identity is not active.
+That route claims no peaq identity or event. This route must not relax its live identity gate.
 
 ## Current state
 

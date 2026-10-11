@@ -1,10 +1,13 @@
 # peaq integration decision
 
-**October 10, 2026: the peaq-linked job and bounded operator paths exist in code. Live activation and event submission remain pending.**
+**October 11, 2026: keep Solana settlement. The optional peaq-linked job and operator paths exist in code. Live activation and events remain pending.**
 The [paid-job runbook](JOBS.md) owns execution commands, current policy, event bytes, and recovery.
 This document records the SDK/deployment decision and historical readiness evidence.
-The buyer now connects the observer identity to its pinned receipt key and service before payment.
+In that optional path, the buyer connects the observer identity to its pinned key and service before payment.
 This document owns peaq interfaces, readiness, and activation gates.
+The [current requirements](competition/REQUIREMENTS.md) establish no general Agung transaction requirement.
+Use the [Solana rehearsal](competition/REHEARSAL.md) while activation is pending.
+That path claims no peaq identity or event. The Agung path must retain its strict live authority gate.
 
 ## October 11 host preflight
 
@@ -22,7 +25,7 @@ No alternate address, SDK upgrade, activation or activity write followed this fa
 
 ## Other peaq surfaces reviewed October 11
 
-Keep Agung identity and activity as the core. The buyer must check the registered device before spending.
+Agung identity and activity remain a prepared integration option. In that path, the buyer checks the registered device before spending.
 The current SDK documentation explicitly skips Agung MCR integration because no approved paired rating endpoint exists.
 Its Stream purchase surfaces remain in development. Its Verify surface supplies API reads and chip preflight, not phone camera attestation.
 These surfaces do not supply a verified shortcut for the current contact demonstration.
@@ -158,12 +161,14 @@ Do not publish private location or customer data as event metadata.
 Registry registration records an operator claim. It does not establish device key possession, installation, physical truth, or site permission.
 The public identity inputs also require an ownership and reservation review before activation. An identifier alone is not an authorization mechanism.
 
-## Why Solana onboarding does not remove this gate
+## Why native Solana onboarding is not a drop-in replacement
 
-The earlier guide review recorded paused onboarding, a mainnet-only flow, and a contract migration.
-The October 11 web reader did not retrieve the guide again. Current onboarding availability remains unverified.
-Verify the supported deployment before using copied reservation instructions.
-Native Agung readiness is a separate path. It does not prove that Solana onboarding works.
+The current 0.11.2 SDK describes native Solana activation through selected mainnet deployments and a cross-chain peaq link.
+It does not establish a Solana Devnet-only replacement for this demonstration.
+The flow includes wallets, bonds, network fees, and external validation. No activation occurred here.
+Keep the tested Solana payment instead of making mainnet onboarding a recording dependency.
+Agung readiness does not establish native Solana activation.
+[Current native-chain SDK documentation](https://pypi.org/project/peaq-os-sdk/0.11.2/).
 [Solana onboarding guide](https://docs.peaq.xyz/peaqos/guides/onboard-on-solana).
 
 The inspected Python release supports selected Tokenomics identity and event surfaces.

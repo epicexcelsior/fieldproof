@@ -31,6 +31,7 @@ Payment verification cannot refresh an expired contact answer. Neither result es
 ## Coordinator acceptance before recording
 
 Use the [paid-job runbook](../JOBS.md). Keep live evidence separate from controlled software checks.
+For the Solana-only route, use the [rehearsal](REHEARSAL.md). Identity and activity rows remain pending and are not acceptance claims.
 
 | Part | Acceptance result |
 |---|---|

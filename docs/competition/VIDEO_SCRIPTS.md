@@ -1,10 +1,17 @@
 # Founder recording scripts
 
 Speak in your own voice. The time blocks are editing targets. Run the live demonstration first, then replace every bracketed cue with the actual verified screen or cut that line. Keep physical footage, browser state, transaction, and peaq readback legible. Do not show a private key or wallet file.
+Payment goes to the configured operator wallet. Do not describe the ESP32 as controlling that wallet.
+The bounded buyer is software callable by an AI agent. Explain that distinction if no AI tool call appears in the recording.
+The [current requirements](REQUIREMENTS.md) own cutoff and form checks. The [pilot questions](PILOT.md) own the buyer hypothesis.
 
 ## peaq entry: two-minute transaction video
 
 **0:00–0:15 — buyer and question.** Show the request screen and the enclosure contact stand-in. “An AI agent that manages equipment at another site needs a current answer before its next decision. FieldProof lets it buy one contact check from an approved device.”
+
+Use this grounded alternative when no AI agent appears: “This software buyer pays a real device operator for one new contact reading.
+It fixes the question, price, and useful age before purchase. The board answers that request with a signed observation.”
+Do not imply a validated equipment operator or customer in this prototype.
 
 **0:15–0:35 — identity.** Show the finalized peaq identity readback only if active. “The buyer checks this peaq machine identity, its public receipt key, and its offered service before it accepts the price.” **If pending, say instead:** “The peaq identity check is in integration. Today I can show the existing paid contact prototype.” Do not show a prepared identity draft as activation.
 

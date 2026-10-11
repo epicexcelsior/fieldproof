@@ -1,7 +1,8 @@
 # FieldProof bounty execution plan
 
-**Current status: October 10, 2026.** Build one peaq-linked paid physical check for an AI agent.
-The [current focus](FOCUS.md) owns the frozen scope. The [paid-job runbook](JOBS.md) owns execution and recovery.
+**Current status: October 11, 2026.** Record one repeatable Solana-paid physical check for an AI agent.
+The [current focus](FOCUS.md) owns scope. The [return-to-laptop rehearsal](competition/REHEARSAL.md) owns today's test path.
+Agung remains optional. The [peaq-linked runbook](JOBS.md) retains its strict identity and event gates.
 Live Agung activation, registry binding, event submission, and fresh device tests remain pending.
 
 The internal submission target is October 12, 18:00 CEST.

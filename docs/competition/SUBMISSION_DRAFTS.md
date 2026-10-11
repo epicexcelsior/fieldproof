@@ -2,6 +2,11 @@
 
 These are paste-ready draft paragraphs, not completed submissions. The founder must verify each live form, eligibility, links, and final implementation state. Keep peaq **INTEGRATION PENDING** language until the coordinator supplies independent readback.
 
+Read the [current requirements](REQUIREMENTS.md) and [buyer hypothesis](PILOT.md) before using these drafts.
+The buyer is bounded software callable by an AI agent. Claim autonomous AI reasoning only if the recording shows it.
+Payment goes to the configured operator wallet. The ESP32 does not hold the Solana spending key.
+The Solana route works while Agung remains pending. Its output claims no peaq identity or event.
+
 ## 1. Colosseum Crypto World's Fair project
 
 **Name:** FieldProof
@@ -42,4 +47,5 @@ These are paste-ready draft paragraphs, not completed submissions. The founder m
 8. Paste each tailored draft into its own form. Remove every pending bracket and unsupported claim.
 9. Submit each eligible entry as the founder. Save each confirmation and exact submitted URL.
 
-The plan records an October 13, 2026 cutoff for peaq and Colosseum, with different time zones. Recheck current forms before relying on that record. The older Germany MVP deadline is historical and is not this Germany Colosseum track.
+The official Colosseum cutoff converts to October 13, 2026, 08:59 CEST.
+Verify sponsor cutoffs in both Earn forms. The older MVP deadline does not govern this Germany Colosseum track.
