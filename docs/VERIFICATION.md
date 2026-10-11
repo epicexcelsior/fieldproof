@@ -17,6 +17,10 @@ The replay passed its four recorded stages, expiry, changed-answer rejection, an
 The browser reported no page errors and made only GET/HEAD requests. No payment, device request, or peaq write occurred.
 The page received visual review at 1280 and 390 pixels. Syntax, whitespace, and added-content privacy checks passed.
 Private browser evidence remains under `.local/competition/browser-checks/sponsor-20261011/local-final`.
+GitHub Pages completed the sponsor-review build at `e21b66b`. All 29 public assets match the reviewed export hashes.
+The actual public URL passed the same desktop/mobile link, disclosure, replay, expiry, alteration, and restore checks.
+Public checks remain under `.local/competition/browser-checks/sponsor-20261011/public`.
+The founder's message remains unsent. Final physical footage and live peaq writes remain open.
 
 ## October 11 final integration and feedback cut
 
