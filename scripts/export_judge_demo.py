@@ -1,4 +1,4 @@
-"""Export the public receipt inspector. Whitelist assets and never copy local state."""
+"""Export the guided review and receipt inspector. Copy only approved public assets."""
 
 import argparse
 import hashlib
@@ -12,6 +12,8 @@ from zipfile import ZipFile, ZIP_DEFLATED
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = {
     "feedback.html": "docs/feedback.html",
+    "feedback.mjs": "docs/feedback.mjs",
+    "proof.html": "docs/proof.html",
     "start.html": "docs/start.html",
     "competition/slides.html": "docs/competition/slides.html",
     "competition/fieldproof-pitch.pdf": "docs/competition/fieldproof-pitch.pdf",
@@ -35,6 +37,7 @@ ASSETS = {
     "evidence/peaq-agung-storage-readiness-20261011.json": "docs/evidence/peaq-agung-storage-readiness-20261011.json",
     "assets/fieldproof-signed-receipt.webm": "docs/assets/fieldproof-signed-receipt.webm",
     "assets/fieldproof-paid-check-feedback.webm": "docs/assets/fieldproof-paid-check-feedback.webm",
+    "assets/fieldproof-real-device.webp": "docs/assets/fieldproof-real-device.webp",
     "assets/fieldproof-service-boundaries.svg": "docs/assets/fieldproof-service-boundaries.svg",
     "assets/fieldproof-payment-to-observation.svg": "docs/assets/fieldproof-payment-to-observation.svg",
     "assets/fieldproof-evidence-window.svg": "docs/assets/fieldproof-evidence-window.svg",
@@ -91,12 +94,12 @@ def export(output, *, job_manifest=None, provider_policy=None, require_peaq=Fals
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / source, destination)
         job_page = (stage / "jobs.html").read_text()
-        for old, new in [('href="/"', 'href="./index.html"'), ('href="/proof"', 'href="./index.html"'),
+        for old, new in [('href="/"', 'href="./index.html"'), ('href="/proof"', 'href="./proof.html"'),
                          ('href="/learn"', 'href="./guide.html"'), ('src="/jobs.mjs"', 'src="./jobs.mjs"')]:
             job_page = job_page.replace(old, new)
         (stage / "jobs.html").write_text(job_page)
         review = (stage / "review.html").read_text()
-        for old, new in [('href="/review"', 'href="./review.html"'), ('href="/proof', 'href="./index.html'),
+        for old, new in [('href="/review"', 'href="./review.html"'), ('href="/proof', 'href="./proof.html'),
                          ('href="/learn"', 'href="./guide.html"'), ('href="/jobs"', 'href="./jobs.html"'),
                          ('href="/assets/', 'href="./assets/'), ('href="/evidence/', 'href="./evidence/'),
                          ('src="/review.mjs"', 'src="./review.mjs"')]:
@@ -113,17 +116,25 @@ def export(output, *, job_manifest=None, provider_policy=None, require_peaq=Fals
             page = page.replace('</main>',
                 '<p><a href="./jobs.html">Inspect the reviewed peaq-linked job</a> · '
                 '<a href="./evidence/current-job.json" download>Download original job and recorded readbacks</a></p></main>')
-        (stage / "index.html").write_text(page)
+        (stage / "proof.html").write_text(page)
+        home = (stage / "feedback.html").read_text()
+        # Preserve existing receipt bookmarks while giving a new visitor the guided visual story.
+        legacy = ('<script>const q=new URLSearchParams(location.search);'
+                  'if(["record","present","live","view"].some(k=>q.has(k))||location.hash==="#payment")'
+                  '{location.replace("./proof.html"+location.search+location.hash)}</script>')
+        home = home.replace("<head>", "<head>" + legacy, 1)
+        (stage / "index.html").write_text(home)
         (stage / "guide.html").write_text(guide_links((stage / "guide.html").read_text()))
         (stage / "README.txt").write_text(
-            "FieldProof: inspect recorded physical evidence\n\n"
+            "FieldProof: follow one actual recorded paid check\n\n"
             "1. Serve this directory on localhost or HTTPS.\n"
             "   python3 -m http.server 8787 --bind 127.0.0.1\n"
             "   Open http://127.0.0.1:8787/start.html for the story and submission materials.\n"
             "   Open http://127.0.0.1:8787/feedback.html for the short sponsor review.\n"
             "   Open http://127.0.0.1:8787/review.html for the one-minute feedback walkthrough.\n"
             "2. Open http://127.0.0.1:8787/guide.html for the story, radio explanation, and rehearsal.\n"
-            "   Open http://127.0.0.1:8787 for actual recorded-receipt verification.\n"
+            "   Open http://127.0.0.1:8787 for the guided visual replay.\n"
+            "   Open http://127.0.0.1:8787/proof.html?record=20261011 for actual receipt verification.\n"
             "3. Verify the original receipt, then alter its state, challenge, or public key.\n"
             "4. Select Verify recorded payment for a read-only Solana Devnet RPC query.\n"
             "5. Inspect the separately signed BOOT held/released input pair. Those checks moved no funds.\n"

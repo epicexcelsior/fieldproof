@@ -31,21 +31,24 @@ def test_judge_package_contains_only_public_assets_and_works_under_a_url_prefix(
                                           '<a href="/assets/fieldproof-signed-receipt.webm">Video</a>'
                                           '<a href="/evidence/device-signed-purchase-20261011.json">Evidence</a>'
                                           '<a href="/learn">Guide</a><a href="/jobs">Jobs</a><script src="/review.mjs"></script>')
+    (root / "docs/feedback.html").write_text('<html><head></head><body>Guided visual story</body></html>')
     (root / "secret.keypair.json").write_text("PRIVATE FIXTURE")
     monkeypatch.setattr(module, "ROOT", root)
     output = tmp_path / "site"
     archive = module.export(output)
-    assert './proof.js' in (output / "index.html").read_text()
-    assert 'href="./index.html"' in (output / "index.html").read_text()
-    assert 'href="./guide.html"' in (output / "index.html").read_text()
-    assert '?live=1' not in (output / "index.html").read_text()
+    assert './proof.js' in (output / "proof.html").read_text()
+    assert 'href="./index.html"' in (output / "proof.html").read_text()
+    assert 'href="./guide.html"' in (output / "proof.html").read_text()
+    assert '?live=1' not in (output / "proof.html").read_text()
+    assert 'Guided visual story' in (output / "index.html").read_text()
+    assert 'location.replace("./proof.html"+location.search+location.hash)' in (output / "index.html").read_text()
     job_page = (output / "jobs.html").read_text()
-    assert 'href="./index.html"' in job_page
+    assert 'href="./proof.html"' in job_page
     assert 'href="./guide.html"' in job_page
     assert 'src="./jobs.mjs"' in job_page
-    assert 'Live monitoring requires the repository gateway.' in (output / "index.html").read_text()
+    assert 'Live monitoring requires the repository gateway.' in (output / "proof.html").read_text()
     review = (output / "review.html").read_text()
-    assert 'href="./index.html?record=20261011&amp;present=1"' in review
+    assert 'href="./proof.html?record=20261011&amp;present=1"' in review
     assert 'href="./assets/fieldproof-signed-receipt.webm"' in review
     assert 'href="./evidence/device-signed-purchase-20261011.json"' in review
     assert 'href="./guide.html"' in review
@@ -147,7 +150,7 @@ def test_job_export_includes_one_reviewed_manifest_and_keeps_original_bytes(tmp_
     exported = json.loads((output / "evidence/current-job.json").read_text())
     assert canonical(exported["job"]) == canonical(source["job"])
     assert "PRIVATE FIXTURE" not in (output / "evidence/current-job.json").read_text()
-    assert 'href="./jobs.html"' in (output / "index.html").read_text()
+    assert 'href="./jobs.html"' in (output / "proof.html").read_text()
     assert "Load reviewed job from this export" in (output / "README.txt").read_text()
     with ZipFile(archive) as bundle:
         assert "evidence/current-job.json" in bundle.namelist()

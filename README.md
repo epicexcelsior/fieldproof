@@ -2,9 +2,9 @@
 
 **Pay a device for a fresh physical check. Verify its signed answer before using it.**
 
-[Start here: story, demo, deck, and recording materials](https://epicexcelsior.github.io/fieldproof/start.html) · [Replay the real paid check](https://epicexcelsior.github.io/fieldproof/review.html?view=20261011-story) · [Inspect the original receipt](https://epicexcelsior.github.io/fieldproof/?record=20261011&present=1)
+[Follow one paid check visually](https://epicexcelsior.github.io/fieldproof/) · [Founder materials](https://epicexcelsior.github.io/fieldproof/start.html) · [Inspect the original receipt](https://epicexcelsior.github.io/fieldproof/proof.html?record=20261011&present=1)
 
-For a quick external review, open [the one-page prototype brief](https://epicexcelsior.github.io/fieldproof/feedback.html).
+Select **Show the request**, then follow the four steps. The page uses original recorded evidence and makes no payment.
 
 A laptop buys a new contact reading from an ESP32-C6 through Solana x402.
 The device signs its answer. The buyer checks the device key, request, samples, signature, and answer's age.

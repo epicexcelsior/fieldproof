@@ -1,6 +1,23 @@
-# Five-minute signed-out reviewer test
+# Follow one check, then inspect the evidence
 
-Open [the material hub](../start.html) for the story, deck, rehearsal, and submission materials.
+Open [the visual replay](https://epicexcelsior.github.io/fieldproof/) first. No wallet, key, or login is required.
+
+1. Select **Show the request**.
+2. Select **Show the payment**. The operator receives 0.001 Devnet test USDC in the recorded purchase.
+3. Select **Show the device check**. The real recorded button input reads OPEN.
+4. Select **Verify the answer**. The browser checks the original signature at capture time.
+5. Select **Use this old answer now**. Expect an expired answer.
+6. Select **Change the answer**. Expect signature rejection.
+7. Select **Restore original**. The original timestamp stays unchanged.
+
+Opening the replay creates no payment or measurement. The real device photo comes from earlier footage.
+The recorded answer is expired today. peaq identity and work-record writes remain pending.
+
+Explain who pays, what the operator supplies, and why the buyer rejects an old answer.
+If the reviewer cannot explain those three facts, record the confusing step before opening more materials.
+
+Open **Evidence, limits, and reviewer questions** for the receipt inspector, original receipt, and deck.
+Use [the founder material hub](../start.html) for recording and submission resources.
 
 For a quick preview, watch the [58-second captioned feedback cut](../assets/fieldproof-paid-check-feedback.webm).
 It contains the real October 11 test payment and signed ESP32 answer. It makes no new measurement or payment.
@@ -8,7 +25,7 @@ The clip labels live peaq integration pending. The final narrated hardware video
 
 Goal: determine whether the evidence supports a paid fresh contact check. No wallet, key, hardware, or login is needed for this public inspection. The public record is historical and expired.
 
-For the latest feedback export, open `review.html` first.
+The earlier detailed replay remains at `review.html`. Its entrance is an illustration.
 Select **Replay the real check** to follow the October 11 request, payment, measurement, and example decision.
 Historical acceptance uses the original capture time. It does not establish a fresh answer today.
 Select **Try this old answer now**. Expect the example trip to stay on hold.
@@ -23,7 +40,7 @@ Select **Inspect evidence** to open the original receipt inspector.
 Select **Show full page**, then **Verify buyer payment** for a read-only transfer query.
 The instructions below also support the older public inspector.
 
-1. Open the [public inspector](https://epicexcelsior.github.io/fieldproof/) in a private browser window.
+1. Open the [public inspector](https://epicexcelsior.github.io/fieldproof/proof.html?record=20261011) in a private browser window.
 2. Select **Verify original**. Expect a valid device signature and expired evidence. The decision remains WAIT.
 3. Select **Flip contact state**. Expect signature rejection and WAIT.
 4. Restore **Verify original**. Expect the original signature result to return.

@@ -4,6 +4,28 @@ Current continuation: October 11, 2026, Europe/Berlin. Public paid evidence incl
 The historical local MVP completes a public Devnet purchase, a real ESP32 observation, and both human-controlled contact states.
 This record does not claim production security, safety certification, or standards compliance.
 
+## October 11 guided visual review
+
+The public home page now presents one guided visual replay. It shows the buyer, actual device, operator payment, and signed answer.
+The first view contains fewer than 240 words. Detailed evidence and limitations remain in one disclosure.
+The original receipt inspector now lives at `proof.html`. Existing record, presentation, live-view, and payment bookmarks retain their parameters.
+The founder material hub remains separate from the reviewer path.
+
+The device image comes from the two-second frame of the founder's earlier hardware clip.
+It is a still image, not an October 11 capture or a synchronized live hardware view.
+The earlier [founder video](https://youtu.be/XRSp_4vJ5oU) has a 138-second duration and an October 5 upload date.
+The existing local transcript and physical footage supplied the useful hardware context. No earlier future-network claim became verified functionality.
+
+The declared gateway suite passed **128 tests**, including genuine receipt verification and four unavailable/invalid-evidence cases for the visual replay.
+The new test also verifies control readiness with deliberately delayed cryptography. The first full run exposed an event-loop-count wait.
+The corrected wait observes control readiness with a bounded deadline. It changes no production verification or signing behavior.
+The export subset passed **eight tests, with one optional SDK skip**.
+Chrome passed 1280-, 390-, and 320-pixel layouts, keyboard steps, the actual image, expiry, altered-copy rejection, restore, and back navigation.
+Chrome also passed missing/forged/pin-mismatch failures, reduced motion, unchanged original evidence, and legacy receipt bookmarks.
+The existing detailed replay and job workbench passed their browser regression checks.
+The guided page requests only public files. It never accesses buyer configuration, signs, pays, or requests hardware.
+Private checks and screenshots remain under `.local/competition/visual-story-20261011`.
+
 ## October 11 short sponsor review
 
 The [quick prototype review](feedback.html) gives the product explanation, actual paid-check sequence, buyer hypothesis, and pending peaq status.

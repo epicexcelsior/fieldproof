@@ -5,9 +5,9 @@ Final founder videos, live peaq integration, and submitted confirmations remain 
 
 | Material | Use it for |
 |---|---|
-| [Quick prototype review](../feedback.html) | One link for Superteam feedback before the final founder video |
+| [Guided visual replay](../feedback.html) | Follow one actual paid check before opening technical evidence |
 | [Plain-language story](STORY.md) | What it does, proposed buyer, alternatives, limitations, and future test |
-| [One-minute public replay](https://epicexcelsior.github.io/fieldproof/review.html?view=20261011-story) | No-wallet feedback on a recorded real purchase |
+| [Earlier technical replay](https://epicexcelsior.github.io/fieldproof/review.html?view=20261011-story) | Detailed recorded-purchase explanation after the visual overview |
 | [Physical rehearsal](REHEARSAL.md) | Unpaid input changes, new bounded payment, phone verification, and recovery |
 | [Video scripts](VIDEO_SCRIPTS.md) | Separate 2–3 minute pitch and at-most-three-minute product demo |
 | [HTML deck](slides.html), [PDF](fieldproof-pitch.pdf), [editable PowerPoint](fieldproof-pitch.pptx) | Five supporting slides. A deck does not replace the required videos |

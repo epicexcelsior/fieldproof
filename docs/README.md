@@ -7,9 +7,9 @@ Read [the current status](FOCUS.md) for verified features and open gates. Do not
 
 | Your task | Current owner |
 |---|---|
-| Send one short page for sponsor feedback | [Quick prototype review](feedback.html) |
+| Follow one check or send it for sponsor feedback | [Guided visual replay](feedback.html) |
 | Understand the product, proposed buyer, and alternatives | [Plain-language story](competition/STORY.md) |
-| Replay one actual paid check | [Public walkthrough](https://epicexcelsior.github.io/fieldproof/review.html?view=20261011-story) |
+| Inspect the original signature and payment | [Receipt inspector](https://epicexcelsior.github.io/fieldproof/proof.html?record=20261011) |
 | Find deck, video scripts, and entry drafts | [Competition package](competition/README.md) |
 | Test physical input and record a new transaction | [Physical rehearsal](competition/REHEARSAL.md) |
 | Collect useful external feedback | [Tester guide](competition/TESTER_GUIDE.md) |
