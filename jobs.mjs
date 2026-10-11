@@ -204,7 +204,8 @@ if (typeof document !== 'undefined' && document.body?.dataset.fieldproofPage ===
     } else el('explorer').removeAttribute('href');
     text('machine-id', job?.identity?.machine_id ?? 'No peaq identity in this historical run');
     const eventState = source.event?.status ?? source.event?.state;
-    text('event-status', eventState ? `Recorded ${eventState}; this page does not query peaq now` : 'No linked peaq event shown');
+    const activityRoute = source.event?.reference?.route === 'storage' ? 'peaq Storage activity' : 'peaq event';
+    text('event-status', eventState ? `Recorded ${activityRoute}: ${eventState}; no live query here` : 'No linked peaq activity shown');
     mark('pin-check', 'INSTALLED', 'ok');
     mark('signature-check', signature ? 'VALID' : 'REJECTED', signature ? 'ok' : 'bad');
     mark('terms-check', terms ? 'MATCH' : 'REJECTED', terms ? 'ok' : 'bad');
@@ -217,7 +218,7 @@ if (typeof document !== 'undefined' && document.body?.dataset.fieldproofPage ===
       !terms ? 'The request, payment terms, receipt digest, or recorded identity does not match.' :
         !fresh ? 'The signed answer is too old for the ten-second buyer policy.' :
           'Signature and terms match. Verify the Devnet transfer separately before relying on this paid run.');
-    text('ticket-note', source.kind === 'historical' ? 'Historical paid run. No peaq identity or event is claimed.' :
+    text('ticket-note', source.kind === 'historical' ? 'Historical paid run. No peaq identity or activity is claimed.' :
       'The peaq fields are recorded data. This page has not queried the registry.');
     el('tamper').disabled = false; el('restore').disabled = true;
     status(signature && terms ? (fresh ? 'Receipt checks passed. Payment and current peaq state need separate verification.' :

@@ -1,6 +1,7 @@
 {
-  "README.txt": "0666f3a41b90f0bcaa7e948289540017e807c07099f8dfeeebde6bdce20ac652",
+  "README.txt": "83457162410031197542fe0a990d323c4a704d0f2c83a0ce806187b1ba8c2a95",
   "assets/fieldproof-evidence-window.svg": "377b10402bb13bd2787cec33a72c8509e7e4615f282d0a582d909732aab476e9",
+  "assets/fieldproof-paid-check-feedback.webm": "0bb4df35f8f62821b9474d7671ef1eb1755cc401b987072d6b0c9f1a3133d564",
   "assets/fieldproof-payment-to-observation.svg": "faa42577ef796bc09332a848ac0d3d380e06c74eaf1fd0c77ec2d4e874b5034e",
   "assets/fieldproof-service-boundaries.svg": "62648320848115a211c6a4affe9ee2d3aa46df184f005164457d45f05102a3d5",
   "assets/fieldproof-signed-receipt.webm": "42e7ec97daacd0cb04d5af39d50ebae1c9dc127d6e552f47aa9219b49357159b",
@@ -14,14 +15,16 @@
   "evidence/device-signed-purchase-click-20261005.json": "8875428bd7001ce4680a8f816f5a81542acb455ff9da28d658e86ced46fe35da",
   "evidence/device-signed-purchase-fast-20261005.json": "1c80d52f9d48949e9bae70ed8f259f627a12741846115e7a235deb9cd5b5845e",
   "evidence/device-signed-purchase.json": "a41601211bd21b9bc7abd48fdba621c794e895c22ba9cdac8ce01e76baf2f467",
+  "evidence/peaq-agung-event-registry-20261011.json": "04012d7a9e5496af9a9007d18c318a98438db25df87a12b67946e8b346a23154",
+  "evidence/peaq-agung-storage-readiness-20261011.json": "048f26dc6bdccdf0a5087d9aa7b00d5a11e4dd185857a84a71077b53a7ddf616",
   "guide.html": "d19e597898cc2c79bce5a0de0c444b559f3739ff92413a205f1defc48f15cea1",
   "index.html": "86ce04f5ef2ddcb75f00acf2f94c7f31d51b3a5361c728d2f4521bd950084a25",
   "jobs.html": "d749e3c060f5046ba484af32011caac03926826f6c19509e4441d28effb88f74",
-  "jobs.mjs": "543e9f085d44cf04f092b825a96b6a5f63d1b64d62ac5a893fbebeae38b55be6",
+  "jobs.mjs": "6c3137c8cc7bffe68c1bc3a789d4253e815caaa2421667aeee38955e9fbfff73",
   "proof.js": "5800eb13e762dc1ea3c917660755bc0e2cfce7c322d5add0a9bb30c0a5c4a060",
   "receipt-keys.json": "0eb12edac38603bb3e7657147613037904f610fec7b3b5fda31322c65bed6662",
   "review.html": "c482522a36ca0c79a871fc98e1f0f9c3764bf3fac166fe342decf665adffc821",
   "review.mjs": "d34e6409a203e918e6b6165074bdb31daf9007ad898ba2b6a3f53decad5ae2f1",
   "settlement.mjs": "144e5dac218d6644db90277f6ab5fcd9a771a93e01951115cb4b56ac3409000d",
-  "start.html": "b846853e5945138746a85d07fb33237411997ee1d622c79e8bbc9966cdbba4f0"
+  "start.html": "2d5ead83c8c86c28152a2acc3fc5ec64dac81f54d408dd69b08a71f870ba4fcf"
 }
