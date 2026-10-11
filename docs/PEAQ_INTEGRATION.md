@@ -6,6 +6,20 @@ This document records the SDK/deployment decision and historical readiness evide
 The buyer now connects the observer identity to its pinned receipt key and service before payment.
 This document owns peaq interfaces, readiness, and activation gates.
 
+## October 11 host preflight
+
+The founder supplied logs from the laptop's normal terminal. Gateway checks passed 43 tests. Core Python checks passed 40, with nine SDK skips.
+Agung deployment reads passed at finalized block `11117566`, hash `0x94815e1969f93628682063b394361b3e368d584ae2fa37ba9c367071c2a21149`.
+The seven published contracts contain bytecode, and their documented peers match. The proposed observer identity remains absent at this block.
+The full tier-0 bond read remains `400000000000000000` base units. Operator credit, balance, allowance and gas still require preview.
+
+The activity adapter queried `InfoDesk.peer(keccak256("EVENT_REGISTRY"))` and received a zero address.
+This discovery convention was an unverified integration assumption. The SDK accepts a separately supplied EventRegistry address.
+The failed lookup does not establish that every Agung activity route is unavailable.
+Request the official Agung EventRegistry address and its deployment source before changing the registry authority gate.
+No alternate address, SDK upgrade, activation or activity write followed this failure.
+[Current SDK configuration and event routing](https://pypi.org/project/peaq-os-sdk/0.11.2/).
+
 ## Other peaq surfaces reviewed October 11
 
 Keep Agung identity and activity as the core. The buyer must check the registered device before spending.

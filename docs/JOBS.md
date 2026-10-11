@@ -28,6 +28,9 @@ Optional SDK checks skip in the core host environment. The log states each skip.
 Add `--build-phone` to compile and verify the local debug APK without installation.
 Before activation, add `--agung-preflight` to read the live deployment and discover its EventRegistry.
 This preflight needs `FIELDPROOF_PEAQ_PYTHON`. It reads no wallet and creates no machine.
+If its EventRegistry peer is unset, keep the failed diagnostic and request the official Agung address with its deployment source.
+The SDK accepts this address separately. Our discovery convention does not establish that another supported registry exists or is absent.
+Do not replace the authority gate with a guessed address or a different network.
 After configuring the isolated SDK and activating the approved identity, add `--live-read-only` to verify registry and identity reads.
 The live flag remains read-only. It cannot fund or activate the machine.
 

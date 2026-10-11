@@ -1,5 +1,6 @@
 """Registry discovery uses the finalized Agung peer and never a fallback."""
 
+import json
 from types import SimpleNamespace as Row
 
 import pytest
@@ -37,7 +38,26 @@ def test_registry_discovery_uses_finalized_peer_and_machine_binding(monkeypatch)
 
 
 def test_absent_registry_peer_blocks_discovery(monkeypatch):
-    environment(monkeypatch, "0x" + "00" * 20)
+    calls, contracts = environment(monkeypatch, "0x" + "00" * 20)
     monkeypatch.setattr(discovery, "bind_verified_registry", lambda *_args: pytest.fail("No guessed registry is allowed"))
-    with pytest.raises(ValueError, match="EventRegistry peer"):
+    with pytest.raises(discovery.RegistryPeerUnavailable, match="EventRegistry peer") as error:
         discovery.discover()
+    evidence = error.value.evidence
+    assert evidence["verified"] is False and evidence["reason"] == "peer_unset"
+    assert evidence["info_desk"] == contracts["info_desk"] and evidence["machine_registry"] == contracts["machine_registry"]
+    assert evidence["finalized_block"] == 123 and evidence["registry"] == "0x" + "00" * 20
+    assert calls == [{"block_identifier": 123}]
+
+
+def test_missing_peer_cli_preserves_public_diagnostic_without_claiming_no_deployment(monkeypatch, capsys):
+    evidence = {"schema": "fieldproof-peaq-registry-discovery-v1", "verified": False,
+                "reason": "peer_unset", "chain_id": 9990, "finalized_block": 123,
+                "registry": "0x" + "00" * 20, "signing": False}
+    def unavailable():
+        raise discovery.RegistryPeerUnavailable(evidence)
+    monkeypatch.setattr(discovery, "discover", unavailable)
+    assert discovery.main() == 1
+    output = capsys.readouterr()
+    assert json.loads(output.out) == evidence
+    assert "official Agung EventRegistry address" in output.err
+    assert "No signing or fallback" in output.err
