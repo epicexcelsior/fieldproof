@@ -28,6 +28,9 @@ Chrome also passed the existing replay, expiry, tamper, restore, immutable-evide
 The refreshed five-slide PowerPoint contains editable text. Its exported PDF received visual review on all five pages.
 The HTML deck passed desktop/mobile checks and prints five pages. PowerPoint desktop execution remains untested.
 Private audit and visual evidence remain under `.local/competition/audits` and `.local/competition/presentation-refresh`.
+The published hub and replay passed the same Chrome checks under the actual `/fieldproof` URL prefix.
+All 25 public files matched the reviewed export hashes. GitHub Pages completed its build at `3273426`.
+Source and gh-pages pushes were independently verified. Private audits, wallet state, and feedback drafts stayed local.
 
 Official requirement checks now establish the same deadline for all three entries: October 13, 08:59 CEST.
 The current FAQ requires a 2–3 minute presentation and a separate product demo of at most three minutes.
