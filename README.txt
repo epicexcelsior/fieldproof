@@ -3,6 +3,7 @@ FieldProof: inspect recorded physical evidence
 1. Serve this directory on localhost or HTTPS.
    python3 -m http.server 8787 --bind 127.0.0.1
    Open http://127.0.0.1:8787/start.html for the story and submission materials.
+   Open http://127.0.0.1:8787/feedback.html for the short sponsor review.
    Open http://127.0.0.1:8787/review.html for the one-minute feedback walkthrough.
 2. Open http://127.0.0.1:8787/guide.html for the story, radio explanation, and rehearsal.
    Open http://127.0.0.1:8787 for actual recorded-receipt verification.
