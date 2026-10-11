@@ -1,4 +1,4 @@
-# Return to the laptop: record one complete transaction
+# Physical rehearsal: record one complete transaction
 
 Outcome: a paid hardware check, one legible recording, and preserved evidence.
 Keep this route on Solana. Agung remains optional and pending.
@@ -65,7 +65,7 @@ The board samples its current input for every request. BOOT does not need a pres
 Three unchanged OPEN answers can contain three distinct fresh challenges and signed receipts.
 They do not demonstrate a physical state change.
 
-When physical access returns, hold BOOT to test the opposite state.
+The founder is physically present now. Hold BOOT throughout the opposite-state check.
 
    ```bash
    python3 scripts/demo.py board --expect closed
@@ -158,8 +158,9 @@ Each purchase costs at most 0.001 Devnet USDC. The shared controller permits at 
 7. Use the changed-state attack control. Record signature rejection.
 8. Restore the original. Verify that the original signature result returns.
 
-Complete three distinct paid checks. Test both contact states when physical access returns.
-These are founder test jobs, not customer traction. BOOT actuation is an optional visual scene, not a purchase prerequisite.
+Only two operations remain under the existing cap. Record one paid check after the unpaid two-state rehearsal.
+Preserve the last operation for another state or a later take. Recheck readiness before each purchase.
+These are founder test jobs, not customer traction. Keep BOOT visible to show the physical input.
 Stop on any unknown payment outcome. Do not click again to diagnose it.
 The [demo runbook](../DEMO.md#pay-and-read-with-one-click) owns browser recovery.
 

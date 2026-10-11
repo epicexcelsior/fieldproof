@@ -4,6 +4,37 @@ Current continuation: October 11, 2026, Europe/Berlin. Public paid evidence incl
 The historical local MVP completes a public Devnet purchase, a real ESP32 observation, and both human-controlled contact states.
 This record does not claim production security, safety certification, or standards compliance.
 
+## October 11 submission-material audit
+
+The founder now has physical access. A fresh no-payment BLE check returned OPEN, five matching samples, and a valid pinned P-256 signature.
+Buyer inspection found no lock or unresolved operation. Eight used operations leave two under the existing cap.
+No new payment, flash, phone installation, or peaq write occurred during this audit.
+The Seeker had authorized ADB access but remained asleep and locked during inspection.
+Its synthetic photo-evidence suite passed five tests. That result does not establish real capture or a paid provider.
+
+Read-only Agung inspection reached finalized block 11123336. The proposed identity remained absent, and the operator balance was zero.
+The event peer remained unset. The current project registry authority rule requires review against an official deployment source.
+These facts do not establish activation or activity publication.
+
+The new material hub routes the plain-language story, deck, rehearsal, scripts, tester questions, and entries.
+Earlier first-reading plans now route to current owners. Git preserves their prior versions.
+The declared gateway suite passed **113 tests**. The declared Python suite passed **246 tests, with 19 explicit skips**.
+The exporter subset passed **seven tests, with one optional SDK skip**. No declared formatter or type checker exists.
+Syntax checks passed for the gateway and deck generator. The whitespace diff check passed.
+A local-path check inspected 31 current Markdown documents and found no missing file paths.
+
+Chrome verified the hub at 1280 and 390 pixels, relative material downloads, keyboard navigation, FAQ interaction, and no page errors.
+Chrome also passed the existing replay, expiry, tamper, restore, immutable-evidence, and failure checks.
+The refreshed five-slide PowerPoint contains editable text. Its exported PDF received visual review on all five pages.
+The HTML deck passed desktop/mobile checks and prints five pages. PowerPoint desktop execution remains untested.
+Private audit and visual evidence remain under `.local/competition/audits` and `.local/competition/presentation-refresh`.
+
+Official requirement checks now establish the same deadline for all three entries: October 13, 08:59 CEST.
+The current FAQ requires a 2–3 minute presentation and a separate product demo of at most three minutes.
+Copilot confirmed current registration and an incomplete FieldProof draft. It made no account changes.
+The draft is not a submission. No submitted confirmation exists.
+[Requirements and official sources](competition/REQUIREMENTS.md).
+
 ## October 11 visual decision replay
 
 The feedback page now shows one physical scene before transaction details.

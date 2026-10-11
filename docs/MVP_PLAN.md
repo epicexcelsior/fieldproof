@@ -1,3 +1,7 @@
+> Historical initial MVP plan. Its logistics scenario is an example, not a validated buyer.
+> Use [current status](FOCUS.md), [the story](competition/STORY.md), and [current requirements](competition/REQUIREMENTS.md).
+> This file does not define the current submission or claim autonomous AI reasoning.
+
 # FieldProof MVP plan
 
 FieldProof lets an autonomous logistics agent buy fresh evidence before it dispatches a vehicle through a gate.

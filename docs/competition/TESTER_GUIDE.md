@@ -1,5 +1,7 @@
 # Five-minute signed-out reviewer test
 
+Open [the material hub](../start.html) for the story, deck, rehearsal, and submission materials.
+
 Goal: determine whether the evidence supports a paid fresh contact check. No wallet, key, hardware, or login is needed for this public inspection. The public record is historical and expired.
 
 For the latest feedback export, open `review.html` first.

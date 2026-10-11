@@ -1,74 +1,104 @@
-# Founder recording scripts
+# Record FieldProof in plain language
 
-Speak in your own voice. The time blocks are editing targets. Run the live demonstration first, then replace every bracketed cue with the actual verified screen or cut that line. Keep physical footage, browser state, transaction, and peaq readback legible. Do not show a private key or wallet file.
-Payment goes to the configured operator wallet. Do not describe the ESP32 as controlling that wallet.
-The bounded buyer is software callable by an AI agent. Explain that distinction if no AI tool call appears in the recording.
-The [current requirements](REQUIREMENTS.md) own cutoff and form checks. The [pilot questions](PILOT.md) own the buyer hypothesis.
+Record the hardware sequence first. Record narration after the sequence works.
+Use the [five-slide deck](slides.html) to rehearse the pitch.
+Use the [rehearsal](REHEARSAL.md) for commands, device checks, and the remaining payment budget.
+The [requirements](REQUIREMENTS.md) own upload rules and cutoffs.
 
-## Immediate feedback preview: 45–60 seconds
+## Claims that govern every recording
 
-Use the [public visual replay](https://epicexcelsior.github.io/fieldproof/review.html?view=20261011-story). This preview does not replace the final hardware recording.
+- The buyer is bounded software. An AI agent can call it. This recording does not establish autonomous AI reasoning.
+- Solana Devnet payment settles before the ESP32 takes the paid measurement.
+- The operator wallet receives 0.001 test USDC. The ESP32 does not control that wallet.
+- OPEN and CLOSED both fulfill the purchased observation. The buyer's next action is separate.
+- BOOT is an electrical-contact stand-in. It does not prove contents, safety, or completed physical work.
+- The signature authenticates the device's claim. It does not prove that the physical claim is true.
+- The live peaq identity and activity event remain pending. Show them only after independent readback succeeds.
+- The buyer need, inspection price, and commercial revenue remain unvalidated.
 
-**0:00–0:10 — the decision.** “Before software sends someone to a remote site, it needs a current answer.
-FieldProof tests whether a device on site can sell that check.” Label the entrance as an illustrative use.
+Label a historical capture **Recorded paid check: October 11, 2026**.
+Label a new capture with its actual recording date.
+Keep the original receipt and capture time unchanged.
+Label the public replay **Recorded evidence. No new measurement or payment.**
+Show a simulation label when a simulated input appears.
 
-**0:10–0:30 — the real transaction.** Select **Replay the real check** through its four steps.
-“This replays a real Solana Devnet payment and ESP32 reading. BOOT represents the contact.
-The operator receives test payment for a new measurement. The board signs the requested answer.”
+## The physical shot
 
-**0:30–0:45 — the useful boundary.** Select **Try this old answer now**, then **Change the signed answer**.
-“The original answer was usable at capture. It is too old now. Changing its state breaks the signature.”
+Put the ESP32 and laptop screen in the same frame.
+Show BOOT released, then held. Show a fresh reading for each state before the paid take.
+Use no-funds device checks for rehearsal. Preserve the bounded payment budget for the recording.
+The rehearsal owns the exact commands. Do not start competing buyers with the same wallet.
 
-**0:45–1:00 — the feedback request.** “The paid-check loop works. Customer demand and live peaq identity remain unvalidated.
-Which existing paid inspection is worth testing? Which missing integration matters most for this bounty?”
+For the paid take, show the request, quote, payment, and physical input in one sequence.
+Keep BOOT steady until capture ends.
+Show the new answer immediately. Then show the unchanged answer after expiry.
+Keep the transaction amount, network, and result readable in the screen recording.
+Record the board footage separately if the wide shot hides those details.
 
-For the final video, show a physical input change beside a new reading. Show the board and browser in the same sequence.
-This connects the evidence to a visible event. Keep the illustrative entrance separate from actual hardware footage.
+If a verified external contact replaces BOOT, name its actual input and installed firmware.
+Do not relabel an old GPIO9 receipt as evidence from another sensor.
+Do not call a contact state proof that an item is present or a job is complete.
 
-## peaq entry: two-minute transaction video
+## Startup pitch: target 2:30
 
-**0:00–0:15 — buyer and question.** Show the request screen and the enclosure contact stand-in. “An AI agent that manages equipment at another site needs a current answer before its next decision. FieldProof lets it buy one contact check from an approved device.”
+This pitch explains the proposed business. It is separate from the product demo.
 
-Use this grounded alternative when no AI agent appears: “This software buyer pays a real device operator for one new contact reading.
-It fixes the question, price, and useful age before purchase. The board answers that request with a signed observation.”
-Do not imply a validated equipment operator or customer in this prototype.
+| Time | Picture | Spoken script |
+|---|---|---|
+| 0:00–0:20 | Founder and slide 1 | “FieldProof lets software pay a device for a fresh physical check. The device signs its answer. The buyer verifies who answered and whether the answer is still fresh.” |
+| 0:20–0:50 | Slide 2 | “The buyer hypothesis is remote-operations software. An operator already pays someone to check a physical fact at another site. Its software lacks a reliable answer from an existing API. FieldProof tests whether a device on site can provide that check.” |
+| 0:50–1:15 | Physical board and slide 3 | “The prototype uses an ESP32 contact input. A software buyer requests a new reading and prepays 0.001 test USDC on Solana Devnet. The operator receives the payment. The board signs the new answer for that request.” |
+| 1:15–1:40 | Fresh result, then expiry | “The buyer accepts the answer only within its age limit. The same answer becomes too old for the next decision. An edited answer fails signature verification. OPEN and CLOSED both complete the paid check.” |
+| 1:40–2:05 | Slides 4 and 5 | “This tests a commissioned physical service with payment and independently checkable evidence. A standard API remains the better choice when it supplies a reliable answer. The peaq route will bind the service to a machine identity and record attributed activity. Live activation and event readback remain pending.” |
+| 2:05–2:30 | Founder and slide 5 | “The next test is one authorized operator and one repeated physical question. I will compare useful answers, latency, failures, and integration effort with the current process. The business hypothesis is paid inspection and integration. No customer demand or commercial revenue is validated yet.” |
 
-**0:15–0:35 — identity.** Show the finalized peaq identity readback only if active. “The buyer checks this peaq machine identity, its public receipt key, and its offered service before it accepts the price.” **If pending, say instead:** “The peaq identity check is in integration. Today I can show the existing paid contact prototype.” Do not show a prepared identity draft as activation.
+If peaq readback succeeds before recording, replace its pending sentence with the verified identity and event references.
+Name the network. Explain that test activity is not customer revenue.
+Keep any specific site or workflow labeled as an example until an operator validates it.
 
-**0:35–1:05 — payment and capture.** Show the quoted terms, 0.001 Devnet USDC transfer, actual contact input, and fresh result in one legible sequence. “The x402 request settles on Solana Devnet before the ESP32 samples the contact. The board signs the request and result with its P-256 key.” If the footage uses simulation or a recorded purchase, say so on screen and in speech.
+## Product demo: target 2:40
 
-**1:05–1:30 — acceptance.** Show signature and age, then WAIT after expiry or on a changed answer. “The buyer accepts a matching signed answer only within its ten-second policy window. An authentic old answer is still too old for this decision.” Both OPEN and CLOSED can fulfill a paid check. The buyer policy controls the next action.
+This demo shows one purchase and a visible physical input.
+Use it as the technical demo. Use its transaction sequence for the peaq video.
 
-**1:30–1:50 — activity record.** Show the peaq event transaction and independent hash readback only if verified. “The completed job now has a peaq activity record linked to the payment and original device receipt.” **If pending, say instead:** “A linked peaq activity record is still pending. This recording proves the Solana payment and signed contact result only.”
+| Time | Picture | Spoken script |
+|---|---|---|
+| 0:00–0:20 | Board beside request screen | “This board can sell one physical contact check. BOOT stands in for the contact. Here is the buyer's question, selected device, fixed price, and ten-second age limit.” |
+| 0:20–0:40 | No-funds rehearsal of two states | “Released gives OPEN. Held gives CLOSED. These rehearsal readings make no payment. The paid request will require a new measurement.” |
+| 0:40–1:15 | Quote, payment, steady physical input, new answer | “I start one bounded purchase. Solana x402 settles 0.001 test USDC to the operator before capture. The ESP32 now samples this input and signs the original answer for this request.” |
+| 1:15–1:40 | Receipt verification and transaction | “The buyer checks the provisioned device key, request, signed result, and age. This transaction paid for the observation. The result does not need to be favorable to fulfill the job.” |
+| 1:40–2:05 | Same receipt after expiry, then edited-copy test | “This original answer is now too old. Its signature remains valid, but the buyer waits. I change a copy of the signed answer. Verification rejects that copy. The original receipt stays unchanged.” |
+| 2:05–2:25 | peaq status or verified readbacks | If pending: “The peaq identity and activity path has tests, but no live identity or event is established. This take proves the Solana payment and original signed contact result.” If verified: “Here is the independently readable machine identity and registered device key. Here is the activity record linked to this completed check.” |
+| 2:25–2:40 | Public replay and GitHub links | “Reviewers can inspect recorded payment and evidence without a wallet. The public page makes no new paid check. This is a working observation prototype. Physical truth and commercial demand remain separate questions.” |
 
-**1:50–2:00 — boundary.** “This is a contact observation, not proof of safe equipment use. Next I will test the workflow with one authorized remote operator.”
+If the paid take uses the October 11 archive, replace “now” with “during this recorded run.”
+State that no new physical measurement occurs in the replay.
+Do not stage a fresh screen result beside unrelated old hardware footage.
+If a live screen does not support an edited-copy test, use the labeled public replay for that cut.
 
-## Colosseum entry: startup pitch, target 2:40
+## Feedback clip: target 45–60 seconds
 
-**0:00–0:25 — problem.** “An AI agent can pay online, but payment alone cannot tell it what is happening at equipment another operator owns. Its next decision needs a current, attributable physical answer.”
+Use this clip tonight before the final recordings.
 
-**0:25–0:55 — product.** “FieldProof lets the agent buy a fresh check. In this prototype, it requests an electrical contact observation from an ESP32. Solana Devnet x402 settles 0.001 Devnet USDC before capture. The device signs its answer. The buyer checks the selected key, question, samples, and age.”
+1. **0:00–0:10:** Show the board. Say: “Software can pay this device operator for one fresh physical check.”
+2. **0:10–0:30:** Show the labeled [public replay](https://epicexcelsior.github.io/fieldproof/review.html?view=20261011-story).
+   Say: “This replays a real Solana Devnet payment and signed ESP32 reading. It makes no new measurement.”
+3. **0:30–0:45:** Show expiry and the edited-copy rejection.
+   Say: “An authentic answer can be too old. Editing the answer breaks its signature.”
+4. **0:45–1:00:** Say: “The paid-check loop works. Customer demand and live peaq integration remain open.
+   What physical check do you already pay for? What is missing for this bounty?”
 
-**0:55–1:20 — proof.** Show the actual transaction and receipt, then the same answer after its ten-second window. “A past paid run produced a signed OPEN reading. The buyer accepted it while fresh and returned WAIT after expiry. Changing the answer invalidates its signature.” Label this as historical if it is recorded evidence.
+The entrance illustration explains a possible decision. No real entrance is connected.
+Treat reviewer enthusiasm as feedback. Record a pilot or payment commitment separately.
 
-**1:20–1:45 — why this matters.** “The buyer hypothesis is an AI builder that manages remote equipment. The first question is a contact state. A single contact does not prove what is inside an enclosure or whether operation is safe. This is a small transaction contract for a real observation, not a broad sensor catalog.”
+## Final recording checks
 
-**1:45–2:10 — business test.** “I want one authorized operator and one AI builder to try a repeated decision. I will compare this workflow with their existing API or manual check. I will measure useful answers, integration work, failures, and recovery. Paid integration and support are the initial business hypothesis. No customer revenue is established.”
+1. Hide notifications, wallet files, terminal secrets, and private device identifiers.
+2. Show the network and test-token amount beside the payment.
+3. Show the physical input and its new answer in the same sequence.
+4. Keep historical receipts and timestamps unchanged.
+5. Remove any claim without matching footage or independently readable evidence.
+6. Check pitch and demo upload fields separately before submission.
 
-**2:10–2:40 — roadmap and ask.** “peaq identity and job history can make the selected machine and its activity inspectable across operators. I will claim that integration only after live readback. The next step is a real pilot at one site, then a second site to test reuse. I am looking for an AI equipment builder and a site operator willing to define one useful physical question.”
-
-## Colosseum entry: separate technical demo, target 2:30
-
-**0:00–0:20.** Show `POST /requests`, provider, contact question, and age limit. “The buyer fixes the question, provider key, budget, and freshness policy before purchase.”
-
-**0:20–0:45.** Show `402` and x402 offer. “The resource server quotes 1,000 base units, or 0.001 Devnet USDC, on Solana Devnet. The buyer pins the network, mint, recipient, and amount.”
-
-**0:45–1:10.** Show real transaction and physical input. “The gateway settles payment before BLE capture. BOOT is the electrical-contact stand-in. The ESP32 takes five matching samples and signs the original receipt with P-256.”
-
-**1:10–1:40.** Show receipt acceptance, then expiry and tamper test. “The buyer checks the key, challenge, signed result, sample agreement, and age. At eleven seconds, the same signed answer fails the ten-second age policy. A changed state fails signature verification.”
-
-**1:40–2:05.** If verified, show finalized peaq identity and event readback. Explain the identity-to-key association and event hash. If still pending, say: “The peaq identity and event path is still in integration. This demo contains no peaq chain claim.”
-
-**2:05–2:30.** Show repository and inspector. “A reviewer can inspect the recorded real payment and receipt without a wallet. The local simulator runs a complete no-funds purchase. The public inspector reads recorded evidence and cannot make a new physical check.”
-
-The Colosseum pitch and technical demo are separate recordings. Verify current form length and upload rules before export. The existing captioned video has no founder narration.
+The internal freeze is Monday, October 12, 2026, at 18:00 CEST.
+Read the current requirements before relying on a final competition cutoff.

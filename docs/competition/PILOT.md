@@ -1,7 +1,9 @@
 # Test the buyer need before expanding the network
 
-Hypothesis: a builder can automate a recurring decision by commissioning a fresh check at an independently operated site.
+Buyer hypothesis: remote-operations software needs recurring checks at sites that independent operators manage.
+The first product to test is paid remote inspection jobs where existing APIs fail and manual checks consume time or money.
 The prototype tests payment and evidence mechanics. It does not establish a commercial buyer.
+The [plain-language story](STORY.md) owns the explanation and alternatives.
 
 ## Explain the demonstration in plain language
 

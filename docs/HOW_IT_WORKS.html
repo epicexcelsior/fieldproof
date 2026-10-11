@@ -43,7 +43,7 @@ footer{font-size:13px;color:var(--dim);border-top:1px solid var(--line);margin-t
 <span class="tag">READ → REHEARSE → EXPLAIN · OFFLINE GUIDE</span>
 </header>
 <main>
-<div class="notice"><b>Current competition path:</b> AI agents buy fresh physical checks. Open the <a href="/jobs">paid job workbench</a> or read the <a href="JOBS.md">job runbook</a>. Identity and activity adapters exist. Live peaq activation and event readback remain pending.</div>
+<div class="notice"><b>Detailed technical reference:</b> Open the <a href="start.html">material hub</a> first for the current story, deck, physical rehearsal, and submissions. This guide explains the protocol. Live peaq identity and activity remain pending. <a href="/jobs">Inspect a job</a> · <a href="JOBS.md">Job execution and recovery</a>.</div>
 
 <section>
 <div class="label">Physical services across operator boundaries</div>
@@ -56,15 +56,14 @@ footer{font-size:13px;color:var(--dim);border-top:1px solid var(--line);margin-t
 </section>
 
 <section class="section" id="understand">
-<div class="label">The story to explain</div><h2>A visiting robot needs an answer from someone else's gate.</h2>
-<p>A fleet operates the robot. Another operator owns the facility. The robot needs a current contact answer before its next decision.</p>
-<p>Payment records money movement. A device signature authenticates the reported answer. The buyer's freshness limit determines whether that answer remains useful.</p><p><b>The demo moment:</b> the payment remains verified and the signature remains valid, but the observation expires. The buyer returns WAIT.</p>
-<div class="grid3" aria-label="Three responsibilities"><div class="radio-card"><h3>Solana: payment</h3><p>Did the buyer pay the quoted merchant?</p><span class="pill real">Historical Devnet transfer verified</span></div><div class="radio-card"><h3>FieldProof: evidence</h3><p>Does this signed answer match the buyer's question and useful-time limit?</p><span class="pill real">Historical ESP32 receipt verified</span></div><div class="radio-card"><h3>peaq: machine identity</h3><p>Who operates this machine, and what service does it register?</p><span class="pill sim">Adapters implemented · live test pending</span></div></div>
-<p><b>Current result:</b> a real Solana Devnet payment followed a quote and preceded a real ESP32-signed observation. Independent buyer checks accepted it.</p>
-<p>BOOT represents the contact. This prototype buys an observation. Access rights, gate control, safe robot motion, and completed-service evidence remain separate.</p>
-<div class="ok"><b>Company target:</b> one integration for machines to transact with physical services another operator owns. Start with one fleet and one authorized facility.</div>
-<p>A second independent facility tests integration reuse. Paid integration and support come first. Customer demand and pricing remain unvalidated.</p>
-<details><summary>Say the story in your own words</summary><p>Describe the visiting robot, the external operator, and the missing current answer. Show the payment, signed answer, and acceptance checks.</p><p>Explain the next pilot: one actual incident, the existing workaround, operator permission, useful-time limit, and buyer budget.</p><p>Open-RMF and machine-service markets already exist. The proposed edge is independent buyer acceptance of physical evidence under explicit transaction terms.</p></details>
+<div class="label">The story to explain</div><h2>Software buys a new physical check.</h2>
+<p>FieldProof lets software pay a device for a fresh physical check. The device signs its answer so the buyer can verify the source, request, and age.</p>
+<p>The real prototype buys a contact reading from an ESP32. Payment settles first. The device then samples its input for that request.</p>
+<div class="grid3" aria-label="Three responsibilities"><div class="radio-card"><h3>Solana: payment</h3><p>Did the buyer pay the quoted operator?</p><span class="pill real">Actual Devnet transfer verified</span></div><div class="radio-card"><h3>FieldProof: evidence</h3><p>Does the answer match the request, selected key, and age limit?</p><span class="pill real">Real ESP32 receipt verified</span></div><div class="radio-card"><h3>peaq: provider identity</h3><p>Can the buyer resolve a registered key and attributed work history?</p><span class="pill sim">Adapters tested · live integration pending</span></div></div>
+<p>BOOT represents the contact. Both honest states fulfill the observation. The demo policy controls no equipment.</p>
+<div class="notice"><b>Buyer hypothesis:</b> remote-operations software needs a check at another operator's site where an existing API fails and manual checks cost money. No validated customer exists.</div>
+<p>A signature authenticates a claim, not physical truth. The current price uses test tokens, not commercial inspection pricing.</p>
+<details><summary>Explain the useful distinction</summary><p>The buyer commissions a new measurement with a specific request and age limit. A dashboard only displays results.</p><p>A reliable existing API can already solve the problem. Cross-operator integration reuse and buyer value remain hypotheses.</p><p><a href="STRATEGY.md">Read the current story and buyer test.</a></p></details>
 </section>
 
 <section class="section" id="transaction">
@@ -82,7 +81,7 @@ footer{font-size:13px;color:var(--dim);border-top:1px solid var(--line);margin-t
 <div class="explain-panel" aria-live="polite"><div class="stage-meta" id="step-route">Laptop software / trusted buyer configuration</div><h3 id="step-title">The buyer defines the answer it will accept.</h3><p id="step-body">It selects the device and trusted public key, the contact question, a 0.001 Devnet USDC budget, and a ten-second freshness limit.</p><p class="note" id="step-limit">A new nonce identifies this question. Discovery cannot replace the trusted device key.</p></div>
 <p class="note">The receipt signs the challenge and observation. The gateway ledger associates that challenge with its purchase. Payment and delivery are not atomic.</p>
 <details><summary>Explain the four buyer checks</summary><ul class="plain"><li><b>Identity:</b> does the signature match the public key the buyer already trusts?</li><li><b>Challenge:</b> does the answer match the exact question and its new nonce?</li><li><b>Contact contract:</b> does the selected input report five matching samples?</li><li><b>Freshness:</b> does the measurement fit the buyer's useful-time window now?</li></ul><p>Accepted OPEN produces the demo recommendation DISPATCH. CLOSED or unacceptable evidence produces WAIT. Neither outcome controls a robot.</p></details>
-<details><summary>Why peaq is not activated yet</summary><p>Agung registry reads and offline public identity inputs work. No identity or activity event is activated.</p><p>Activation needs an operator wallet, controller, service description, current SDK preflight, test-token bond, and gas approval.</p><p>These inputs and approval remain open. Registration is a separate chain transaction. It is not an extra sensor-signature check.</p><p>For Germany, explain the working Solana purchase first. For the peaq bounty, complete registration, readback, key comparison, and an honest activity event.</p><p>The current buyer trusts its independently provisioned public key. A registry entry alone cannot establish truthful sensing.</p><p><a href="PEAQ_INTEGRATION.md">Read the measured readiness and remaining activation steps.</a></p></details>
+<details><summary>Why peaq is not activated yet</summary><p>Agung registry reads and offline public identity inputs work. No identity or activity event is activated.</p><p>Activation needs an operator wallet, controller, service description, current SDK preflight, test-token bond, and gas approval.</p><p>The operator lacks testnet funding, and the event deployment remains unresolved. Registration is a separate chain transaction. It is not an extra sensor-signature check.</p><p>For Germany, explain the working Solana purchase first. For the peaq bounty, complete registration, readback, key comparison, and an honest activity event.</p><p>The current buyer trusts its independently provisioned public key. A registry entry alone cannot establish truthful sensing.</p><p><a href="PEAQ_INTEGRATION.md">Read the measured readiness and remaining activation steps.</a></p></details>
 </section>
 
 <section class="section" id="run">
@@ -118,12 +117,12 @@ python3 scripts/demo.py check</code></pre>
 <div class="explain-panel" aria-live="polite"><div class="case-inputs"><span id="case-a">A: fresh OPEN</span><span id="case-b">B: fresh OPEN</span></div><div class="answer accept" id="case-decision">DISPATCH</div><p id="case-reason">Both configured answers match their challenges, verify under distinct pinned keys, and report fresh, stable OPEN.</p></div>
 <pre><code>python3 scripts/demo.py cases</code></pre><p>Expected result: <b>SIMULATED SIGNED FIXTURES</b>. Only fresh OPEN produces DISPATCH. The other seven final outcomes remain WAIT.</p>
 <p>Two temporary signing keys exercise software verification. No two physical boards participate. Distinct keys do not establish independent sensing.</p>
-<details><summary>What can this apply to, and how many devices work today?</summary><div class="table-scroll"><table><tr><th>Scope</th><th>Demonstrated</th><th>Next gate</th></tr><tr><td>One ESP32 contact</td><td>BLE, Wi-Fi, signed input, held/released BOOT, and one paid observation</td><td>Authorized external contact fixture and installation checks</td></tr><tr><td>Two observers</td><td>Signed-fixture policy and bounded concurrent BLE collector software</td><td>Two provisioned physical boards, collection timing, disagreement, and independent sensing</td></tr><tr><td>More devices or facilities</td><td>No physical capacity benchmark. The payment endpoint selects one provider per purchase.</td><td>Provider routing, permissions, adapters, load measurements, and operator recovery</td></tr><tr><td>Gate → dock → charger → elevator</td><td>Expansion hypothesis, not implemented services</td><td>A separate physical contract, controller adapter, permissions, and delivery economics for each service</td></tr><tr><td>Android phone or laptop sensors</td><td>Phone camera/judge browser and laptop buyer/gateway. No phone-sensor observer.</td><td>New sensing contract, permission checks, signing identity, and physical verification</td></tr></table></div><p>The firmware configures up to four Wi-Fi stations. This is an access-point setting, not a paid-device capacity test.</p></details>
+<details><summary>What can this apply to, and how many devices work today?</summary><div class="table-scroll"><table><tr><th>Scope</th><th>Demonstrated</th><th>Next gate</th></tr><tr><td>One ESP32 contact</td><td>BLE, Wi-Fi, signed input, held/released BOOT, and one paid observation</td><td>Authorized external contact fixture and installation checks</td></tr><tr><td>Two observers</td><td>Signed-fixture policy and bounded concurrent BLE collector software</td><td>Two provisioned physical boards, collection timing, disagreement, and independent sensing</td></tr><tr><td>More devices or facilities</td><td>No physical capacity benchmark. The payment endpoint selects one provider per purchase.</td><td>Provider routing, permissions, adapters, load measurements, and operator recovery</td></tr><tr><td>Gate → dock → charger → elevator</td><td>Expansion hypothesis, not implemented services</td><td>A separate physical contract, controller adapter, permissions, and delivery economics for each service</td></tr><tr><td>Android phone or laptop sensors</td><td>Phone browser verifier and laptop buyer/gateway. The requested-photo app builds offline but real capture is unverified.</td><td>New sensing contract, permission checks, signing identity, and physical verification</td></tr></table></div><p>The firmware configures up to four Wi-Fi stations. This is an access-point setting, not a paid-device capacity test.</p></details>
 <details><summary>What the reliability results mean</summary><p>The completed earlier overnight baseline recorded 119 passes and one discovery miss out of 120 scheduled checks.</p><p>The next scheduled sample recovered. The underlying radio or operating-system cause remains unverified.</p><p>One successful sample or a unit-test count cannot establish every environment, radio range, service uptime, or safe motion.</p><p><a href="VERIFICATION.md">Read exact verification results and limits.</a></p></details>
 </section>
 
 <section class="section" id="today">
-<div class="label">Protect the entry / Germany deadline: October 5, 23:59:59 CEST</div><h2>Your next day has one rehearsal and one submission path.</h2>
+<div class="label">Current entries / October 13, 08:59 CEST</div><h2>Record the hardware, then complete the three entries.</h2>
 <ol class="rehearsal-plan"><li><b>Learn the transaction.</b> Explain who pays, who observes, who signs, and who accepts. Use the six-step panel.</li><li><b>Run the three stages yourself.</b> Show simulated expiry, a real BOOT reading, and recorded receipt attacks. Keep the technical video as the fallback.</li><li><b>Complete the human fields and public links.</b> Verify Germany registration, project URL, team contact, test access, video access, and the submission receipt.</li></ol>
 <p>Use the phone for one continuous shot of BOOT and the laptop. Label the physical stand-in. Another sensor type remains outside this deadline's scope.</p>
 <p>The later peaq gate is explicit operator/key/service registration and a reviewed activation decision. The later company gate is one buyer incident and budget.</p>
@@ -155,13 +154,10 @@ python3 scripts/demo.py check</code></pre>
 <div class="label">Start here · Founder explanation</div>
 <h2>Understand the product</h2>
 <h3>The company hypothesis</h3>
-<p>A fleet operates a robot. A separate company operates the gate, dock, or charger it needs. Their software needs agreed terms, permission, payment, and evidence.</p>
-<p>The buyer hypothesis is one reusable service integration across independent facilities. The provider hypothesis is controlled service access and accountable delivery to approved buyers.</p>
-<p>The current MVP purchases an observation. Access permission, gate control, reservations, and completed-service verification remain future work.</p>
-<p>This buyer pays for the observation before measurement. A future access purchase needs separate readiness, reservation, delivery, and recovery terms.</p>
-<p>Start with one fleet and one authorized facility. A second independent facility tests whether the buyer can reuse its integration.</p>
-<p>The <a href="STRATEGY.md">product strategy</a> owns this story, pricing options, alternatives, and the pilot acceptance target.</p>
-<figure style="margin:24px 0"><a href="assets/fieldproof-service-boundaries.svg"><img src="assets/fieldproof-service-boundaries.svg" width="1200" height="660" style="width:100%;height:auto" alt="Implemented observation purchase and the planned peaq identity, permission, and physical-service integrations."></a><figcaption class="note">Open the graphic at full size. Solid boxes show the current observation purchase. Dashed boxes show planned service integrations.</figcaption></figure>
+<p>The first product to test is paid remote inspection jobs for remote-operations software. An existing device supplies a current answer when the buyer lacks a reliable API.</p>
+<p>Compare one authorized operator's current workaround with FieldProof. Then test a second operator and measure integration reuse.</p>
+<p>Demand, price, provider margins, and distribution remain unvalidated. Access control and completed-service proof remain future work.</p>
+<p>The <a href="STRATEGY.md">current strategy route</a> links the canonical plain-language story and commercial test.</p>
 <h3>One buyer, one operator, one immediate decision</h3>
 <p>Example: a delivery robot reaches an access point operated by another company. Its controller needs the current gate-contact state.</p>
 <p>The operator permits sale of that observation. The buyer pays for one answer. Its controller decides whether that answer helps the next action.</p>
@@ -692,7 +688,7 @@ metric|sensor|closed|stable_samples|total_samples|started_at|completed_at</pre>
 <h2>Five-minute demo script</h2>
 <ol class="steps">
 <li><b>Open the dispatch desk</b>Run <code>cd gateway &amp;&amp; npm run demo</code>, then open <code>http://127.0.0.1:4022</code>. The header shows <code>SIMULATED PAYMENT · NO FUNDS MOVED</code>.</li>
-<li><b>State the question</b>A robot already near an external gate needs permitted contact state for its next decision. Budget 0.001 USDC. Freshness ten seconds.</li>
+<li><b>State the question</b>A buyer requests one current contact state. BOOT supplies the real test input. No gate or robot connects to this prototype. Budget 0.001 USDC. Freshness ten seconds.</li>
 <li><b>Request the quote</b>Select <b>Get payment quote</b>. Show the 402 response with the exact amount, network, asset, and recipient. No evidence yet.</li>
 <li><b>Complete the purchase</b>Select <b>Run simulation</b>. Show the payment mode label, the receipt, and the <code>DISPATCH</code> decision with <code>5/5</code> agreement.</li>
 <li><b>Show expiry</b>Wait eleven seconds. The desk flips to <code>WAIT</code> with <code>Evidence expired</code>. Explain that a cached receipt never becomes fresh on retry.</li>
@@ -748,7 +744,7 @@ metric|sensor|closed|stable_samples|total_samples|started_at|completed_at</pre>
 <h2>Deadlines and open items</h2>
 <div class="table-scroll"><table>
 <tr><th>Track</th><th>Deadline in UTC</th><th>Local</th></tr>
-<tr><td>Germany MVP</td><td>October 5, 2026 · 21:59:59 UTC</td><td>23:59:59 CEST</td></tr>
+<tr><td>Colosseum and Germany track</td><td>October 13, 2026 · 06:59:00 UTC</td><td>08:59 CEST</td></tr>
 <tr><td>peaq machine economy</td><td>October 13, 2026 · 06:59:00 UTC</td><td>08:59 CEST</td></tr>
 </table></div>
 <h3>Required fields</h3>
@@ -763,7 +759,7 @@ metric|sensor|closed|stable_samples|total_samples|started_at|completed_at</pre>
 <tr><td>Team contact</td><td>Missing: supply it in the submission form</td></tr>
 <tr><td>peaq submission answer</td><td>Missing: answer truthfully at submission time</td></tr>
 </table></div>
-<div class="notice"><b>Open work.</b> The technical walkthrough and public inspector package are ready for review. Publication, registration, contact selection, and submission need owner action. Follow <a href="BOUNTY_PLAN.md">the bounty execution plan</a>.</div>
+<div class="notice"><b>Open work.</b> The technical walkthrough and public inspector package are ready for review. Final founder videos, live peaq integration, and submissions remain incomplete. The public inspector is deployed. Follow <a href="BOUNTY_PLAN.md">the bounty execution plan</a>.</div>
 </section>
 
 </details>

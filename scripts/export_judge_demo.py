@@ -11,6 +11,11 @@ from zipfile import ZipFile, ZIP_DEFLATED
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = {
+    "start.html": "docs/start.html",
+    "competition/slides.html": "docs/competition/slides.html",
+    "competition/fieldproof-pitch.pdf": "docs/competition/fieldproof-pitch.pdf",
+    "competition/fieldproof-pitch.pptx": "docs/competition/fieldproof-pitch.pptx",
+    "competition/assets/fieldproof-project.png": "docs/competition/assets/fieldproof-project.png",
     "review.html": "docs/review.html",
     "review.mjs": "docs/review.mjs",
     "guide.html": "docs/HOW_IT_WORKS.html",
@@ -110,6 +115,7 @@ def export(output, *, job_manifest=None, provider_policy=None, require_peaq=Fals
             "FieldProof: inspect recorded physical evidence\n\n"
             "1. Serve this directory on localhost or HTTPS.\n"
             "   python3 -m http.server 8787 --bind 127.0.0.1\n"
+            "   Open http://127.0.0.1:8787/start.html for the story and submission materials.\n"
             "   Open http://127.0.0.1:8787/review.html for the one-minute feedback walkthrough.\n"
             "2. Open http://127.0.0.1:8787/guide.html for the story, radio explanation, and rehearsal.\n"
             "   Open http://127.0.0.1:8787 for actual recorded-receipt verification.\n"

@@ -1,3 +1,7 @@
+> Historical CapMesh implementation brief. This is not the current product or submission contract.
+> Open [the material hub](docs/start.html), [current status](docs/FOCUS.md), and [current architecture](docs/ARCHITECTURE.md).
+> Earlier payment-channel and marketplace plans remain unimplemented unless current evidence states otherwise.
+
 The right MVP is **not “Solana payment on an ESP32.”** Build a small transport-independent capability protocol where an ESP32 is the first provider, a laptop is the first buyer/agent, BLE is the first transport, and payment is an adapter added after the capability flow works.
 
 Below is the prompt I would hand directly to the coding agent.

@@ -1,24 +1,23 @@
-# FieldProof competition materials
+# FieldProof submission package
 
-These are draft submission materials. Final videos and human submissions remain incomplete.
-Live peaq activation and event readback remain pending. Preserve that label until independent verification passes.
+**Open [the material hub](../start.html).** This package supports an honest paid-hardware prototype submission.
+Final founder videos, live peaq integration, and submitted confirmations remain incomplete.
 
-- [One-minute feedback walkthrough](https://epicexcelsior.github.io/fieldproof/review.html): the October 11 real paid check, evidence attacks, and targeted reviewer questions.
-- [Recording scripts](VIDEO_SCRIPTS.md): peaq transaction, founder pitch, and technical demo.
-- [Submission drafts](SUBMISSION_DRAFTS.md): separate Colosseum, Germany, and peaq entries.
-- [Tester guide](TESTER_GUIDE.md): a no-wallet review of historical signed evidence.
-- [Return-to-laptop rehearsal](REHEARSAL.md): real unattended paid checks, browser purchase, and the bounded Solana agent.
-- [Current requirements](REQUIREMENTS.md): verified dates, correct listings, and remaining authenticated form checks.
-- [Pilot questions](PILOT.md): a specific buyer test and candid answers to judging objections.
-- [Editable five-slide deck](fieldproof-pitch.pptx), [PDF review copy](fieldproof-pitch.pdf), and [HTML slides](slides.html).
+| Material | Use it for |
+|---|---|
+| [Plain-language story](STORY.md) | What it does, proposed buyer, alternatives, limitations, and future test |
+| [One-minute public replay](https://epicexcelsior.github.io/fieldproof/review.html?view=20261011-story) | No-wallet feedback on a recorded real purchase |
+| [Physical rehearsal](REHEARSAL.md) | Unpaid input changes, new bounded payment, phone verification, and recovery |
+| [Video scripts](VIDEO_SCRIPTS.md) | Separate 2–3 minute pitch and at-most-three-minute product demo |
+| [HTML deck](slides.html), [PDF](fieldproof-pitch.pdf), [editable PowerPoint](fieldproof-pitch.pptx) | Five supporting slides. A deck does not replace the required videos |
+| [Tester guide](TESTER_GUIDE.md) | Specific comprehension, verification, and buyer questions |
+| [Pilot questions](PILOT.md) | Falsifiable buyer and pricing research after the technical demonstration |
+| [Current requirements](REQUIREMENTS.md) | Exact deadlines, required fields, eligibility, and disclosures |
+| [Entry drafts](SUBMISSION_DRAFTS.md) | Reviewable text and field checklist for all three entries |
 
-Use [current focus](../FOCUS.md) to select the next step.
-Run `python3 scripts/competition_check.py --build-phone` from the repository root for one safe software check.
-This command starts no payment, chain write, device request, or installation.
-Use [the paid-job runbook](../JOBS.md) to run and recover the integration.
-The runbook also builds a reviewed linked-job export with a release gate for recorded finalized peaq evidence.
-The workbench can load that exported job without a wallet or manual file selection.
-Use [the verification record](../VERIFICATION.md) for tested claims.
-The founder must record narration, verify the current forms, and submit each eligible entry.
-No customer, commercial revenue, or live peaq integration is established by these drafts.
-The PDF contains raster slide previews. The PowerPoint text remains editable.
+All three deadlines are Tuesday, October 13, 2026 at 08:59 CEST.
+Target Monday, October 12 at 18:00 CEST. Save three actual submission confirmations.
+
+Read [current status](../FOCUS.md) before recording. Use [verification](../VERIFICATION.md) for executed claims.
+The prototype price uses Devnet test USDC. No commercial revenue or validated buyer exists.
+The current Solana route claims no live peaq identity or activity event.

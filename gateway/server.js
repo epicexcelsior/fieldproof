@@ -62,7 +62,7 @@ export async function createGateway({ paymentServer, store, observe = observeHar
   app.disable('x-powered-by');
   app.use(express.json({ limit: '2kb' }));
   app.use((_req, res, next) => { res.set('Cache-Control', 'no-store'); next(); });
-  app.get('/learn', (_req, res) => {
+  app.get(['/learn', '/guide.html'], (_req, res) => {
     const guide = readFileSync(resolve(assetsRoot, 'docs/HOW_IT_WORKS.html'), 'utf8');
     // The docs server and standalone export have different roots. Keep this route local and references public.
     res.type('html').send(guide.replace(/href="([^"]+)"/g, (attribute, target) => {
@@ -78,6 +78,12 @@ export async function createGateway({ paymentServer, store, observe = observeHar
   for (const [route, file] of Object.entries({
     '/': 'docs/overview.html', '/proof': 'docs/proof.html', '/proof.js': 'docs/proof.js',
     '/review': 'docs/review.html', '/review.mjs': 'docs/review.mjs',
+    '/start': 'docs/start.html', '/start.html': 'docs/start.html',
+    '/review.html': 'docs/review.html',
+    '/competition/slides.html': 'docs/competition/slides.html',
+    '/competition/fieldproof-pitch.pdf': 'docs/competition/fieldproof-pitch.pdf',
+    '/competition/fieldproof-pitch.pptx': 'docs/competition/fieldproof-pitch.pptx',
+    '/competition/assets/fieldproof-project.png': 'docs/competition/assets/fieldproof-project.png',
     '/jobs': 'docs/jobs.html', '/jobs.mjs': 'docs/jobs.mjs',
     '/settlement.mjs': 'docs/settlement.mjs',
     '/receipt-keys.json': 'host/capmesh/protocol/receipt_keys.json',

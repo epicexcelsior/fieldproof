@@ -86,9 +86,33 @@ def test_current_founder_guide_has_only_supported_export_links():
     guide = module.guide_links(source)
     assert 'href="./index.html?present=1"' in guide
     assert 'href="HARDWARE_NEXT.md"' not in guide
-    assert 'src="assets/fieldproof-service-boundaries.svg"' in guide
+    assert 'src="assets/fieldproof-payment-to-observation.svg"' in guide
     assert 'href="./jobs.html"' in guide
     assert 'href="https://github.com/epicexcelsior/fieldproof/blob/main/docs/JOBS.md"' in guide
+
+
+def test_material_hub_local_links_resolve_within_the_public_export():
+    from html.parser import HTMLParser
+    from urllib.parse import urlsplit
+    module = load_exporter()
+
+    class Links(HTMLParser):
+        def __init__(self):
+            super().__init__()
+            self.targets = []
+
+        def handle_starttag(self, tag, attrs):
+            self.targets.extend(value for key, value in attrs if key in {"href", "src"})
+
+    links = Links()
+    links.feed((module.ROOT / "docs/start.html").read_text())
+    local = [urlsplit(target).path for target in links.targets
+             if not urlsplit(target).scheme and urlsplit(target).path]
+    assert local
+    assert set(local) <= set(module.ASSETS)
+    assert "competition/fieldproof-pitch.pdf" in local
+    assert "competition/fieldproof-pitch.pptx" in local
+    assert all(not target.startswith(("/", ".local", "..")) for target in local)
 
 
 def public_source(tmp_path, monkeypatch, module):

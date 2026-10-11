@@ -1,16 +1,42 @@
 <!doctype html>
 <html lang="en">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FieldProof five-slide pitch</title>
+<title>FieldProof: five-slide pitch</title>
 <style>
-:root{font-family:Arial,"Liberation Sans",sans-serif;color:#183146;background:#e8e9e5}*{box-sizing:border-box}body{margin:0}.deck{max-width:1280px;margin:auto}.slide{width:100%;min-height:720px;background:#f3f3ed;padding:52px 74px 48px;position:relative;margin:20px 0;display:grid;grid-template-columns:60% 40%;grid-template-rows:auto 1fr auto;gap:20px;box-shadow:0 6px 24px #18314619}.slide h1{grid-column:1/-1;font-size:44px;line-height:1.1;margin:0}.body{align-self:start;padding-top:25px}.body p{font-size:28px;line-height:1.28;margin:0 0 38px}.body .lead{color:#146b8d;font-weight:700;font-size:32px}.body .minor{font-size:21px;color:#52616c}.body .pending{font-size:20px;color:#a35a10;font-weight:700}.body .caution{color:#a35a10;font-size:25px}.slide img{width:100%;height:420px;object-fit:contain;align-self:start}.slide footer{grid-column:1/-1;align-self:end;color:#146b8d;font-size:15px;font-weight:700}.slide:last-child{grid-template-columns:1fr}.slide:last-child .body{max-width:900px}.slide:last-child .body p{margin-bottom:42px}@media(max-width:800px){.slide{min-height:auto;display:block;padding:34px 26px;margin:10px}.slide h1{font-size:30px}.body p,.body .lead{font-size:21px;margin:28px 0}.body .minor,.body .pending{font-size:17px}.slide img{height:auto;max-height:260px}.slide footer{margin-top:30px}}@media print{body{background:#fff}.deck{margin:0;max-width:none}.slide{width:100vw;height:100vh;min-height:0;margin:0;box-shadow:none;page-break-after:always}@page{size:13.333in 7.5in;margin:0}}
+:root{font-family:Arial,"Liberation Sans",sans-serif;color:#17364d;background:#dfedf6}*{box-sizing:border-box}body{margin:0}.deck{max-width:1280px;margin:auto}.slide{width:100%;min-height:720px;background:#f4faff;padding:56px 72px 48px;position:relative;margin:24px 0;display:flex;flex-direction:column;gap:26px;box-shadow:0 6px 24px #17364d13}.slide h1{font-size:46px;line-height:1.12;margin:0;letter-spacing:-1px}.slide h2{font-size:25px;color:#126c97;margin:0 0 18px}.slide p{font-size:27px;line-height:1.34;margin:0 0 24px}.slide .lead{font-size:38px;line-height:1.2;color:#126c97;font-weight:700}.slide .minor{font-size:20px;color:#536d80}.slide .pending{color:#9a5617}.columns{display:grid;grid-template-columns:1fr 1fr;gap:62px;padding-top:24px}.hero{display:grid;grid-template-columns:3fr 1fr;gap:48px;align-items:center;padding-top:28px}.hero img{width:100%;max-width:250px;height:auto}.steps{display:grid;grid-template-columns:1fr 1fr;gap:28px 70px;padding-top:12px}.step h2{font-size:28px;margin-bottom:12px}.step p{font-size:25px;margin:0}.slide footer{margin-top:auto;font-size:18px;line-height:1.35;color:#536d80}.slide footer a{color:#126c97}.slide .next{font-size:26px;margin-top:12px}.slide .two-lines{max-width:980px}@media(max-width:800px){.slide{min-height:auto;padding:32px 24px;margin:14px 0;gap:22px}.slide h1{font-size:32px}.slide .lead{font-size:28px}.slide p,.slide .next{font-size:22px}.slide h2,.step h2{font-size:23px}.columns,.steps{grid-template-columns:1fr;gap:22px;padding-top:0}.hero{grid-template-columns:1fr;padding-top:0}.hero img{max-width:135px}.slide .minor,.slide footer{font-size:17px}.slide footer{margin-top:16px}}@media print{body{background:#fff}.deck{margin:0;max-width:none}.slide{width:100vw;height:100vh;min-height:0;margin:0;box-shadow:none;break-after:page}@page{size:13.333in 7.5in;margin:0}}
 </style>
+</head>
+<body>
 <main class="deck">
-<section class="slide" aria-label="Slide 1"><h1>Paid fresh physical checks</h1><div class="body"><p class="lead">For AI agents that manage equipment at another site</p><p>One question. One paid observation. One signed answer with an expiry.</p><p class="minor">Remote-equipment AI builder: initial buyer hypothesis</p></div><img src="assets/fieldproof-project.png" alt="FieldProof mark and evidence window"><footer>FIELDPROOF / 01</footer></section>
-<section class="slide" aria-label="Slide 2"><h1>The current physical question</h1><div class="body"><p class="lead">Is this enclosure contact closed now?</p><p>The ESP32-C6 samples the BOOT contact stand-in after payment. Its P-256 key signs the question and result.</p><p class="caution">A contact state does not prove contents, safe operation, or access permission.</p></div><img src="assets/fieldproof-buyer-problem.png" alt="A buyer asks another operator's device for a current contact answer"><footer>FIELDPROOF / 02</footer></section>
-<section class="slide" aria-label="Slide 3"><h1>One paid observation</h1><div class="body"><p>Buyer sets provider, question, price, and age limit.</p><p class="lead">x402 settles 0.001 Devnet USDC on Solana Devnet before capture.</p><p>ESP32 samples the contact and returns its original P-256 signed receipt.</p><p class="pending">peaq identity and linked activity event: INTEGRATION PENDING</p></div><img src="assets/fieldproof-payment-to-observation.png" alt="Solana payment precedes the device's signed observation"><footer>FIELDPROOF / 03</footer></section>
-<section class="slide" aria-label="Slide 4"><h1>The buyer accepts fresh evidence</h1><div class="body"><p>Check the selected key, challenge, samples, and signature.</p><p class="lead">Then check age against the buyer's ten-second policy.</p><p>The same valid answer becomes WAIT after expiry. A changed answer fails signature verification.</p></div><img src="assets/fieldproof-evidence-window.png" alt="A confirmed payment and valid signature remain after the answer expires"><footer>FIELDPROOF / 04</footer></section>
-<section class="slide" aria-label="Slide 5"><h1>The first buyer test</h1><div class="body"><p class="lead">One AI builder and one authorized equipment operator.</p><p>Compare this check with the current API or manual process. Measure useful answers, integration work, failures, and recovery.</p><p>Repeat at a second site to test reuse. Paid integration and support remain business hypotheses.</p><p class="pending">No validated customer or commercial revenue yet.</p></div><footer>FIELDPROOF / 05</footer></section>
+<section class="slide" aria-label="Slide 1: FieldProof">
+<h1>FieldProof</h1>
+<div class="hero"><div><p class="lead">Software pays for a fresh physical check.</p><p>The device signs its answer. The buyer verifies who answered and whether the answer is still fresh.</p><p class="minor">Working prototype: ESP32-C6 and Solana Devnet.</p></div><img src="assets/fieldproof-project.png" alt="FieldProof logo"></div>
+<footer>01 / A device signature authenticates a claim. It does not establish physical truth.</footer>
+</section>
+<section class="slide" aria-label="Slide 2: Buyer hypothesis">
+<h1>A remote inspection before a decision</h1>
+<div class="columns"><div><h2>Target workflow</h2><p>An operator pays someone to check a physical fact at another site.</p><p>Its software lacks a reliable answer from an existing API.</p></div><div><h2>FieldProof proposal</h2><p>Commission one check from a device already on site.</p><p>Get a new answer tied to that request.</p></div></div>
+<p class="next">Value test: does the check replace a manual check or change a costly decision?</p>
+<footer>02 / Buyer hypothesis. No customer or willingness to pay is validated. Use an existing API when it supplies the answer.</footer>
+</section>
+<section class="slide" aria-label="Slide 3: Working transaction">
+<h1>What the prototype does</h1>
+<div class="steps"><div class="step"><h2>1. Request a check</h2><p>The buyer fixes the contact question, device key, price, and ten-second age limit.</p></div><div class="step"><h2>2. Pay the operator</h2><p>Solana x402 settles 0.001 test USDC before measurement.</p></div><div class="step"><h2>3. Measure and sign</h2><p>The ESP32 reads the physical input and signs a new answer for this request.</p></div><div class="step"><h2>4. Verify and decide</h2><p>The buyer verifies the source, request, signature, and age before its next action.</p></div></div>
+<footer>03 / OPEN and CLOSED both fulfill the paid check. The operator wallet receives test tokens. The buyer's next action is separate.</footer>
+</section>
+<section class="slide" aria-label="Slide 4: Evidence and limits">
+<h1>The evidence has limits</h1>
+<div class="columns"><div><h2>The buyer can verify</h2><p>This approved device signed the answer to this request.</p><p>An old answer fails the age policy. An edited answer fails signature verification.</p></div><div><h2>The physical demonstration</h2><p>Release or hold BOOT. The contact changes between OPEN and CLOSED.</p><p>The contact does not prove contents, safety, or completed work.</p></div></div>
+<footer>04 / BOOT is a contact stand-in. No robot or real entrance is connected. The software buyer can serve an AI agent.</footer>
+</section>
+<section class="slide" aria-label="Slide 5: peaq and next test">
+<h1>peaq's role and the next test</h1>
+<div class="columns"><div><h2>Solana: demonstrated</h2><p>Bounded Devnet payment and an original device-signed answer.</p><p class="minor">The public replay preserves the October 11 transaction and capture time.</p></div><div><h2 class="pending">peaq: live integration pending</h2><p>A machine identity binds the offered service to its device key.</p><p>An activity record links a completed check to payment and evidence.</p></div></div>
+<p class="next">Next: one authorized operator, one repeated question, and a comparison with its current process.</p>
+<footer>05 / peaq code has tests. No live identity or activity event is established. Paid integration and inspection fees remain hypotheses.</footer>
+</section>
 </main>
+</body>
 </html>

@@ -1,76 +1,63 @@
-# FieldProof: start here
+# FieldProof: current state and next actions
 
-**Current focus: share the working feedback demo, then record the final Solana-paid physical check.**
-As of October 11, 2026. Primary entry: peaq Germany. Secondary entries: Superteam Germany Colosseum track and Colosseum.
-The internal submission target is Monday, October 12, 18:00 CEST.
-No submission confirmation exists in this repository.
-Use the [return-to-laptop rehearsal](competition/REHEARSAL.md) for today's actions.
-Its [unattended paid batch](competition/REHEARSAL.md#run-three-real-paid-checks-without-a-button-press) needs no BOOT press or separate gateway terminal.
-It checks the real board before reading the wallet and stops on any uncertain payment. The October 11 paid check passed.
-Share the [one-minute feedback walkthrough](https://epicexcelsior.github.io/fieldproof/review.html?view=20261011-story) before finalizing the story.
-The walkthrough starts with a physical scene and a decision. It keeps transaction details behind the evidence link.
-Select **Replay the real check**, then test an expired or altered answer.
-The entrance and trip are illustrative. BOOT is the actual input. The business remains a hypothesis.
-Use the [current requirements](competition/REQUIREMENTS.md) for dates, sources, and form checks.
+Verified October 11, 2026. The founder is physically with the ESP32 and Seeker.
+Primary entry: peaq Germany. Secondary entries: Germany Colosseum track and Colosseum.
 
-## Explain one transaction
+**Open [the material hub](start.html) first.** Read [the plain-language story](competition/STORY.md), then use [the physical rehearsal](competition/REHEARSAL.md).
 
-FieldProof sells fresh physical checks to AI agents.
-An agent requests a contact observation from a selected ESP32.
-The Solana route uses an independently provisioned device key.
-The optional peaq route also resolves a live identity and checks its registered key before payment.
-Solana Devnet x402 prepays 0.001 test USDC. The ESP32 measures and signs the answer.
-The buyer verifies the request, signature, sample agreement, and age.
-A durable outbox prepares the peaq-linked job for attributed activity. Live submission remains pending.
+## Submission assessment
 
-The useful distinction is a commissioned measurement with buyer-defined terms, rather than a standing data feed.
-Connected live Agung execution remains unverified. Skipping it does not complete peaq identity or activity integration.
-Agung is not an explicit general bounty requirement. See the [current requirements](competition/REQUIREMENTS.md).
-The peaq route must retain its live identity gate. A failed lookup must block its payment.
-Both OPEN and CLOSED fulfill a valid observation. The buyer's operational decision remains separate from payment.
-The signature authenticates a device claim. It does not prove physical truth or authorize equipment use.
+FieldProof is a credible paid-hardware prototype. It does not yet establish a viable business.
+The real Solana purchase and signed ESP32 response fit the peaq machine-commerce scope.
+No live peaq identity or event exists. That gap materially weakens the sponsor entry.
+Colosseum also judges business viability and traction. No validated customer or commercial revenue exists.
 
-## Know what is verified
+## What works and what remains open
 
-| Part | Verified result | Remaining gap |
+| Component | Verified behavior | Remaining gap |
 |---|---|---|
-| Solana and ESP32 | October 11 real paid check and independently verified transfer | Founder recording and opposite physical input |
-| peaq | Historical Agung readiness, new strict resolver, bounded operator, and offline tests | Funded operator, current preview, activation, registry binding, finalized event |
-| Jobs | Bounded Solana check passed live. peaq-linked evidence and outbox pass controlled tests | Live peaq identity and activity |
-| Seeker | Browser verification history and an offline-built requested-photo app | Install, capture, trusted key transfer, and independent verification |
-| Submission | Public historical inspector and local editable package | Founder narration, current public links, eligibility, final forms |
+| Solana payment | October 11 actual 0.001 Devnet USDC transfer, independently verified | New founder-led recording |
+| ESP32 | Real BLE request, pinned P-256 signature, five matching GPIO9 samples | Today's founder-held opposite-state footage |
+| Buyer | Request, key, contact profile, sample, and ten-second age checks | Real customer policy and production integration |
+| Recovery | Shared wallet operation cap, durable records, fail-closed uncertain payments | Production refund and delivery guarantees |
+| Public demo | Real recorded evidence, current-time expiry, tamper rejection, read-only RPC query | External feedback and final narrated videos |
+| peaq | Current Agung deployment reads, identity/activity adapters and controlled tests | Funded operator, authoritative event deployment, activation, independent readback |
+| Seeker | Earlier independent browser verification, current authorized ADB, photo-app offline build | Today's phone rehearsal. Photo app installation/capture and paid provider remain unverified |
+| Business | Explicit buyer hypothesis and falsifiable pilot | Recurring buyer problem, willingness to pay, pricing, acquisition, and margins |
+| Entries | Requirements verified against current official pages | Completed forms, video uploads, and saved submission confirmations |
 
-The normal laptop access report passed network and device prerequisites.
-The current session now has network and device access. The real payment and board observation passed.
-The Seeker remains screen-locked. The [verification record](VERIFICATION.md) names tested behavior and remaining gaps.
+The October 11 no-spend check found the deployed GPIO9 board OPEN with a valid signature.
+It found no buyer lock and no unresolved operation. Eight operations leave **two** under the original ten-operation cap.
+Recheck readiness before recording. This snapshot does not guarantee the next payment succeeds.
+The Seeker was asleep and locked during the audit. The founder can now unlock it.
 
-## Do next
+## Do these actions in order
 
-1. Share the feedback walkthrough and collect one concrete buyer or sponsor objection.
-2. Preserve the two remaining wallet operations for recording. Use `--count 1` for a single paid rehearsal.
-3. Reinspect one operation without another payment. Record expiry and changed-receipt rejection.
-4. Record the physical device, purchase, transfer, evidence, and founder explanation.
-5. Test the actual public links from a private browser window.
-6. Complete each eligible form and save submitted confirmations.
+1. Open the material hub and explain the two-sentence story without notes.
+2. Run unpaid held and released BOOT checks. Record the board and answer together.
+3. Record one paid check and the Seeker's independent verification. Preserve its original receipt.
+4. Send the public replay to reviewers yourself. Record their actual comprehension and objections.
+5. Resolve the live peaq deployment and funding gates. Preserve pending labels if those gates remain open.
+6. Record the separate pitch and product-demo videos. Verify their public access.
+7. Complete all three forms and save their submitted confirmations.
 
-Follow [the rehearsal](competition/REHEARSAL.md) for commands and expected results.
-Follow [the peaq-linked runbook](JOBS.md) only after its verified prerequisites exist.
-Never substitute a local identity or guessed registry for finalized peaq evidence.
+All three official cutoffs are **Tuesday, October 13, 08:59 CEST**.
+Internal target: Monday, October 12, 18:00 CEST. [Requirements and source links](competition/REQUIREMENTS.md).
 
-Keep the existing signed `gate.closed` contract and BOOT fallback.
-Do not make new hardware, a paid phone provider, or a marketplace a prerequisite.
-The [phone extension](../mobile/seeker-inspector/README.md) remains optional.
-A callable physical-check service is the strongest adapter extension after the live core.
-The bounty lists new robotic.sh adapters among its examples. Hosted admission and the extension interface remain unverified.
-[Official bounty](https://superteam.fun/earn/listing/build-solutions-advancing-the-machine-economy-with-peaq).
+## Hardware scope
 
-## Test the business hypothesis
+Record BOOT first. It gives a visible physical change without new parts or firmware.
+An optional door-contact fixture uses a passive switch and reliable wires. Give that work 60–90 minutes after the baseline recording.
+The GPIO20 prototype is not the deployed board profile. Its bounded paid-buyer support and live fixture checks remain open.
+[Parts and acceptance checklist](HARDWARE_NEXT.md) · [Contact configuration](CONTACT_SETUP.md).
 
-The first candidate is an AI builder that commissions checks at an authorized site another operator manages.
-Test one repeated decision that existing telemetry cannot answer reliably.
-Record the current workaround, useful evidence age, integration effort, and budget before proposing a paid pilot.
-If an existing API answers the question reliably, this segment has no established need for FieldProof.
-Use the [pilot questions](competition/PILOT.md). Reviewer comprehension is feedback, not customer traction.
-No paying customer, commercial revenue, validated price, or network effect exists in the verified record.
-Earlier fleet/facility research remains in [the strategy document](STRATEGY.md).
-The competition prototype does not validate that earlier segment.
+## Evidence and documentation ownership
+
+- [Story](competition/STORY.md): product explanation and buyer hypothesis.
+- [Rehearsal](competition/REHEARSAL.md): current live commands and recovery.
+- [Requirements](competition/REQUIREMENTS.md): current rules, dates, and fields.
+- [Verification](VERIFICATION.md): executed checks and dated evidence.
+- [peaq integration](PEAQ_INTEGRATION.md): network facts and remaining authority gates.
+
+Earlier fleet, pickup, and financing scenarios are research hypotheses. They do not establish customers or implemented services.
+Older planning documents route here or to their current owner. Git preserves their earlier versions.

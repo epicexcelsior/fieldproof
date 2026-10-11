@@ -1,6 +1,7 @@
 # Configure one contact observer
 
-**The software supports another input and another device. Physical verification remains open.**
+**GPIO9 BOOT is deployed. External-input software exists, but the shared-budget paid paths still require GPIO9.**
+Use [the current physical checklist](HARDWARE_NEXT.md) before any new fixture.
 Audience: the operator who prepares the fixture and the buyer who selects its evidence.
 Use this guide after the [board, sensor, and wiring checks](HARDWARE_NEXT.md#resolve-the-board-before-wiring).
 On October 5, the attached board changed to GPIO20 for a prototype foil-contact check.
@@ -49,7 +50,10 @@ Use it after `sdkconfig.defaults` in an isolated build. Keep the default GPIO9 c
 Flash only the application at `0x10000`. Preserve the partition table and NVS signing-key storage.
 Restore the saved GPIO9 application at the same offset to return to BOOT. Disconnect the foil during restoration.
 
-The paid buyer opts in with `--package --sensor gpio20-contact`.
+The standalone `buyer.js` supports `--package --sensor gpio20-contact` for the historical experiment.
+The current `paid-checks.js`, `agent-contact.js`, and browser buyer remain GPIO9-only.
+Do not use the standalone buyer to bypass the shared operation budget.
+Before another paid GPIO20 take, add bounded profile support and mixed-profile ledger tests.
 The gateway uses `FIELDPROOF_CONTACT_SENSOR=gpio20-contact` and `FIELDPROOF_BUYER_PURPOSE=package-pickup`.
 The inspector uses `/proof?view=package&live=1&present=1`. It requires a new GPIO20 buyer output.
 The package view never loads the older GPIO9 purchase as fallback evidence.

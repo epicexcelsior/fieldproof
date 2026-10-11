@@ -11,6 +11,14 @@ That path claims no peaq identity or event. The Agung path must retain its stric
 
 ## October 11 host preflight
 
+The latest no-signing audit reached finalized block `11123336` and found the proposed identity absent.
+The existing testnet operator balance was zero. The full tier-0 bond remained 0.4 native test tokens, before gas.
+The activity peer remained unset. No activation or event followed these reads.
+The current project provenance gate requires the configured EventRegistry to match the InfoDesk event peer.
+That requirement is a project rule, not an established SDK deployment guarantee.
+An official address alone cannot complete this path until the authority rule matches an authoritative deployment source.
+Review that rule before accepting a separately published registry. Never substitute a guessed address.
+
 The founder supplied logs from the laptop's normal terminal. Gateway checks passed 43 tests. Core Python checks passed 40, with nine SDK skips.
 Agung deployment reads passed at finalized block `11117566`, hash `0x94815e1969f93628682063b394361b3e368d584ae2fa37ba9c367071c2a21149`.
 The seven published contracts contain bytecode, and their documented peers match. The proposed observer identity remains absent at this block.
