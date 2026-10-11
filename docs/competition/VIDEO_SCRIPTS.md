@@ -5,6 +5,26 @@ Payment goes to the configured operator wallet. Do not describe the ESP32 as con
 The bounded buyer is software callable by an AI agent. Explain that distinction if no AI tool call appears in the recording.
 The [current requirements](REQUIREMENTS.md) own cutoff and form checks. The [pilot questions](PILOT.md) own the buyer hypothesis.
 
+## Immediate feedback preview: 45–60 seconds
+
+Use the [public visual replay](https://epicexcelsior.github.io/fieldproof/review.html). This preview does not replace the final hardware recording.
+
+**0:00–0:10 — the decision.** “Before software sends someone to a remote site, it needs a current answer.
+FieldProof tests whether a device on site can sell that check.” Label the entrance as an illustrative use.
+
+**0:10–0:30 — the real transaction.** Select **Replay the real check** through its four steps.
+“This replays a real Solana Devnet payment and ESP32 reading. BOOT represents the contact.
+The operator receives test payment for a new measurement. The board signs the requested answer.”
+
+**0:30–0:45 — the useful boundary.** Select **Try this old answer now**, then **Change the signed answer**.
+“The original answer was usable at capture. It is too old now. Changing its state breaks the signature.”
+
+**0:45–1:00 — the feedback request.** “The paid-check loop works. Customer demand and live peaq identity remain unvalidated.
+Which existing paid inspection is worth testing? Which missing integration matters most for this bounty?”
+
+For the final video, show a physical input change beside a new reading. Show the board and browser in the same sequence.
+This connects the evidence to a visible event. Keep the illustrative entrance separate from actual hardware footage.
+
 ## peaq entry: two-minute transaction video
 
 **0:00–0:15 — buyer and question.** Show the request screen and the enclosure contact stand-in. “An AI agent that manages equipment at another site needs a current answer before its next decision. FieldProof lets it buy one contact check from an approved device.”

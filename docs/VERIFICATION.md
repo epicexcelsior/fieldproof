@@ -1,8 +1,32 @@
 # FieldProof verification record
 
-Current continuation: October 11, 2026, Europe/Berlin. Public paid evidence dates to October 1 and October 5.
+Current continuation: October 11, 2026, Europe/Berlin. Public paid evidence includes October 1, October 5, and October 11.
 The historical local MVP completes a public Devnet purchase, a real ESP32 observation, and both human-controlled contact states.
 This record does not claim production security, safety certification, or standards compliance.
+
+## October 11 visual decision replay
+
+The feedback page now shows one physical scene before transaction details.
+It reuses the existing browser verifier and original October 11 purchase.
+The entrance and maintenance trip are illustrative. The actual device reads BOOT. No customer workflow is connected.
+The replay evaluates the original signature and age at the original capture time.
+The present-time test retains the original timestamp and rejects expired evidence.
+The alteration test changes a local answer copy. The device result remains OPEN and its altered signature fails.
+Missing evidence, a forged original, or a mismatched served key disable replay. No replacement evidence is generated.
+
+The declared gateway suite passed 113 tests. The exporter suite passed six tests, with one optional SDK skip.
+Installed Chrome passed desktop and 390-pixel mobile layout, keyboard replay, expiry, alteration, restore, and failure cases.
+The replay made only GET requests. It made no buyer-configuration request, payment, or new measurement.
+The existing job workbench still initialized and verified its historical receipt after the shared-module guard changed.
+Local screenshots and results remain in `.local/competition/browser-checks/story-local-20261011-r2`.
+
+Reproduce the browser check with an installed Puppeteer package and Chrome:
+
+```bash
+CHROME_BIN=/usr/bin/google-chrome node scripts/check_review_ui.mjs http://127.0.0.1:8788
+```
+
+Serve a current judge export at that URL first. The runner requires no wallet or physical device.
 
 ## October 11 access restored and real paid check completed
 

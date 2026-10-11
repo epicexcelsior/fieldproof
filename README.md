@@ -9,8 +9,11 @@ Select **Verify recorded payment** for a read-only Solana Devnet query.
 The recorded receipt is expired, so its decision remains WAIT. The guide labels its interactive examples as teaching models.
 No hosted action creates a payment or reads hardware. Use [Run without hardware](#run-without-hardware) for the complete simulated purchase.
 
-The feedback walkthrough includes the October 11 real paid ESP32 check. It needs no wallet, account, or manual file upload.
-The original signature remains valid. Expired evidence remains WAIT.
+The feedback walkthrough replays the October 11 real paid ESP32 check as a physical scene.
+Select **Replay the real check** to follow the request, payment, measurement, and answer.
+Select **Try this old answer now** or **Change the signed answer** to see why the buyer cannot use either.
+The replay labels historical acceptance at the original capture time. Expired evidence remains WAIT for a new decision.
+The illustrative entrance and trip explain a proposed use. No entrance is connected and buyer demand remains unvalidated.
 
 **Deployment:** Solana Devnet, 0.001 Devnet USDC per real observation. No custom Solana program.
 

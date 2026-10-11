@@ -30,7 +30,7 @@ def test_judge_package_contains_only_public_assets_and_works_under_a_url_prefix(
     (root / "docs/review.html").write_text('<a href="/review">Start</a><a href="/proof?record=20261011&amp;present=1">Inspect today</a>'
                                           '<a href="/assets/fieldproof-signed-receipt.webm">Video</a>'
                                           '<a href="/evidence/device-signed-purchase-20261011.json">Evidence</a>'
-                                          '<a href="/learn">Guide</a><a href="/jobs">Jobs</a>')
+                                          '<a href="/learn">Guide</a><a href="/jobs">Jobs</a><script src="/review.mjs"></script>')
     (root / "secret.keypair.json").write_text("PRIVATE FIXTURE")
     monkeypatch.setattr(module, "ROOT", root)
     output = tmp_path / "site"
@@ -50,6 +50,7 @@ def test_judge_package_contains_only_public_assets_and_works_under_a_url_prefix(
     assert 'href="./evidence/device-signed-purchase-20261011.json"' in review
     assert 'href="./guide.html"' in review
     assert 'href="./jobs.html"' in review
+    assert 'src="./review.mjs"' in review
     guide = (output / "guide.html").read_text()
     assert 'href="./index.html?present=1"' in guide
     assert 'href="https://github.com/epicexcelsior/fieldproof/blob/main/docs/PROTOCOL.md#request"' in guide

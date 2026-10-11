@@ -165,7 +165,8 @@ export function decisionAt(inspection, paymentVerified, now = Math.floor(Date.no
     decision: paymentVerified && inspection.signature && inspection.terms && fresh && r.result.closed === false ? 'DISPATCH' : 'WAIT' };
 }
 
-if (typeof document !== 'undefined') {
+// Other pages reuse the verification exports without starting the workbench or its local buyer.
+if (typeof document !== 'undefined' && document.body?.dataset.fieldproofPage === 'jobs') {
   const el = id => document.getElementById(id);
   let original = null, inspection = null, pin = INSTALLED_PIN, paymentVerified = false;
   let localConfig = null, lastOperation = null, publishedJob = null;

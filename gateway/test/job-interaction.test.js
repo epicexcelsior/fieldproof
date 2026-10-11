@@ -18,7 +18,7 @@ async function workbench(t, query, windowFixture, publishedStatus = 404) {
       addEventListener(name, callback) { this.listeners[name] = callback; },
       removeAttribute(name) { delete this[name]; }, classList: { add() {}, remove() {} } });
   }
-  globalThis.document = { addEventListener() {}, getElementById: id => {
+  globalThis.document = { body: { dataset: { fieldproofPage: 'jobs' } }, addEventListener() {}, getElementById: id => {
     assert.ok(elements.has(id), `Missing workbench element ${id}`);
     return elements.get(id);
   } };
@@ -51,6 +51,21 @@ async function workbench(t, query, windowFixture, publishedStatus = 404) {
 }
 
 const rpcResponse = () => Response.json({ jsonrpc: '2.0', id: 'fieldproof-payment-check', result: rpc });
+
+test('verification imports on another page do not initialize the workbench or access a buyer', async t => {
+  const previous = { document: globalThis.document, fetch: globalThis.fetch };
+  globalThis.document = { body: { dataset: {} }, getElementById() { assert.fail('Workbench DOM accessed from another page'); } };
+  globalThis.fetch = () => { assert.fail('Import alone must not request buyer configuration or evidence'); };
+  t.after(() => {
+    if (previous.document === undefined) delete globalThis.document;
+    else globalThis.document = previous.document;
+    globalThis.fetch = previous.fetch;
+  });
+  const { inspectSource } = await import(`../../docs/jobs.mjs?interaction=${++sequence}`);
+  const result = await inspectSource(recorded, { now: recorded.purchase.receipt.completed_at });
+  assert.equal(result.signature, true);
+  assert.equal(result.fresh, true);
+});
 
 test('a completed payment query cannot verify a different imported ticket', async t => {
   let complete;

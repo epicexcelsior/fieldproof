@@ -12,6 +12,7 @@ from zipfile import ZipFile, ZIP_DEFLATED
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = {
     "review.html": "docs/review.html",
+    "review.mjs": "docs/review.mjs",
     "guide.html": "docs/HOW_IT_WORKS.html",
     "proof.js": "docs/proof.js",
     "settlement.mjs": "docs/settlement.mjs",
@@ -88,7 +89,8 @@ def export(output, *, job_manifest=None, provider_policy=None, require_peaq=Fals
         review = (stage / "review.html").read_text()
         for old, new in [('href="/review"', 'href="./review.html"'), ('href="/proof', 'href="./index.html'),
                          ('href="/learn"', 'href="./guide.html"'), ('href="/jobs"', 'href="./jobs.html"'),
-                         ('href="/assets/', 'href="./assets/'), ('href="/evidence/', 'href="./evidence/')]:
+                         ('href="/assets/', 'href="./assets/'), ('href="/evidence/', 'href="./evidence/'),
+                         ('src="/review.mjs"', 'src="./review.mjs"')]:
             review = review.replace(old, new)
         (stage / "review.html").write_text(review)
         page = (ROOT / "docs/proof.html").read_text()

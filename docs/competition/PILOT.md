@@ -14,6 +14,12 @@ The demonstration price uses test tokens. It is not a proposed commercial inspec
 The device signs evidence. Its operator wallet receives payment. The device does not hold the Solana spending key.
 The buyer is bounded software callable by an AI agent. No autonomous AI reasoning is established.
 
+The public replay illustrates a maintenance coordinator checking an entrance before a trip.
+That scenario explains a decision. It is not a validated customer segment or a connected entrance.
+The archive keeps its original signed `gate.closed` metric. The replay never changes the capture time.
+Ask reviewers to identify the buyer, purchased check, and decision before showing transaction details.
+Ask operators about an inspection they already pay for. Do not ask them to invent a use for the technology.
+
 ## Ask about the current workflow
 
 Ask an operator or builder these questions before presenting a broad sensor network.

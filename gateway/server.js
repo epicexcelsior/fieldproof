@@ -77,7 +77,7 @@ export async function createGateway({ paymentServer, store, observe = observeHar
   // Check only these relative asset names for dotfiles, not the trusted checkout path.
   for (const [route, file] of Object.entries({
     '/': 'docs/overview.html', '/proof': 'docs/proof.html', '/proof.js': 'docs/proof.js',
-    '/review': 'docs/review.html',
+    '/review': 'docs/review.html', '/review.mjs': 'docs/review.mjs',
     '/jobs': 'docs/jobs.html', '/jobs.mjs': 'docs/jobs.mjs',
     '/settlement.mjs': 'docs/settlement.mjs',
     '/receipt-keys.json': 'host/capmesh/protocol/receipt_keys.json',

@@ -3,8 +3,19 @@
 Goal: determine whether the evidence supports a paid fresh contact check. No wallet, key, hardware, or login is needed for this public inspection. The public record is historical and expired.
 
 For the latest feedback export, open `review.html` first.
-Select **Inspect today's paid check** to load the October 11 real purchase without a file upload.
-Select **Verify buyer payment** to query that transfer. The instructions below also support the older public inspector.
+Select **Replay the real check** to follow the October 11 request, payment, measurement, and example decision.
+Historical acceptance uses the original capture time. It does not establish a fresh answer today.
+Select **Try this old answer now**. Expect the example trip to stay on hold.
+Select **Change the signed answer**. Expect rejection of the altered copy.
+Select **Restore the replay**. The original timestamp remains unchanged.
+The illustrated entrance is not connected. BOOT represents its contact. Buyer demand remains unvalidated.
+
+Before opening transaction details, explain who buys the check and what decision depends on its answer.
+Record confusion as feedback. Do not count a reviewer as a customer.
+
+Select **Inspect evidence** to open the original receipt inspector.
+Select **Show full page**, then **Verify buyer payment** for a read-only transfer query.
+The instructions below also support the older public inspector.
 
 1. Open the [public inspector](https://epicexcelsior.github.io/fieldproof/) in a private browser window.
 2. Select **Verify original**. Expect a valid device signature and expired evidence. The decision remains WAIT.
