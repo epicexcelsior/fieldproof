@@ -4,7 +4,7 @@ Current continuation: October 11, 2026, Europe/Berlin. Public paid evidence incl
 The historical local MVP completes a public Devnet purchase, a real ESP32 observation, and both human-controlled contact states.
 This record does not claim production security, safety certification, or standards compliance.
 
-## October 11 guided visual review
+## October 12 guided visual review
 
 The public home page now presents one guided visual replay. It shows the buyer, actual device, operator payment, and signed answer.
 The first view contains fewer than 240 words. Detailed evidence and limitations remain in one disclosure.
@@ -25,6 +25,9 @@ Chrome also passed missing/forged/pin-mismatch failures, reduced motion, unchang
 The existing detailed replay and job workbench passed their browser regression checks.
 The guided page requests only public files. It never accesses buyer configuration, signs, pays, or requests hardware.
 Private checks and screenshots remain under `.local/competition/visual-story-20261011`.
+GitHub Pages completed the visual-review build at `82ab6e2`. All 32 public assets match the reviewed export hashes.
+The actual public home page passed the same browser checks, including the original receipt bookmark redirect.
+At October 12, 00:21 CEST, both latest and finalized Agung operator balances remain zero. No signer or chain write ran.
 
 ## October 11 short sponsor review
 
