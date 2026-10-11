@@ -24,7 +24,7 @@ and [exact chain diagnostic](evidence/peaq-agung-event-registry-20261011.json).
 The founder approved one testnet activation with a 0.4 AGUNG bond and a 0.04 AGUNG combined gas ceiling.
 The existing operator still needs faucet funding. The API request returned HTTP 403.
 The official browser form then reported its 24-hour limit. Latest and finalized balances still read zero.
-The founder must supply the faucet transaction link or an exact error to resolve this funding discrepancy.
+The founder requested manual testnet funding from peaq support. Funding remains unconfirmed.
 The signer remains unused. Activation and finalized identity readback remain pending.
 
 peaq native storage supplies a separate activity-anchor path through precompile `0x0000000000000000000000000000000000000801`.

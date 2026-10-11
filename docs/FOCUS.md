@@ -36,7 +36,7 @@ The Seeker was asleep during the earlier audit. The later unlocked-phone check p
 1. Open the material hub and explain the two-sentence story without notes.
 2. Run unpaid held and released BOOT checks. Record the board and answer together.
 3. Record one paid check and the Seeker's independent verification. Preserve its original receipt.
-4. Send the public replay to reviewers yourself. Record their actual comprehension and objections.
+4. Send [the quick prototype review](feedback.html) to reviewers yourself. Record their actual comprehension and objections.
 5. Resolve the live peaq deployment and funding gates. Preserve pending labels if those gates remain open.
 6. Record the separate pitch and product-demo videos. Verify their public access.
 7. Complete all three forms and save their submitted confirmations.

@@ -5,6 +5,7 @@ Final founder videos, live peaq integration, and submitted confirmations remain 
 
 | Material | Use it for |
 |---|---|
+| [Quick prototype review](../feedback.html) | One link for Superteam feedback before the final founder video |
 | [Plain-language story](STORY.md) | What it does, proposed buyer, alternatives, limitations, and future test |
 | [One-minute public replay](https://epicexcelsior.github.io/fieldproof/review.html?view=20261011-story) | No-wallet feedback on a recorded real purchase |
 | [Physical rehearsal](REHEARSAL.md) | Unpaid input changes, new bounded payment, phone verification, and recovery |

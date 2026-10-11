@@ -4,6 +4,20 @@ Current continuation: October 11, 2026, Europe/Berlin. Public paid evidence incl
 The historical local MVP completes a public Devnet purchase, a real ESP32 observation, and both human-controlled contact states.
 This record does not claim production security, safety certification, or standards compliance.
 
+## October 11 short sponsor review
+
+The [quick prototype review](feedback.html) gives the product explanation, actual paid-check sequence, buyer hypothesis, and pending peaq status.
+It links one real recorded replay. Detailed integration evidence, the deck, and the captioned clip remain optional.
+The message draft remains local and unsent. The founder requested manual Agung funding. Funding remains unconfirmed.
+
+The declared gateway suite passed **123 tests**. The export subset passed **eight tests, with one optional SDK skip**.
+The export checks cover both review-page and material-hub links under a URL prefix.
+Chrome passed desktop/mobile rendering, all local review links, keyboard disclosures, and navigation to the real replay.
+The replay passed its four recorded stages, expiry, changed-answer rejection, and restore.
+The browser reported no page errors and made only GET/HEAD requests. No payment, device request, or peaq write occurred.
+The page received visual review at 1280 and 390 pixels. Syntax, whitespace, and added-content privacy checks passed.
+Private browser evidence remains under `.local/competition/browser-checks/sponsor-20261011/local-final`.
+
 ## October 11 final integration and feedback cut
 
 The buyer cap now permits 100 operations and at most 0.100 Devnet USDC at the fixed 0.001 price.

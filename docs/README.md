@@ -7,6 +7,7 @@ Read [the current status](FOCUS.md) for verified features and open gates. Do not
 
 | Your task | Current owner |
 |---|---|
+| Send one short page for sponsor feedback | [Quick prototype review](feedback.html) |
 | Understand the product, proposed buyer, and alternatives | [Plain-language story](competition/STORY.md) |
 | Replay one actual paid check | [Public walkthrough](https://epicexcelsior.github.io/fieldproof/review.html?view=20261011-story) |
 | Find deck, video scripts, and entry drafts | [Competition package](competition/README.md) |

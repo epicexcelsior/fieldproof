@@ -72,10 +72,12 @@ That category does not establish demand for FieldProof contact readings.
 A linked activity record attributes the completed paid check to that provider.
 This can let an operator carry its identity and work history across applications.
 
-No live FieldProof peaq identity or event exists. The adapters and recovery paths pass controlled software tests.
+No live FieldProof peaq identity or activity record exists. The adapters and recovery paths pass controlled software tests.
 Agung readiness reads do not establish activation. The current paid route reports `peaq: not_used`.
-An official event deployment, funded testnet operator, activation, and independent readback remain open.
-The registry provenance rule also requires review against the official deployment before execution.
+The published Agung EventRegistry binds a legacy identity registry. The prepared path uses official native Storage for a linked job hash.
+The buyer checks registered authority before purchase. Storage retains separate request-time and submission-time authority checks.
+This record is operator-controlled. It is not a peaqOS event or a credit rating.
+Testnet funding, activation, a new identity-gated purchase, and independent activity readback remain open.
 [Integration facts and gates](../PEAQ_INTEGRATION.md).
 
 The peaq bounty permits early prototypes. It also penalizes superficial integrations.

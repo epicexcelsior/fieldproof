@@ -79,6 +79,7 @@ export async function createGateway({ paymentServer, store, observe = observeHar
     '/': 'docs/overview.html', '/proof': 'docs/proof.html', '/proof.js': 'docs/proof.js',
     '/review': 'docs/review.html', '/review.mjs': 'docs/review.mjs',
     '/start': 'docs/start.html', '/start.html': 'docs/start.html',
+    '/feedback.html': 'docs/feedback.html',
     '/review.html': 'docs/review.html',
     '/competition/slides.html': 'docs/competition/slides.html',
     '/competition/fieldproof-pitch.pdf': 'docs/competition/fieldproof-pitch.pdf',

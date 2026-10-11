@@ -4,6 +4,8 @@
 
 [Start here: story, demo, deck, and recording materials](https://epicexcelsior.github.io/fieldproof/start.html) · [Replay the real paid check](https://epicexcelsior.github.io/fieldproof/review.html?view=20261011-story) · [Inspect the original receipt](https://epicexcelsior.github.io/fieldproof/?record=20261011&present=1)
 
+For a quick external review, open [the one-page prototype brief](https://epicexcelsior.github.io/fieldproof/feedback.html).
+
 A laptop buys a new contact reading from an ESP32-C6 through Solana x402.
 The device signs its answer. The buyer checks the device key, request, samples, signature, and answer's age.
 

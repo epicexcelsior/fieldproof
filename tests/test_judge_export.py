@@ -91,7 +91,8 @@ def test_current_founder_guide_has_only_supported_export_links():
     assert 'href="https://github.com/epicexcelsior/fieldproof/blob/main/docs/JOBS.md"' in guide
 
 
-def test_material_hub_local_links_resolve_within_the_public_export():
+@pytest.mark.parametrize("page", ["start.html", "feedback.html"])
+def test_material_hub_local_links_resolve_within_the_public_export(page):
     from html.parser import HTMLParser
     from urllib.parse import urlsplit
     module = load_exporter()
@@ -105,13 +106,14 @@ def test_material_hub_local_links_resolve_within_the_public_export():
             self.targets.extend(value for key, value in attrs if key in {"href", "src"})
 
     links = Links()
-    links.feed((module.ROOT / "docs/start.html").read_text())
+    links.feed((module.ROOT / "docs" / page).read_text())
     local = [urlsplit(target).path for target in links.targets
              if not urlsplit(target).scheme and urlsplit(target).path]
     assert local
-    assert set(local) <= set(module.ASSETS)
+    assert set(local) <= {*module.ASSETS, "index.html"}
     assert "competition/fieldproof-pitch.pdf" in local
-    assert "competition/fieldproof-pitch.pptx" in local
+    if page == "start.html":
+        assert "competition/fieldproof-pitch.pptx" in local
     assert all(not target.startswith(("/", ".local", "..")) for target in local)
 
 
