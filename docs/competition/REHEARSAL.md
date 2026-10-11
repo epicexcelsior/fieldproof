@@ -1,8 +1,37 @@
 # Return to the laptop: record one complete transaction
 
-Outcome: three distinct paid hardware checks, one legible recording, and preserved evidence.
+Outcome: a paid hardware check, one legible recording, and preserved evidence.
 Keep this route on Solana. Agung remains optional and pending.
 Start from the repository root. Keep wallets, ledgers, and journals private.
+
+## Show the feedback demo now
+
+The October 11 check completed a real 0.001 Devnet USDC purchase and a fresh signed ESP32 OPEN observation.
+Its independent payment query verified the exact transfer. The public copy contains only the whitelisted purchase fields.
+Open `review.html` in the latest reviewed static export for the one-minute walkthrough.
+It links the new receipt, the earlier video, and the actual transaction. Its evidence is recorded and expires normally.
+The public review needs no wallet or hardware. Live peaq identity and activity remain pending.
+
+## Diagnose a buyer lock without payment
+
+```bash
+node gateway/paid-checks.js --check-buyer
+```
+
+This command derives the wallet's public address. It reads local buyer metadata and process information.
+It creates no lock, starts no device request, and makes no network request or payment.
+The output names the owner PID and its recognized FieldProof role. Private process arguments remain excluded.
+Run it in the normal host terminal. A sandbox's process namespace cannot establish host-process absence.
+
+If `owner_state` is `alive`, use the running buyer or stop it from its original terminal after its purchase finishes.
+Do not delete its lock. A graceful idle shutdown removes the lock.
+If `owner_state` is `unknown`, preserve the lock and inspect its original process.
+Use stale-lock recovery only when the normal host reports the original owner absent and all records are complete.
+
+The October 11 host diagnosis identified PID 1824662 as the original idle browser buyer from October 5.
+That active process caused the recovery refusal. It was not a missing key, board failure, or reused PID.
+The coordinator verified its idle status and stopped it with SIGTERM. It removed its own lock.
+The next real paid check passed. Eight completed operations now leave two under the original ten-operation limit.
 
 ## Check without payment
 
@@ -46,7 +75,9 @@ When physical access returns, hold BOOT to test the opposite state.
 
 If a board check fails, preserve its printed log. Resolve that failure before spending test tokens.
 
-## Run three real paid checks without a button press
+<a id="run-three-real-paid-checks-without-a-button-press"></a>
+
+## Run a real paid check without a button press
 
 Prerequisites: successful signed board preflight, installed host and gateway dependencies, and a funded disposable Devnet buyer.
 Stop other buyers and BLE clients. This command starts its own hardware gateway on loopback port 4027.
@@ -54,7 +85,7 @@ Keep the board powered. Run from the laptop's normal terminal if the agent acces
 
 ```bash
 node gateway/paid-checks.js --execute \
-  --count 3 \
+  --count 1 \
   --recover-stale-lock
 ```
 
@@ -63,13 +94,14 @@ The command generates a new private output directory and prints its path. It pre
 Use `--keypair` only to select another real Solana CLI keypair file. Never enter the example `/path/to/...` literally.
 Use `--output-directory` only to select a new directory yourself. An existing directory remains protected.
 
-The maximum batch cost is 0.003 Devnet USDC. These are test tokens, not customer revenue.
-The command saves three recovery IDs before device work. It verifies one unpaid signed reading before reading the wallet.
+This command costs at most 0.001 Devnet USDC. These are test tokens, not customer revenue.
+Select one to three checks with `--count`, within the wallet's remaining limit.
+The command saves each recovery ID before device work. It verifies one unpaid signed reading before reading the wallet.
 It then verifies the wallet, the shared operation budget, the associated test-USDC balance, and gateway startup.
 These are setup checks. Their failures report `buyer_setup_failed`, zero purchase attempts, and an actionable error.
 The funds check counts the source associated token account that x402 actually uses. It does not count unrelated owned accounts.
 No Solana mainnet RPC or asset enters this route.
-It then purchases three distinct readings in sequence and independently queries each Devnet transfer.
+It then purchases the requested readings in sequence and independently queries each Devnet transfer.
 Each purchase uses the same per-wallet controller as the browser and agent. Its shared lifetime limit remains ten operations.
 The hardware bridge uses installed Python dependencies without package downloads during delivery.
 No manual gateway startup or BOOT press is required. The command never selects the simulator or drives a GPIO output.
@@ -80,7 +112,7 @@ If the previous owner process still exists or its status is unknown, the command
 If an operation is pending, damaged, or under review, the command preserves the lock and stops.
 If all records are complete and the host reports the owner absent, it archives the old lock.
 Recovery preserves every operation and its original receipt. It does not reset the shared spending limit.
-The October 11 wallet inspection found seven completed records. Three operations remained under that limit.
+The latest October 11 paid check leaves two operations under that limit. Use `--count 1` or `--count 2`.
 An archived lock is local recovery evidence. It does not verify a new payment.
 
 Expected files in the new output directory:
@@ -88,7 +120,7 @@ Expected files in the new output directory:
 - `plan.json`: recovery IDs, maximum batch budget, and disabled automatic paid retries.
 - `preflight.json`: the unpaid signed board reading.
 - `buyer-preflight.json`: the read-only Devnet balance check, remaining operation count, and optional lock archive reference.
-- `check-1.json` through `check-3.json`: original paid receipts and independently verified payment results.
+- `check-1.json` through the selected count: original paid receipts and independently verified payment results.
 - `result.json`: completed count, transfer references, contact states, and purchase durations.
 
 An unchanged contact state is valid. The summary states whether it observed a change.
@@ -115,7 +147,7 @@ Each purchase costs at most 0.001 Devnet USDC. The shared controller permits at 
 1. Start the browser buyer with your local wallet path.
 
    ```bash
-   node gateway/live-demo.js /path/to/disposable-devnet.keypair.json
+   node gateway/live-demo.js .local/disposable-buyer.keypair.json
    ```
 
 2. Open `http://127.0.0.1:4026/proof?present=1`.

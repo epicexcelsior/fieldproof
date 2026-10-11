@@ -3,6 +3,7 @@
 These are draft submission materials. Final videos and human submissions remain incomplete.
 Live peaq activation and event readback remain pending. Preserve that label until independent verification passes.
 
+- [One-minute feedback walkthrough](https://epicexcelsior.github.io/fieldproof/review.html): the October 11 real paid check, evidence attacks, and targeted reviewer questions.
 - [Recording scripts](VIDEO_SCRIPTS.md): peaq transaction, founder pitch, and technical demo.
 - [Submission drafts](SUBMISSION_DRAFTS.md): separate Colosseum, Germany, and peaq entries.
 - [Tester guide](TESTER_GUIDE.md): a no-wallet review of historical signed evidence.

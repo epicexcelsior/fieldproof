@@ -3,13 +3,53 @@ import assert from 'node:assert/strict';
 import { mkdir, mkdtemp, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
-import { BuyerSetupError, checkDevnetFunds, checkPhysicalContact, runPaidChecks } from '../paid-checks.js';
+import { BuyerSetupError, checkBuyerReadiness, checkDevnetFunds, checkPhysicalContact, runPaidChecks } from '../paid-checks.js';
 import { contactToolPreview } from '../agent-contact.js';
 import { loadBuyerSigner } from '../buyer.js';
-import { inspectLocalBuyer, recoverCompletedBuyerLock, createLocalBuyer } from '../local-buyer.js';
+import { inspectLocalBuyer, describeBuyerProcess, recoverCompletedBuyerLock, createLocalBuyer } from '../local-buyer.js';
 import { USDC, PAY_TO } from '../constants.js';
 import { TOKEN_PROGRAM_ADDRESS } from '@x402/svm';
 import { randomUUID } from 'node:crypto';
+
+test('buyer diagnosis identifies an active browser buyer without exposing its command arguments', async t => {
+  const options = await config(t), directory = options.directory;
+  await mkdir(directory);
+  await writeFile(join(directory, '.lock'), JSON.stringify({ pid: process.pid, started_at: '2026-10-05T21:05:52.880Z' }));
+  const state = inspectLocalBuyer({ directory, ownerDetails: () => ({ role: 'browser_buyer', command: 'MainThread' }) });
+  assert.equal(state.owner.pid, process.pid);
+  assert.equal(state.owner.started_at, '2026-10-05T21:05:52.880Z');
+  assert.equal(state.owner.role, 'browser_buyer');
+  assert.equal(state.owner_state, 'alive');
+  assert.equal(state.remaining, 10);
+});
+
+test('buyer diagnosis gives the active-owner next step without a device request, payment, or lock change', async () => {
+  const result = await checkBuyerReadiness({ keyPath: 'private-local-wallet',
+    loadSigner: async path => { assert.equal(path, 'private-local-wallet'); return { address: 'fixture-public-payer' }; },
+    inspect: ({ directory }) => {
+      assert.ok(directory.endsWith('/.local/live-buyer/fixture-public-payer'));
+      return { operations: 7, remaining: 3, blocked: false, locked: true, owner_state: 'alive',
+        owner: { pid: 1824662, role: 'browser_buyer' } };
+    } });
+  assert.equal(result.spending, false);
+  assert.equal(result.device_request, false);
+  assert.equal(result.network_request, false);
+  assert.equal(result.schema, 'fieldproof-buyer-readiness-v1');
+  assert.equal(typeof result.payer, 'string');
+  assert.equal(Array.isArray(result.next_steps), true);
+  assert.match(result.next_steps.join(' '), /original terminal/);
+  assert.equal(JSON.stringify(result).includes('private-local-wallet'), false);
+});
+
+test('buyer process diagnosis returns an allowlisted role and never prints private command arguments', () => {
+  const sentinel = 'PRIVATE-KEY-PATH-SENTINEL';
+  const files = { '/proc/123/comm': 'MainThread\n',
+    '/proc/123/cmdline': `node\0/home/example/gateway/live-demo.js\0${sentinel}\0` };
+  const details = describeBuyerProcess(123, path => files[path]);
+  assert.deepEqual(details, { role: 'browser_buyer', command: 'MainThread' });
+  assert.equal(JSON.stringify(details).includes(sentinel), false);
+  assert.deepEqual(describeBuyerProcess(123, () => { throw new Error(sentinel); }), { role: 'unverified' });
+});
 
 // Controlled collaborators test sequencing and recovery. These are not new device captures or chain transactions.
 const physical = () => ({ schema: 'fieldproof-physical-preflight-v1', payment: 'none',

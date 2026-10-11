@@ -2,12 +2,15 @@
 
 **Paid physical checks for AI agents.**
 
-**Try FieldProof:** [public receipt inspector](https://epicexcelsior.github.io/fieldproof/) · [interactive guide](https://epicexcelsior.github.io/fieldproof/guide.html) · [captioned 2:30 technical walkthrough](https://epicexcelsior.github.io/fieldproof/assets/fieldproof-signed-receipt.webm).
+**Try FieldProof:** [one-minute feedback walkthrough](https://epicexcelsior.github.io/fieldproof/review.html) · [public receipt inspector](https://epicexcelsior.github.io/fieldproof/) · [interactive guide](https://epicexcelsior.github.io/fieldproof/guide.html) · [captioned 2:30 technical walkthrough](https://epicexcelsior.github.io/fieldproof/assets/fieldproof-signed-receipt.webm).
 
 The public inspector verifies recorded real ESP32 evidence. Select **Verify original**, then change the state, challenge, or key.
 Select **Verify recorded payment** for a read-only Solana Devnet query.
 The recorded receipt is expired, so its decision remains WAIT. The guide labels its interactive examples as teaching models.
 No hosted action creates a payment or reads hardware. Use [Run without hardware](#run-without-hardware) for the complete simulated purchase.
+
+The feedback walkthrough includes the October 11 real paid ESP32 check. It needs no wallet, account, or manual file upload.
+The original signature remains valid. Expired evidence remains WAIT.
 
 **Deployment:** Solana Devnet, 0.001 Devnet USDC per real observation. No custom Solana program.
 
@@ -56,7 +59,8 @@ A durable activity outbox stores exact evidence bytes. Interrupted submissions r
 The operator workflow adds bounded activation, event submission, independent inspection, and payment-query recovery commands.
 
 **Live activation and activity submission remain pending.** No peaq identity or event exists for the demonstration yet.
-Offline tests verify the new interfaces and rejection paths. The current sandbox blocks live RPC, Bluetooth, and ADB checks.
+Controlled tests verify the new interfaces and rejection paths. Restored access allowed a real paid ESP32 check on October 11.
+That check uses Solana only. It does not establish live peaq activation or activity.
 The job workbench labels imported snapshots as recorded evidence and keeps chain verification separate.
 
 Run `python3 scripts/check_execution_access.py` before live work in a new session.

@@ -1,12 +1,13 @@
 # FieldProof: start here
 
-**Current focus: record one repeatable Solana-paid physical check, then finish the submission.**
+**Current focus: share the working feedback demo, then record the final Solana-paid physical check.**
 As of October 11, 2026. Primary entry: peaq Germany. Secondary entries: Superteam Germany Colosseum track and Colosseum.
 The internal submission target is Monday, October 12, 18:00 CEST.
 No submission confirmation exists in this repository.
 Use the [return-to-laptop rehearsal](competition/REHEARSAL.md) for today's actions.
 Its [unattended paid batch](competition/REHEARSAL.md#run-three-real-paid-checks-without-a-button-press) needs no BOOT press or separate gateway terminal.
-It checks the real board before reading the wallet and stops on any uncertain payment. New live batch results remain pending.
+It checks the real board before reading the wallet and stops on any uncertain payment. The October 11 paid check passed.
+Share the [one-minute feedback walkthrough](https://epicexcelsior.github.io/fieldproof/review.html) before finalizing the story.
 Use the [current requirements](competition/REQUIREMENTS.md) for dates, sources, and form checks.
 
 ## Explain one transaction
@@ -30,20 +31,20 @@ The signature authenticates a device claim. It does not prove physical truth or 
 
 | Part | Verified result | Remaining gap |
 |---|---|---|
-| Solana and ESP32 | Historical paid Devnet checks and original P-256 receipts | Fresh integrated rehearsal |
+| Solana and ESP32 | October 11 real paid check and independently verified transfer | Founder recording and opposite physical input |
 | peaq | Historical Agung readiness, new strict resolver, bounded operator, and offline tests | Funded operator, current preview, activation, registry binding, finalized event |
-| Jobs | Bounded Solana agent, canonical peaq-linked evidence, durable outbox, recovery and inspection | Live RPC and physical acceptance test |
+| Jobs | Bounded Solana check passed live. peaq-linked evidence and outbox pass controlled tests | Live peaq identity and activity |
 | Seeker | Browser verification history and an offline-built requested-photo app | Install, capture, trusted key transfer, and independent verification |
 | Submission | Public historical inspector and local editable package | Founder narration, current public links, eligibility, final forms |
 
 The normal laptop access report passed network and device prerequisites.
-The current agent session still blocks local servers, RPC, ADB, Bluetooth, and Tailscale access.
-The [verification record](VERIFICATION.md) separates offline checks from those blocked live steps.
+The current session now has network and device access. The real payment and board observation passed.
+The Seeker remains screen-locked. The [verification record](VERIFICATION.md) names tested behavior and remaining gaps.
 
 ## Do next
 
-1. Run the safe software check and both no-payment board states.
-2. Complete three distinct paid checks with a disposable Devnet buyer after budget approval.
+1. Share the feedback walkthrough and collect one concrete buyer or sponsor objection.
+2. Preserve the two remaining wallet operations for recording. Use `--count 1` for a single paid rehearsal.
 3. Reinspect one operation without another payment. Record expiry and changed-receipt rejection.
 4. Record the physical device, purchase, transfer, evidence, and founder explanation.
 5. Test the actual public links from a private browser window.

@@ -23,8 +23,34 @@ function processState(pid) {
   catch (error) { return error.code === 'ESRCH' ? 'absent' : 'unknown'; }
 }
 
+// Diagnostic only. Arguments can contain wallet paths or credentials. Never return them.
+export function describeBuyerProcess(pid, read = path => readFileSync(path, 'utf8')) {
+  try {
+    const command = read(`/proc/${pid}/comm`).trim();
+    const args = read(`/proc/${pid}/cmdline`).split('\0');
+    const roles = { 'live-demo.js': 'browser_buyer', 'paid-checks.js': 'paid_checks',
+      'agent-contact.js': 'contact_agent', 'agent-job.js': 'job_agent', 'peaq-event.js': 'job_recovery' };
+    // Inspect the Node script argument only. A wallet filename cannot determine the process role.
+    const script = args[1]?.split('/').at(-1);
+    return { role: roles[script] ?? 'unrecognized',
+      ...(/^[A-Za-z0-9 ._-]{1,64}$/.test(command) ? { command } : {}) };
+  } catch { return { role: 'unverified' }; }
+}
+
+export function buyerLockMessage(state) {
+  const owner = state.owner;
+  const name = Number.isSafeInteger(owner?.pid) ? `Buyer owner PID ${owner.pid}` : 'Buyer owner';
+  if (state.owner_state === 'alive') {
+    return `${name} is active${owner?.role === 'browser_buyer' ? ' (browser buyer)' : ''}. Use its running demo or stop that buyer in its original terminal after its purchase finishes. Run node gateway/paid-checks.js --check-buyer for details.`;
+  }
+  if (state.owner_state === 'absent') {
+    return `${name} is absent from this process namespace. In the normal host terminal, inspect with --check-buyer, then use --recover-stale-lock to archive the lock.`;
+  }
+  return `${name} cannot be verified. Run node gateway/paid-checks.js --check-buyer in the normal host terminal. Preserve the lock.`;
+}
+
 // Readiness is advisory. The controller still acquires its exclusive lock before a signer can act.
-export function inspectLocalBuyer({ directory, maximum = 10, ownerState = processState }) {
+export function inspectLocalBuyer({ directory, maximum = 10, ownerState = processState, ownerDetails = describeBuyerProcess }) {
   if (!existsSync(directory)) return { operations: 0, remaining: maximum, blocked: false, locked: false };
   const files = readdirSync(directory).filter(name => operationId.test(name.slice(0, -5)) && name.endsWith('.json'));
   let blocked = false;
@@ -40,7 +66,13 @@ export function inspectLocalBuyer({ directory, maximum = 10, ownerState = proces
   if (result.locked) {
     try {
       const owner = JSON.parse(readFileSync(join(directory, '.lock'), 'utf8'));
-      result.owner_state = Number.isSafeInteger(owner.pid) && owner.pid > 0 ? ownerState(owner.pid) : 'unknown';
+      const validPid = Number.isSafeInteger(owner.pid) && owner.pid > 0;
+      result.owner_state = validPid ? ownerState(owner.pid) : 'unknown';
+      result.owner = { ...(validPid ? { pid: owner.pid } : {}),
+        ...(typeof owner.started_at === 'string' && Number.isFinite(Date.parse(owner.started_at))
+          ? { started_at: new Date(owner.started_at).toISOString() } : {}),
+        ...(validPid ? ownerDetails(owner.pid) : { role: 'unverified' }),
+        status_scope: 'current_process_namespace' };
     } catch { result.owner_state = 'unknown'; }
   }
   return result;

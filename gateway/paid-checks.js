@@ -12,7 +12,7 @@ import { checkEvidence, loadBuyerSigner } from './buyer.js';
 import { contactToolPreview, runContactOperation } from './agent-contact.js';
 import { PurchaseStore } from './store.js';
 import { saveBuyerRun } from './buyer-output.js';
-import { inspectLocalBuyer, recoverCompletedBuyerLock } from './local-buyer.js';
+import { buyerLockMessage, inspectLocalBuyer, recoverCompletedBuyerLock } from './local-buyer.js';
 import { DEVNET_RPC } from '../docs/settlement.mjs';
 import { USDC } from './constants.js';
 
@@ -34,6 +34,21 @@ function deviceFailure(error) {
 
 export class BuyerSetupError extends Error {
   constructor(stage, message) { super(message); this.stage = stage; }
+}
+
+export async function checkBuyerReadiness({ keyPath = resolve(root, '.local/disposable-buyer.keypair.json'),
+    loadSigner = loadBuyerSigner, inspect = inspectLocalBuyer } = {}) {
+  const signer = await loadSigner(keyPath);
+  const state = inspect({ directory: resolve(root, '.local/live-buyer', signer.address) });
+  const next_steps = state.blocked ? ['Preserve unresolved buyer records. Review their original purchases before another payment.']
+    : state.recovery_active ? ['Preserve the recovery marker. Inspect its original owner before another buyer starts.']
+    : state.locked ? [buyerLockMessage(state)]
+    : state.remaining < 1 ? ['The shared ten-operation limit is reached. Existing receipts remain available for review.']
+    : ['The buyer lock is clear. Run --execute --count 1 for one bounded real-device test payment.'];
+  return { schema: 'fieldproof-buyer-readiness-v1', payer: signer.address, ...state,
+    spending: false, device_request: false, network_request: false,
+    funds_verified: false, next_steps,
+    note: 'This command derives the wallet public address and reads local metadata. It creates no lock and signs no transaction. Process status applies only to this process namespace.' };
 }
 
 export async function checkDevnetFunds(payer, count, rpc = createSolanaRpc(DEVNET_RPC)) {
@@ -170,6 +185,7 @@ export async function runPaidChecks({ directory, count = 3, preflight = checkPhy
 async function main() {
   const { values } = parseArgs({ options: {
     execute: { type: 'boolean', default: false }, 'check-device': { type: 'boolean', default: false },
+    'check-buyer': { type: 'boolean', default: false },
     keypair: { type: 'string' }, count: { type: 'string', default: '3' },
     'output-directory': { type: 'string' }, port: { type: 'string', default: '4027' },
     'recover-stale-lock': { type: 'boolean', default: false },
@@ -178,13 +194,20 @@ async function main() {
   const count = Number(values.count), port = Number(values.port);
   checkCount(count);
   if (!Number.isInteger(port) || port < 1024 || port > 65535) throw new Error('Select a local port from 1024 to 65535.');
-  if (values.execute && values['check-device']) throw new Error('Select either a no-payment device check or explicit paid execution.');
+  if ([values.execute, values['check-device'], values['check-buyer']].filter(Boolean).length > 1) {
+    throw new Error('Select one mode: --check-buyer, --check-device, or --execute.');
+  }
   if (values['ble-address']) {
     if (!/^(?:[0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$/.test(values['ble-address'])) throw new Error('Use the trusted board Bluetooth MAC address.');
     process.env.FIELDPROOF_BLE_ADDRESS = values['ble-address'];
   }
   // Use installed host dependencies and a writable cache. Do not install packages during paid delivery.
   process.env.UV_CACHE_DIR ??= '/tmp/fieldproof-uv-cache';
+  if (values['check-buyer']) {
+    if (values['output-directory'] || values['recover-stale-lock']) throw new Error('Buyer diagnosis creates no output directory and performs no recovery.');
+    console.log(JSON.stringify(await checkBuyerReadiness({ keyPath: values.keypair }), null, 2));
+    return;
+  }
   if (!values.execute) {
     if (values.keypair || values['output-directory'] || values['recover-stale-lock']) throw new Error('Wallet, output-directory, and recovery options require explicit execution.');
     if (values['check-device']) {
@@ -212,9 +235,7 @@ async function main() {
         if (state.remaining < count) throw new BuyerSetupError('buyer_budget', `Only ${state.remaining} operations remain in the shared ten-operation limit. Reduce --count.`);
         if (state.recovery_active) throw new BuyerSetupError('buyer_lock', 'Buyer lock recovery is active or incomplete. Preserve its files for review.');
         if (state.locked && (state.owner_state !== 'absent' || !values['recover-stale-lock'])) {
-          throw new BuyerSetupError('buyer_lock', state.owner_state === 'absent'
-            ? 'An older buyer lock remains. In the normal host terminal, use --recover-stale-lock to archive it after inspection.'
-            : 'Another buyer owner is active or unknown. Stop its original process before running this batch.');
+          throw new BuyerSetupError('buyer_lock', buyerLockMessage(state));
         }
         const funds = await checkDevnetFunds(signer.address, count);
         try {

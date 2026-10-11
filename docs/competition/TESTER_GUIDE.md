@@ -2,6 +2,10 @@
 
 Goal: determine whether the evidence supports a paid fresh contact check. No wallet, key, hardware, or login is needed for this public inspection. The public record is historical and expired.
 
+For the latest feedback export, open `review.html` first.
+Select **Inspect today's paid check** to load the October 11 real purchase without a file upload.
+Select **Verify buyer payment** to query that transfer. The instructions below also support the older public inspector.
+
 1. Open the [public inspector](https://epicexcelsior.github.io/fieldproof/) in a private browser window.
 2. Select **Verify original**. Expect a valid device signature and expired evidence. The decision remains WAIT.
 3. Select **Flip contact state**. Expect signature rejection and WAIT.

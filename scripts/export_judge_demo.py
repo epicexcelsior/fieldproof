@@ -11,6 +11,7 @@ from zipfile import ZipFile, ZIP_DEFLATED
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = {
+    "review.html": "docs/review.html",
     "guide.html": "docs/HOW_IT_WORKS.html",
     "proof.js": "docs/proof.js",
     "settlement.mjs": "docs/settlement.mjs",
@@ -18,6 +19,7 @@ ASSETS = {
     "jobs.mjs": "docs/jobs.mjs",
     "receipt-keys.json": "host/capmesh/protocol/receipt_keys.json",
     "evidence/device-signed-purchase.json": "docs/evidence/device-signed-purchase.json",
+    "evidence/device-signed-purchase-20261011.json": "docs/evidence/device-signed-purchase-20261011.json",
     "evidence/device-signed-purchase-20261005.json": "docs/evidence/device-signed-purchase-20261005.json",
     "evidence/device-signed-purchase-click-20261005.json": "docs/evidence/device-signed-purchase-click-20261005.json",
     "evidence/device-signed-purchase-fast-20261005.json": "docs/evidence/device-signed-purchase-fast-20261005.json",
@@ -83,6 +85,12 @@ def export(output, *, job_manifest=None, provider_policy=None, require_peaq=Fals
                          ('href="/learn"', 'href="./guide.html"'), ('src="/jobs.mjs"', 'src="./jobs.mjs"')]:
             job_page = job_page.replace(old, new)
         (stage / "jobs.html").write_text(job_page)
+        review = (stage / "review.html").read_text()
+        for old, new in [('href="/review"', 'href="./review.html"'), ('href="/proof', 'href="./index.html'),
+                         ('href="/learn"', 'href="./guide.html"'), ('href="/jobs"', 'href="./jobs.html"'),
+                         ('href="/assets/', 'href="./assets/'), ('href="/evidence/', 'href="./evidence/')]:
+            review = review.replace(old, new)
+        (stage / "review.html").write_text(review)
         page = (ROOT / "docs/proof.html").read_text()
         page = page.replace('src="/proof.js"', 'src="./proof.js"')
         page = page.replace('<a href="/">Back to dispatch desk</a>', '<a href="./index.html">Restart inspection</a>')
@@ -100,6 +108,7 @@ def export(output, *, job_manifest=None, provider_policy=None, require_peaq=Fals
             "FieldProof: inspect recorded physical evidence\n\n"
             "1. Serve this directory on localhost or HTTPS.\n"
             "   python3 -m http.server 8787 --bind 127.0.0.1\n"
+            "   Open http://127.0.0.1:8787/review.html for the one-minute feedback walkthrough.\n"
             "2. Open http://127.0.0.1:8787/guide.html for the story, radio explanation, and rehearsal.\n"
             "   Open http://127.0.0.1:8787 for actual recorded-receipt verification.\n"
             "3. Verify the original receipt, then alter its state, challenge, or public key.\n"

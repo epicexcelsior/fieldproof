@@ -4,6 +4,39 @@ Current continuation: October 11, 2026, Europe/Berlin. Public paid evidence date
 The historical local MVP completes a public Devnet purchase, a real ESP32 observation, and both human-controlled contact states.
 This record does not claim production security, safety certification, or standards compliance.
 
+## October 11 access restored and real paid check completed
+
+The unrestricted session passed socket, loopback, DNS, Bluetooth, ADB, and Tailscale access probes.
+The host diagnosis identified the old lock owner as the idle October 5 browser buyer, PID 1824662.
+Its live configuration reported no active operation. Its wallet matched the preserved seven-operation ledger.
+The coordinator stopped that verified idle process with SIGTERM. The process removed its own lock.
+No lock deletion, ledger reset, wallet replacement, or automatic paid retry occurred.
+
+One real-only paid check completed. It paid 1,000 base units of Devnet USDC and obtained signed ESP32 OPEN evidence.
+The buyer verified the device key, request, signature, and freshness. The independent RPC query verified the exact transfer.
+The paid check took 14,606 ms. Its saved decision was fresh DISPATCH, a demonstration policy result.
+The original capture timestamp remains unchanged. Reinspection after expiry must return WAIT.
+The ledger now contains eight completed operations. Two remain under its original ten-operation limit.
+The check declares `peaq: not_used` and `commercial_revenue: false`.
+
+Transaction: [October 11 Devnet transfer](https://explorer.solana.com/tx/3R8BHWyVCMMnMdH3J3dXoDmpHvwBcpMGk345Qf1XXwLDeHHkYZbqSwGaRBoCh3HK8Ksqbb7fvjuukBgSURLpA1Fj?cluster=devnet).
+The [public purchase](evidence/device-signed-purchase-20261011.json) contains only whitelisted fields.
+Private batch evidence remains in `.local/paid-checks/5056f848-311d-47e5-9641-749fb6c3fb9d`.
+The archive authenticity check used the original capture time. A separate read-only RPC check verified the public copy before export.
+
+The new `--check-buyer` mode reports lock-owner details and actionable next steps without device or network access.
+It excludes private command arguments. Three diagnosis regressions failed before implementation and passed afterward.
+Seventeen focused paid-check and recovery tests passed.
+The declared full gateway suite passed 112 tests. The full Python suite passed 245 tests, with 19 optional skips.
+These software checks make no new payment or device capture.
+
+The exported feedback walkthrough passed desktop and 390-pixel mobile layout checks in installed Chrome.
+The browser loaded the October 11 receipt, verified its signature, rejected a modified contact state, and restored the original.
+Its actual read-only Devnet query verified the transfer. Expired evidence remained WAIT. No page errors occurred.
+The visual review found that focus mode hides the payment query. The walkthrough now names **Show full page** before that query.
+Screenshots and the result remain in `.local/competition/browser-checks/feedback-20261011`.
+ADB detects the Seeker. Its screen is locked, so this session does not claim a new phone-browser verification.
+
 ## October 11 real-host failure and buyer setup correction
 
 The founder ran the real-only batch in the normal laptop terminal. Its signed OPEN preflight passed.
