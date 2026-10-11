@@ -1,4 +1,4 @@
-FieldProof: inspect recorded physical evidence
+FieldProof: follow one actual recorded paid check
 
 1. Serve this directory on localhost or HTTPS.
    python3 -m http.server 8787 --bind 127.0.0.1
@@ -6,7 +6,8 @@ FieldProof: inspect recorded physical evidence
    Open http://127.0.0.1:8787/feedback.html for the short sponsor review.
    Open http://127.0.0.1:8787/review.html for the one-minute feedback walkthrough.
 2. Open http://127.0.0.1:8787/guide.html for the story, radio explanation, and rehearsal.
-   Open http://127.0.0.1:8787 for actual recorded-receipt verification.
+   Open http://127.0.0.1:8787 for the guided visual replay.
+   Open http://127.0.0.1:8787/proof.html?record=20261011 for actual receipt verification.
 3. Verify the original receipt, then alter its state, challenge, or public key.
 4. Select Verify recorded payment for a read-only Solana Devnet RPC query.
 5. Inspect the separately signed BOOT held/released input pair. Those checks moved no funds.

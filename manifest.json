@@ -1,8 +1,9 @@
 {
-  "README.txt": "b71e1d85b727f67c062237ceb4944810cbaef36cfa3298a0c47645cf7f93dd07",
+  "README.txt": "661bfa80ea11e6b6b725ae13a86b823bb784942d838b401dc7038a8fa91986e0",
   "assets/fieldproof-evidence-window.svg": "377b10402bb13bd2787cec33a72c8509e7e4615f282d0a582d909732aab476e9",
   "assets/fieldproof-paid-check-feedback.webm": "0bb4df35f8f62821b9474d7671ef1eb1755cc401b987072d6b0c9f1a3133d564",
   "assets/fieldproof-payment-to-observation.svg": "faa42577ef796bc09332a848ac0d3d380e06c74eaf1fd0c77ec2d4e874b5034e",
+  "assets/fieldproof-real-device.webp": "ffc8d95d35b4f32f5ca5469374947a712386712db8368be1ae05f2d8bc30ec52",
   "assets/fieldproof-service-boundaries.svg": "62648320848115a211c6a4affe9ee2d3aa46df184f005164457d45f05102a3d5",
   "assets/fieldproof-signed-receipt.webm": "42e7ec97daacd0cb04d5af39d50ebae1c9dc127d6e552f47aa9219b49357159b",
   "competition/assets/fieldproof-project.png": "e5dee407b2cee4921c79b1211552daf65ed1de91291f57af014045f90a2c0fd7",
@@ -17,15 +18,17 @@
   "evidence/device-signed-purchase.json": "a41601211bd21b9bc7abd48fdba621c794e895c22ba9cdac8ce01e76baf2f467",
   "evidence/peaq-agung-event-registry-20261011.json": "04012d7a9e5496af9a9007d18c318a98438db25df87a12b67946e8b346a23154",
   "evidence/peaq-agung-storage-readiness-20261011.json": "048f26dc6bdccdf0a5087d9aa7b00d5a11e4dd185857a84a71077b53a7ddf616",
-  "feedback.html": "4df15dfd121e8bc1fecd57df3b8b2e29f2bd87a7c065ab382d221659fdc2422b",
+  "feedback.html": "dc1f259727100912375768898cbd982953634c6c4a761675724db59fed5ef1a5",
+  "feedback.mjs": "360480083251e752af4dd8d2a74f711f3291da65a0b77564c9971c5ecdb89566",
   "guide.html": "d19e597898cc2c79bce5a0de0c444b559f3739ff92413a205f1defc48f15cea1",
-  "index.html": "86ce04f5ef2ddcb75f00acf2f94c7f31d51b3a5361c728d2f4521bd950084a25",
-  "jobs.html": "d749e3c060f5046ba484af32011caac03926826f6c19509e4441d28effb88f74",
+  "index.html": "4a01744ee12a0d4d46787a48fdb3a3fe64d8aeba8db407f4d6641ebe8b78b53d",
+  "jobs.html": "4be74441efe5ac45ce3d9ba63aee303703fea882f6244c7ccd164fd84186e572",
   "jobs.mjs": "6c3137c8cc7bffe68c1bc3a789d4253e815caaa2421667aeee38955e9fbfff73",
+  "proof.html": "86ce04f5ef2ddcb75f00acf2f94c7f31d51b3a5361c728d2f4521bd950084a25",
   "proof.js": "5800eb13e762dc1ea3c917660755bc0e2cfce7c322d5add0a9bb30c0a5c4a060",
   "receipt-keys.json": "0eb12edac38603bb3e7657147613037904f610fec7b3b5fda31322c65bed6662",
-  "review.html": "c482522a36ca0c79a871fc98e1f0f9c3764bf3fac166fe342decf665adffc821",
+  "review.html": "af778c3b9f535dd123bf8f30ea516b430333bc04cdf879a5bead4ca1c4c4870d",
   "review.mjs": "d34e6409a203e918e6b6165074bdb31daf9007ad898ba2b6a3f53decad5ae2f1",
   "settlement.mjs": "144e5dac218d6644db90277f6ab5fcd9a771a93e01951115cb4b56ac3409000d",
-  "start.html": "92695f7bf7307112c7224e3738c3a1ca6e1f383355f3906ff34e2a875d0dc26e"
+  "start.html": "b88b838526b9510eed2d0877337e9cd435c38e24d7b7286abdb011673d8efdef"
 }
