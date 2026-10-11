@@ -22,14 +22,14 @@ Colosseum also judges business viability and traction. No validated customer or 
 | Recovery | Shared wallet operation cap, durable records, fail-closed uncertain payments | Production refund and delivery guarantees |
 | Public demo | Real recorded evidence, expiry, tamper rejection, RPC query, 58-second captioned feedback cut | External feedback and final narrated hardware videos |
 | peaq | Current Agung deployment reads, identity gate, explicit Storage activity route and controlled tests | Faucet funding, activation, gated paid job, independent activity readback |
-| Seeker | Earlier independent browser verification, current authorized ADB, photo-app offline build | Today's phone rehearsal. Photo app installation/capture and paid provider remain unverified |
+| Seeker | October 11 physical-phone Chrome signature, expiry, tamper, and finalized transfer verification | Founder footage. Photo app installation/capture and paid provider remain unverified |
 | Business | Explicit buyer hypothesis and falsifiable pilot | Recurring buyer problem, willingness to pay, pricing, acquisition, and margins |
 | Entries | Requirements verified against current official pages | Completed forms, video uploads, and saved submission confirmations |
 
 The October 11 no-spend check found the deployed GPIO9 board OPEN with a valid signature.
 It found no buyer lock and no unresolved operation. The founder authorized a 100-operation cap. Eight operations leave **92** available, with no ledger reset.
 Recheck readiness before recording. This snapshot does not guarantee the next payment succeeds.
-The Seeker was asleep and locked during the audit. The founder can now unlock it.
+The Seeker was asleep during the earlier audit. The later unlocked-phone check passed independent evidence and payment verification.
 
 ## Do these actions in order
 

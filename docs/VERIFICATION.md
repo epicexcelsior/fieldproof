@@ -35,7 +35,15 @@ Private logs remain in `.local/competition/final-push-20261011`.
 
 Chrome passed desktop/mobile replay, expiry, altered-copy rejection, restore, immutable original evidence, and missing/forged-input failures.
 Chrome passed material links, video metadata, playback, 54-second seeking, keyboard navigation, and page-error checks at 1280 and 390 pixels.
-These checks used the local public export. Actual published checks appear below after deployment completes.
+The published site passed the same desktop/mobile material, video, and replay checks.
+All 28 public files match the reviewed export hashes. GitHub Pages completed its build at `59116b3`.
+The source implementation push at `30a8cae` also received independent remote verification.
+
+A later unpaid real-BLE check returned OPEN with five agreeing GPIO9 samples and a valid device signature.
+The shared buyer ledger still contains eight operations. No lock or unresolved operation exists.
+The unlocked physical Seeker ran Chrome 154 and independently verified the original P-256 signature, expiry, altered-copy rejection, and restore.
+It also queried the original Devnet transfer at slot 509900016. The buyer lost 1000 base units and the operator received 1000.
+The phone test made no payment or measurement. Its private screenshots and result remain under `.local/competition/browser-checks/seeker-public-20261011`.
 
 The [58-second captioned feedback cut](assets/fieldproof-paid-check-feedback.webm) uses the original October 11 purchase.
 It independently read the original Devnet transfer at slot 509900016 and shows the authentic signed contact answer.
