@@ -19,6 +19,11 @@ Installed Chrome passed desktop and 390-pixel mobile layout, keyboard replay, ex
 The replay made only GET requests. It made no buyer-configuration request, payment, or new measurement.
 The existing job workbench still initialized and verified its historical receipt after the shared-module guard changed.
 Local screenshots and results remain in `.local/competition/browser-checks/story-local-20261011-r2`.
+The published page passed the same Chrome checks under the actual `/fieldproof` URL prefix.
+All 20 public assets matched the reviewed export hashes. The Pages build completed at `caf168b`.
+Public results remain in `.local/competition/browser-checks/story-public-20261011`.
+The replay imports a versioned verifier module to avoid the earlier workbench module in a browser cache.
+The refreshed entry URL uses `review.html?view=20261011-story` to avoid an earlier cached page.
 
 Reproduce the browser check with an installed Puppeteer package and Chrome:
 

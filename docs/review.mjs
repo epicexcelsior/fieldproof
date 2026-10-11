@@ -1,4 +1,5 @@
-import { inspectSource, loadTrustedPin } from './jobs.mjs';
+// A reviewer can still have the pre-replay workbench module in the browser's HTTP cache.
+import { inspectSource, loadTrustedPin } from './jobs.mjs?replay=20261011';
 
 const el = id => document.getElementById(id);
 const text = (id, value) => { el(id).textContent = value; };

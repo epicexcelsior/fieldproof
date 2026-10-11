@@ -7,7 +7,7 @@ The [current requirements](REQUIREMENTS.md) own cutoff and form checks. The [pil
 
 ## Immediate feedback preview: 45–60 seconds
 
-Use the [public visual replay](https://epicexcelsior.github.io/fieldproof/review.html). This preview does not replace the final hardware recording.
+Use the [public visual replay](https://epicexcelsior.github.io/fieldproof/review.html?view=20261011-story). This preview does not replace the final hardware recording.
 
 **0:00–0:10 — the decision.** “Before software sends someone to a remote site, it needs a current answer.
 FieldProof tests whether a device on site can sell that check.” Label the entrance as an illustrative use.

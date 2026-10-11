@@ -7,7 +7,7 @@ No submission confirmation exists in this repository.
 Use the [return-to-laptop rehearsal](competition/REHEARSAL.md) for today's actions.
 Its [unattended paid batch](competition/REHEARSAL.md#run-three-real-paid-checks-without-a-button-press) needs no BOOT press or separate gateway terminal.
 It checks the real board before reading the wallet and stops on any uncertain payment. The October 11 paid check passed.
-Share the [one-minute feedback walkthrough](https://epicexcelsior.github.io/fieldproof/review.html) before finalizing the story.
+Share the [one-minute feedback walkthrough](https://epicexcelsior.github.io/fieldproof/review.html?view=20261011-story) before finalizing the story.
 The walkthrough starts with a physical scene and a decision. It keeps transaction details behind the evidence link.
 Select **Replay the real check**, then test an expired or altered answer.
 The entrance and trip are illustrative. BOOT is the actual input. The business remains a hypothesis.

@@ -2,7 +2,7 @@
 
 **Paid physical checks for AI agents.**
 
-**Try FieldProof:** [one-minute feedback walkthrough](https://epicexcelsior.github.io/fieldproof/review.html) · [public receipt inspector](https://epicexcelsior.github.io/fieldproof/) · [interactive guide](https://epicexcelsior.github.io/fieldproof/guide.html) · [captioned 2:30 technical walkthrough](https://epicexcelsior.github.io/fieldproof/assets/fieldproof-signed-receipt.webm).
+**Try FieldProof:** [one-minute feedback walkthrough](https://epicexcelsior.github.io/fieldproof/review.html?view=20261011-story) · [public receipt inspector](https://epicexcelsior.github.io/fieldproof/) · [interactive guide](https://epicexcelsior.github.io/fieldproof/guide.html) · [captioned 2:30 technical walkthrough](https://epicexcelsior.github.io/fieldproof/assets/fieldproof-signed-receipt.webm).
 
 The public inspector verifies recorded real ESP32 evidence. Select **Verify original**, then change the state, challenge, or key.
 Select **Verify recorded payment** for a read-only Solana Devnet query.
