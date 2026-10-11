@@ -6,6 +6,23 @@ This document records the SDK/deployment decision and historical readiness evide
 The buyer now connects the observer identity to its pinned receipt key and service before payment.
 This document owns peaq interfaces, readiness, and activation gates.
 
+## Other peaq surfaces reviewed October 11
+
+Keep Agung identity and activity as the core. The buyer must check the registered device before spending.
+The current SDK documentation explicitly skips Agung MCR integration because no approved paired rating endpoint exists.
+Its Stream purchase surfaces remain in development. Its Verify surface supplies API reads and chip preflight, not phone camera attestation.
+These surfaces do not supply a verified shortcut for the current contact demonstration.
+[Current published SDK](https://pypi.org/project/peaq-os-sdk/).
+
+The official peaq x402 example requires native peaq gas and USDC/USDT balances.
+Retain the tested Solana Devnet settlement before adding a second payment path.
+[Official x402-peaq example](https://github.com/peaqnetwork/x402-peaq).
+
+A requested physical-check adapter remains the best bounded extension after live acceptance.
+The bounty explicitly suggests new robotic.sh services. Verify the extension interface and hosted admission before implementing a listing.
+No hosted FieldProof adapter or marketplace demand is established.
+[Official bounty](https://superteam.fun/earn/listing/build-solutions-advancing-the-machine-economy-with-peaq).
+
 ## What the diagnostic establishes
 
 [`check_peaq_readiness.py`](../scripts/check_peaq_readiness.py) reads the Agung testnet through the published RPC.
@@ -129,8 +146,9 @@ The public identity inputs also require an ownership and reservation review befo
 
 ## Why Solana onboarding does not remove this gate
 
-The official Solana onboarding guide reports paused onboarding and a mainnet-only flow.
-It also identifies a contract migration. Treat copied reservation instructions as stale until the supported deployment is verified.
+The earlier guide review recorded paused onboarding, a mainnet-only flow, and a contract migration.
+The October 11 web reader did not retrieve the guide again. Current onboarding availability remains unverified.
+Verify the supported deployment before using copied reservation instructions.
 Native Agung readiness is a separate path. It does not prove that Solana onboarding works.
 [Solana onboarding guide](https://docs.peaq.xyz/peaqos/guides/onboard-on-solana).
 
@@ -166,5 +184,5 @@ The founder authorized a new disposable Agung operator wallet. Its private key s
 Wallet creation authorizes no funding, bond, gas, activation, or event submission.
 Review exact public identity inputs and the current bounded bond and gas cost first.
 Activation creates permanent public state. The SDK describes no deactivation or bond refund.
-No mainnet funds or activation belong in the October 5 critical path.
+No mainnet funds or activation belong in this competition prototype's critical path.
 [SDK activation and integration limits](https://pypi.org/project/peaq-os-sdk/0.10.0/).

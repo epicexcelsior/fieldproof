@@ -31,6 +31,12 @@ This preflight needs `FIELDPROOF_PEAQ_PYTHON`. It reads no wallet and creates no
 After configuring the isolated SDK and activating the approved identity, add `--live-read-only` to verify registry and identity reads.
 The live flag remains read-only. It cannot fund or activate the machine.
 
+If execution access is unclear, run `python3 scripts/check_execution_access.py` in the laptop's normal terminal.
+The report checks socket creation, loopback binding, DNS prerequisites, device authorization and local tools.
+It records wallet existence and file mode without reading the wallet.
+It omits raw command errors, device IDs and tailnet addresses. Reports use owner-only files and preserve prior runs.
+An exit code of zero establishes network prerequisites only. Browser, live RPC, BLE capture and funding remain separate checks.
+
 ## Prepare the public provider policy
 
 Use the provisioned public key in `host/capmesh/protocol/receipt_keys.json`.

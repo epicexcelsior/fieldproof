@@ -28,6 +28,28 @@ Use this route only when the coordinator supplies a reviewed export that include
 The export contains recorded chain readbacks. It does not establish a current peaq registry read.
 Payment verification cannot refresh an expired contact answer. Neither result establishes equipment safety.
 
+## Coordinator acceptance before recording
+
+Use the [paid-job runbook](../JOBS.md). Keep live evidence separate from controlled software checks.
+
+| Part | Acceptance result |
+|---|---|
+| Access | Read-only Agung preflight and usable board transport pass. If the phone extension appears, its connection passes |
+| Identity | Finalized owner, controller, key and service match the approved policy before payment |
+| Paid hardware | Three distinct jobs retain their original request, signed receipt and exact Devnet payment |
+| Contact outcomes | Both OPEN and CLOSED can fulfill a job. The buyer decision remains separate |
+| Evidence attacks | Changed state, changed challenge, wrong key and expired evidence produce rejection or WAIT |
+| Recovery | Reload and repeated operation inspection create no second payment. The preserved operation ID remains available |
+| Activity | Independent readback binds the exact original job hash and approved registry. Reinspection creates no chain write |
+| Public package | Original timestamps remain unchanged. No wallet, operator journal, private error or local database appears |
+| Browser | Desktop and phone widths, file import, transfer-query failure, restore and history return pass |
+| Seeker extension | If included, actual capture and independent verification pass. Its unpaid status and capture trust limit stay visible |
+| Publication | Inspect the actual signed-out URLs. A source push to main does not update the separate gh-pages deployment |
+| Submissions | Founder verifies forms, records narration and saves actual submitted confirmations |
+
+Do not force a live payment or chain-write failure to demonstrate recovery.
+Use controlled failure tests and inspect existing transaction references without another write.
+
 ## Feedback template
 
 Copy the answers without names or private account data into the project feedback record.

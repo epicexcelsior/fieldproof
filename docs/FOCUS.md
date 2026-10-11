@@ -1,7 +1,7 @@
 # FieldProof: start here
 
 **Current focus: finish one peaq-linked paid physical check and record it.**
-As of October 10, 2026. Primary entry: peaq Germany. Secondary entries: Superteam Germany Colosseum track and Colosseum.
+As of October 11, 2026. Primary entry: peaq Germany. Secondary entries: Superteam Germany Colosseum track and Colosseum.
 The internal submission target is Monday, October 12, 18:00 CEST.
 No submission confirmation exists in this repository.
 
@@ -33,7 +33,7 @@ The [verification record](VERIFICATION.md) separates offline checks from those b
 
 ## Do next
 
-1. Use a session with network and device access. Preserve the current key, firmware, and purchase database.
+1. Run `python3 scripts/check_execution_access.py` in a session with network and device access. Preserve keys, firmware, and the purchase database.
 2. Run the read-only Agung preview and resolve the EventRegistry deployment relationship.
 3. Review and approve the exact test-token bond and gas ceilings before any chain write.
 4. Follow [the paid-job runbook](JOBS.md) for activation, purchase, activity, and independent readback.
@@ -43,6 +43,9 @@ The [verification record](VERIFICATION.md) separates offline checks from those b
 Keep the existing signed `gate.closed` contract and BOOT fallback.
 Do not make new hardware, a paid phone provider, or a marketplace a prerequisite.
 The [phone extension](../mobile/seeker-inspector/README.md) remains optional.
+A callable physical-check service is the strongest adapter extension after the live core.
+The bounty lists new robotic.sh adapters among its examples. Hosted admission and the extension interface remain unverified.
+[Official bounty](https://superteam.fun/earn/listing/build-solutions-advancing-the-machine-economy-with-peaq).
 
 ## Test the business hypothesis
 

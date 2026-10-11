@@ -10,7 +10,7 @@ export function memoryFetch(app, origin) {
       input instanceof Request && input.body ? Buffer.from(await input.arrayBuffer()) : Buffer.alloc(0);
     const headers = new Headers(init.headers ?? (input instanceof Request ? input.headers : undefined));
     if (body.length) headers.set('content-length', String(body.length));
-    headers.set('host', url.host);
+    if (!headers.has('host')) headers.set('host', url.host);
     return new Promise((resolve, reject) => {
       const chunks = [];
       const socket = new Duplex({ read() {}, write(chunk, _encoding, done) { chunks.push(Buffer.from(chunk)); done(); } });

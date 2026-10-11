@@ -48,7 +48,7 @@ test('connected rehearsal: identity, actual x402 signing, contact evidence, paym
         { key: f.privateKey, dsaEncoding: 'ieee-p1363' }).toString('base64');
       return { receipt };
     } });
-  const transport = memoryFetch(app, origin);
+  let transport = memoryFetch(app, origin);
   globalThis.fetch = async (input, init) => {
     const url = new URL(input instanceof Request ? input.url : String(input));
     if (url.origin === origin) return transport(input, init);
@@ -92,6 +92,11 @@ test('connected rehearsal: identity, actual x402 signing, contact evidence, paym
   const savedRaw = events.get(state.purchase_id).job_utf8;
   purchases.close(); purchases = new PurchaseStore(database); events = new EventStore(purchases);
   assert.equal(events.get(state.purchase_id).job_utf8, savedRaw);
+  const restarted = await createGateway({ paymentServer, store: purchases, events, origin,
+    receiptPins: { [f.policy.provider]: f.policy.receipt_public_key }, observe: async () => {
+      assert.fail('Reading a saved job cannot request another physical observation');
+    } });
+  transport = memoryFetch(restarted, origin);
   const job = JSON.parse(savedRaw), eventHash = '0x' + 'cd'.repeat(32), eventTransaction = '0x' + 'ab'.repeat(32);
   let eventWrites = 0;
   const run = async (module, args) => {
@@ -115,6 +120,14 @@ test('connected rehearsal: identity, actual x402 signing, contact evidence, paym
   assert.equal(eventWrites, 1);
   await assert.rejects(submitSavedEvent(options), /pending job/);
   const manifest = savedEvidenceManifest(events, state.purchase_id, f.policy);
+  const publicResponse = await globalThis.fetch(origin + '/jobs/' + state.purchase_id);
+  assert.equal(publicResponse.status, 200);
+  const publicJob = await publicResponse.json();
+  assert.deepEqual(publicJob.job, job);
+  assert.equal(publicJob.event.state, 'confirmed');
+  assert.deepEqual(Object.keys(publicJob.event).sort(), ['confirmation', 'data_hash', 'state', 'transaction_hash']);
+  assert.equal(JSON.stringify(publicJob).includes('fixture-never-read.secret'), false);
+  assert.equal(settlements, 1); assert.equal(observations, 1);
   const checked = await inspectSource(manifest, { pin: f.policy.receipt_public_key, now: job.acceptance.verified_at });
   assert.equal(checked.signature, true); assert.equal(checked.terms, true);
   assert.equal(decisionAt(checked, true, job.receipt.completed_at + 11).decision, 'WAIT');

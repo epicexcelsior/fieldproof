@@ -16,9 +16,9 @@ The job workbench verifies the installed pin and labels imported chain metadata 
 
 Focused checks executed in this restricted session:
 
-- The safe competition command runs 39 gateway tests and all pass.
-- Python identity/event/operator/registry, phone, and export suites: 37 passed, 9 optional SDK checks skipped in the core host environment.
-- The same Python suites with the isolated peaq SDK on `PYTHONPATH`: 46 passed.
+- The safe competition command runs 43 gateway tests and all pass.
+- Python identity/event/operator/registry, phone, export, and access-report suites: 40 passed, 9 optional SDK checks skipped in the core host environment.
+- The same Python suites with the isolated peaq SDK on `PYTHONPATH`: 49 passed.
 - Cross-language Node job bytes and Python event preparation matched receipt and job hashes. The inputs were synthetic test fixtures.
 - Android source compiled with local SDK 35 tools. Debug APK v3 signature verification passed. No install or capture occurred.
 - Phone verifier replay regression first failed, then passed. Request identity rejects a second valid ECDSA signature for the same challenge.
@@ -33,6 +33,10 @@ Focused checks executed in this restricted session:
 - A connected controlled rehearsal uses the real Express handlers and x402 signing stack. It verifies the buyer's Ed25519 payment signature and P-256 receipt.
 - The same rehearsal preserves its job across SQLite restart, submits one fixture activity, reconciles it, and rejects a second write and altered evidence.
 - That rehearsal uses generated receipt keys and controlled physical/RPC fixtures. It made no payment or chain write.
+- The restarted real Express app serves the saved job without another observation or payment. Its public selector excludes journal references.
+- Real local-buyer HTTP handlers reject foreign hosts, origins, cross-site requests, missing tokens and client-selected payment fields.
+- The HTTP checks preserve operation idempotency and the configured purchase limit. Their in-process transport opens no socket or payment.
+- Three access-report tests verify redaction, device authorization counts and owner-only report files. Raw command errors and identifiers remain excluded.
 - Reviewed job export preserves original signed job bytes, rejects inconsistent authority and hashes, and removes private journal metadata.
 - The `--require-peaq` export gate rejects an unconfirmed job before writing any package.
 - Exclusive manifest output preserves earlier evidence and creates an owner-only file.
@@ -56,6 +60,10 @@ The workbench browser runner passed syntax validation. Playwright's bundled brow
 An attempt with installed Chrome failed on `setsockopt: Operation not permitted`. Its interaction and layout QA remain unverified.
 The browser runner uses controlled RPC responses and marks screenshots as QA-only. It cannot establish a live chain result.
 The [job runbook](JOBS.md) supplies the exact continuation and recovery commands.
+The renewed access probe rejects both network socket creation and loopback binding with errno 1, `Operation not permitted`.
+The Agung wallet file exists with mode 0600. No wallet contents were read by that probe.
+The browser connector exposes no browser, and in-app browser creation returns unavailable.
+Public inspector URL retrieval also failed in the web reader. This does not establish the website's HTTP status or browser behavior.
 
 ## October 9 repository wrapup
 

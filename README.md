@@ -53,6 +53,10 @@ The operator workflow adds bounded activation, event submission, independent ins
 Offline tests verify the new interfaces and rejection paths. The current sandbox blocks live RPC, Bluetooth, and ADB checks.
 The job workbench labels imported snapshots as recorded evidence and keeps chain verification separate.
 
+Run `python3 scripts/check_execution_access.py` before live work in a new session.
+It checks network and device prerequisites without reading private keys or making a payment.
+Its private report omits device IDs and tailnet addresses. Access checks do not replace a live job test.
+
 Read the [paid-job runbook](docs/JOBS.md) for the identity policy, bounded agent command, exact event bytes, and recovery procedure.
 The [competition materials](docs/competition/README.md) include a five-slide deck, recording scripts, tester instructions, and three entry drafts.
 Open `/jobs` on the repository gateway to inspect a job file or the existing historical paid reading.
