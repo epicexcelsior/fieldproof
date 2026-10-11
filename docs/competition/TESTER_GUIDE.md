@@ -2,6 +2,10 @@
 
 Open [the material hub](../start.html) for the story, deck, rehearsal, and submission materials.
 
+For a quick preview, watch the [58-second captioned feedback cut](../assets/fieldproof-paid-check-feedback.webm).
+It contains the real October 11 test payment and signed ESP32 answer. It makes no new measurement or payment.
+The clip labels live peaq integration pending. The final narrated hardware video remains open.
+
 Goal: determine whether the evidence supports a paid fresh contact check. No wallet, key, hardware, or login is needed for this public inspection. The public record is historical and expired.
 
 For the latest feedback export, open `review.html` first.
@@ -37,7 +41,7 @@ Use this route only when the coordinator supplies a reviewed export that include
 1. Open `jobs.html` in that export over localhost or HTTPS.
 2. Select **Load reviewed job from this export**.
 3. Verify the original signature, request terms, and capture age.
-4. Read the machine identity and recorded peaq event state.
+4. Read the machine identity and recorded peaq activity state. Check whether the route uses Storage or EventRegistry.
 5. Select **Verify transfer on Devnet** for a separate read-only payment query.
 6. Alter the contact state locally. Expect signature rejection and WAIT.
 7. Restore the original. Expect the transfer button to reset.
@@ -58,7 +62,7 @@ For the Solana-only route, use the [rehearsal](REHEARSAL.md). Identity and activ
 | Contact outcomes | Both OPEN and CLOSED can fulfill a job. The buyer decision remains separate |
 | Evidence attacks | Changed state, changed challenge, wrong key and expired evidence produce rejection or WAIT |
 | Recovery | Reload and repeated operation inspection create no second payment. The preserved operation ID remains available |
-| Activity | Independent readback binds the exact original job hash and approved registry. Reinspection creates no chain write |
+| Activity | Independent readback binds the exact original job hash, approved owner, and declared Storage or EventRegistry route. Reinspection creates no chain write |
 | Public package | Original timestamps remain unchanged. No wallet, operator journal, private error or local database appears |
 | Browser | Desktop and phone widths, file import, transfer-query failure, restore and history return pass |
 | Seeker extension | If included, actual capture and independent verification pass. Its unpaid status and capture trust limit stay visible |

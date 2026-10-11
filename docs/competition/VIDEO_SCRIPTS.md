@@ -78,7 +78,12 @@ If a live screen does not support an edited-copy test, use the labeled public re
 
 ## Feedback clip: target 45–60 seconds
 
-Use this clip tonight before the final recordings.
+The [58-second captioned feedback cut](../assets/fieldproof-paid-check-feedback.webm) is ready for review.
+It shows the original October 11 purchase, payment readback, signed answer, expiry, and altered-copy rejection.
+It contains no narration or new physical footage. Its last frame labels live peaq integration pending.
+Use it tonight for concept feedback. The final founder pitch and hardware demo still need recording.
+
+For a founder-led cut, use this sequence:
 
 1. **0:00–0:10:** Show the board. Say: “Software can pay this device operator for one fresh physical check.”
 2. **0:10–0:30:** Show the labeled [public replay](https://epicexcelsior.github.io/fieldproof/review.html?view=20261011-story).

@@ -4,6 +4,44 @@ Current continuation: October 11, 2026, Europe/Berlin. Public paid evidence incl
 The historical local MVP completes a public Devnet purchase, a real ESP32 observation, and both human-controlled contact states.
 This record does not claim production security, safety certification, or standards compliance.
 
+## October 11 final integration and feedback cut
+
+The buyer cap now permits 100 operations and at most 0.100 Devnet USDC at the fixed 0.001 price.
+The existing ledger still contains eight operations. Readiness reports 92 available, no lock, and no unresolved operation.
+No ledger reset or additional payment occurred in this change.
+
+The official Agung EventRegistry exists at finalized block 11124093, but its identity binding points to the legacy registry.
+The revised discovery accepts the reviewed official address without an InfoDesk event peer and preserves the incompatible-binding rejection.
+[Exact registry diagnostic](evidence/peaq-agung-event-registry-20261011.json).
+
+The explicit peaq Storage activity route commits the unchanged paid-job hash through precompile `0x0801`.
+Controlled tests verify original request-time authority, submission-time authority, successful transaction data, storage bytes, gas bounds, and recovery.
+The historical authority checks compare the actual registered owner, controller, P-256 key, finalized block hash, and timestamp.
+A read-only probe verified the documented interface and exact missing-key response at finalized block 11124299.
+[Interface probe](evidence/peaq-agung-storage-readiness-20261011.json). This probe does not establish activation or paid activity.
+
+The founder approved one activation with a 0.4 AGUNG bond and 0.04 AGUNG combined gas ceiling.
+The direct faucet request returned HTTP 403. The official browser form reported its 24-hour allocation limit.
+Latest and finalized operator balances still read zero. No private key, activation, or peaq transaction was used.
+Live identity, a new identity-gated paid job, and activity readback remain pending.
+
+The declared gateway suite passed **123 tests**. The core Python suite passed **246 tests, with 39 SDK/hardware skips**.
+The isolated SDK integration/export suite passed **75 tests**. The later Storage probe subset passed **14 tests**.
+The latter includes one additional probe test. These test counts overlap and must not be added together.
+The focused competition runner passed its 70 gateway tests, 42 core tests, deployment read, and Storage probe.
+Its 29 SDK/hardware skips remain explicit. It ran with `--agung-preflight --activity-route storage` and no signer.
+The full feedback WebM passed ffmpeg decoding. Syntax and whitespace checks passed.
+Private logs remain in `.local/competition/final-push-20261011`.
+
+Chrome passed desktop/mobile replay, expiry, altered-copy rejection, restore, immutable original evidence, and missing/forged-input failures.
+Chrome passed material links, video metadata, playback, 54-second seeking, keyboard navigation, and page-error checks at 1280 and 390 pixels.
+These checks used the local public export. Actual published checks appear below after deployment completes.
+
+The [58-second captioned feedback cut](assets/fieldproof-paid-check-feedback.webm) uses the original October 11 purchase.
+It independently read the original Devnet transfer at slot 509900016 and shows the authentic signed contact answer.
+Its last frame labels peaq integration pending. It contains no audio, new hardware capture, or new payment.
+The final founder presentation, physical product demo, outside feedback, and three submitted confirmations remain open.
+
 ## October 11 submission-material audit
 
 The founder now has physical access. A fresh no-payment BLE check returned OPEN, five matching samples, and a valid pinned P-256 signature.

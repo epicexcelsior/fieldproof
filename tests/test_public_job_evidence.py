@@ -85,3 +85,64 @@ def test_confirmed_public_export_binds_both_recorded_readbacks_and_keeps_no_jour
         mutation(changed)
         with pytest.raises(ValueError):
             public_evidence(changed, policy(), require_peaq=True)
+
+
+def storage_manifest():
+    source = manifest()
+    prepared = prepare(canonical(source["job"]), policy())
+    key = f'fieldproof.job:{source["job"]["job_id"]}'
+    address, transaction = "0x0000000000000000000000000000000000000801", "0x" + "ab" * 32
+    source["peaq_event"] = {
+        "state": "confirmed", "transaction_hash": transaction, "data_hash": prepared["data_hash"],
+        "reference": {"route": "storage", "storage_address": address, "key_utf8": key,
+                      "journal": "PRIVATE FIXTURE"},
+        "confirmation": {
+            "schema": "fieldproof-peaq-storage-inspection-v1", "route": "storage", "verified": True,
+            "chain_id": 9990, "deployment_id": policy()["deployment_id"], "machine_id": policy()["machine_id"],
+            "owner": policy()["owner"], "storage_address": address, "key_utf8": key,
+            "value_utf8": canonical({"v": 1, "machine_id": policy()["machine_id"],
+                                     "data_hash": prepared["data_hash"]}).decode(),
+            "data_hash": prepared["data_hash"], "job_sha256": source["job_sha256"],
+            "transaction_hash": transaction, "submission_block": 100, "finalized_block": 101,
+            "block_hash": "0x" + "ef" * 32, "official_event_registry": False,
+            "machine_credit_rating": False, "storage_mutable_by_owner": True,
+            "machine_authority_at_request_verified": True,
+            "machine_authority_at_submission_verified": True,
+        },
+    }
+    return source
+
+
+def test_storage_export_preserves_original_job_and_names_the_actual_activity_route():
+    pytest.importorskip("eth_utils", reason="The isolated SDK supplies activity Keccak hashing")
+    source = storage_manifest()
+    exported = public_evidence(source, policy(), require_peaq=True)
+    assert canonical(exported["job"]) == canonical(source["job"])
+    assert "PRIVATE FIXTURE" not in json.dumps(exported)
+    assert set(exported["peaq_event"]["reference"]) == {"route", "storage_address", "key_utf8"}
+    assert exported["peaq_event"]["confirmation"]["official_event_registry"] is False
+    assert exported["peaq_event"]["confirmation"]["storage_mutable_by_owner"] is True
+    assert "no independent live chain read" in exported["verification_note"]
+
+
+@pytest.mark.parametrize("field,value", [
+    ("owner", "0x" + "22" * 20),
+    ("key_utf8", "fieldproof.job:0000000000000000"),
+    ("value_utf8", '{}'),
+    ("storage_address", "0x" + "55" * 20),
+    ("machine_authority_at_submission_verified", False),
+    ("machine_authority_at_request_verified", False),
+    ("official_event_registry", True),
+    ("machine_credit_rating", True),
+    ("storage_mutable_by_owner", False),
+    ("finalized_block", 99),
+    ("transaction_hash", "0x" + "11" * 32),
+    ("block_hash", "0x" + "00" * 32),
+    ("extra", "PRIVATE FIXTURE"),
+])
+def test_storage_export_rejects_unbound_readbacks_or_unsupported_claims(field, value):
+    pytest.importorskip("eth_utils", reason="The isolated SDK supplies activity Keccak hashing")
+    source = storage_manifest()
+    source["peaq_event"]["confirmation"][field] = value
+    with pytest.raises(ValueError):
+        public_evidence(source, policy(), require_peaq=True)

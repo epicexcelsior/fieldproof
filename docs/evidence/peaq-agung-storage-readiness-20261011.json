@@ -1,0 +1,21 @@
+{
+  "abi_source": "https://github.com/peaqnetwork/peaq-network-node/blob/cbcb7a7d5875f55a5d37d3917c9bfd247cf9117a/precompiles/peaq-storage/storage.sol",
+  "block_hash": "0x3ef01d1663c8a77b4141c836b10774f1bf86e8d665195c17cd4b69ff7fb41a8c",
+  "chain_id": 9990,
+  "chain_write": false,
+  "deployment_id": "agung-2026-08-28",
+  "finalized_block": 11124299,
+  "identity_checked": false,
+  "missing_key_response_verified": true,
+  "official_event_registry": false,
+  "owner": "0xAFAC49c440f32a6a7bd4a717cCB95e60cE4D7C12",
+  "probe_key": "fieldproof.probe:v1",
+  "route": "storage",
+  "schema": "fieldproof-peaq-storage-readiness-v1",
+  "scope": "interface_probe_only",
+  "settlement_checked": false,
+  "signing": false,
+  "source": "https://docs.peaq.xyz/peaqchain/sdk-reference/javascript/storage-operations",
+  "storage_address": "0x0000000000000000000000000000000000000801",
+  "verified": true
+}

@@ -8,8 +8,8 @@ That route claims no peaq identity or event. This route must not relax its live 
 ## Current state
 
 The identity resolver, job envelope, bounded buyer tool, durable outbox, operator commands, and job workbench exist in code.
-Live peaq activation and event submission remain unverified.
-Fresh ESP32 and Seeker checks require device access outside the current restricted sandbox.
+Live peaq activation and activity submission remain unverified.
+The coordinator has laptop and device access. Founder-held BOOT footage and unlocked Seeker rehearsal remain open.
 The public inspector still serves historical real evidence. It does not expose a funded signer.
 
 Both OPEN and CLOSED can fulfill a paid observation.
@@ -28,12 +28,12 @@ This runs focused gateway and Python checks. It creates private logs under `.loc
 It makes no payment, chain write, device request, or installation.
 Optional SDK checks skip in the core host environment. The log states each skip.
 Add `--build-phone` to compile and verify the local debug APK without installation.
-Before activation, add `--agung-preflight` to read the live deployment and discover its EventRegistry.
+Before activation, add `--agung-preflight --activity-route storage` to read the live deployment and official Storage interface.
 This preflight needs `FIELDPROOF_PEAQ_PYTHON`. It reads no wallet and creates no machine.
-If its EventRegistry peer is unset, keep the failed diagnostic and request the official Agung address with its deployment source.
-The SDK accepts this address separately. Our discovery convention does not establish that another supported registry exists or is absent.
-Do not replace the authority gate with a guessed address or a different network.
-After configuring the isolated SDK and activating the approved identity, add `--live-read-only` to verify registry and identity reads.
+The reviewed official EventRegistry binds a legacy identity system. Keep that failed compatibility diagnostic.
+Use the explicit peaq Storage path below for this Tokenomics 2.0 identity. It retains the identity and settlement checks.
+Do not replace the authority gate with a guessed registry or a different network.
+After configuring the isolated SDK and activating the approved identity, add `--live-read-only` to verify Storage and identity reads.
 The live flag remains read-only. It cannot fund or activate the machine.
 
 If execution access is unclear, run `python3 scripts/check_execution_access.py` in the laptop's normal terminal.
@@ -101,7 +101,8 @@ node gateway/live-demo.js /path/to/disposable-devnet.keypair.json --peaq-policy 
 
 Open `http://127.0.0.1:4026/jobs`.
 Select the payment button once. Each click pays at most 0.001 Devnet USDC.
-The existing controller permits at most ten operations and blocks unresolved operations.
+The shared controller permits at most 100 operations and blocks unresolved operations.
+At 0.001 Devnet USDC per check, its lifetime transfer budget is 0.100 test USDC.
 It persists the purchase ID before payment leaves the process.
 
 For a bounded agent command against the configured gateway:
@@ -172,7 +173,49 @@ The private journal saves signed transaction bytes and their hash before broadca
 Never publish this journal. An interrupted activation requires reconciliation before another write.
 After activation, run the read-only identity resolver. Activation output alone does not replace this check.
 
-## Submit one saved activity event
+## Record one saved job through peaq Storage
+
+Use this route after genuine activation and a new identity-gated paid check.
+Do not attach a new identity snapshot to an earlier Solana-only receipt.
+Set `FIELDPROOF_PURCHASE_ID` to the new saved purchase ID.
+
+```bash
+node gateway/peaq-event.js --action storage-preview --purchase "$FIELDPROOF_PURCHASE_ID" \
+  --policy .local/competition/provider-policy.json --gas-cap-wei 10000000000000000
+```
+
+The preview reads real identity authority at the original request block and verifies the original finalized Solana payment.
+It resolves current authority, requires an absent job key, and simulates the exact storage call.
+It estimates gas, checks the balance, and signs nothing.
+The public record uses `fieldproof.job:JOB_ID` and commits the complete unchanged job hash.
+The official storage precompile is `0x0000000000000000000000000000000000000801`.
+The record is peaq Storage activity, not an EventRegistry event or Machine Credit Rating.
+
+After explicit approval for that exact job and gas ceiling, run once:
+
+```bash
+node gateway/peaq-event.js --action storage-submit --purchase "$FIELDPROOF_PURCHASE_ID" \
+  --policy .local/competition/provider-policy.json --gas-cap-wei 10000000000000000 \
+  --key-file .local/competition/agung-operator.secret --execute-agung-test-write
+```
+
+The outbox and private journal preserve the claim and signed bytes before broadcast.
+Independent inspection verifies the successful finalized transaction, storage bytes, and registered authority at both relevant blocks.
+The storage owner can change or remove an entry. This route does not claim immutable current storage.
+An unknown result blocks automatic retries. Preserve the database and private journal.
+
+Inspect the original transaction without signing:
+
+```bash
+node gateway/peaq-event.js --action storage-inspect --purchase "$FIELDPROOF_PURCHASE_ID" \
+  --policy .local/competition/provider-policy.json
+```
+
+If SQLite has no transaction reference, recover its hash from the private journal and add `--transaction`.
+Do not execute another write to recover a missing response.
+Use the manifest and judge-export procedures below after the readback succeeds.
+
+## EventRegistry route: compatibility remains blocked
 
 Use the same purchase database as the gateway. These commands run from the repository root.
 List saved jobs and prepare one event without signing:
@@ -206,16 +249,17 @@ Never remove a live lock or delete operation records to reset the budget.
 Event submission repeats an independent finalized Solana check and rejects mismatched token balances or transfer instructions.
 
 The SDK's Agung deployment omits an EventRegistry address.
-Discover the live peer without a signer before approving activation:
+Check the official guide's separately configured address without a signer:
 
 ```bash
 "$FIELDPROOF_PEAQ_PYTHON" -m scripts.discover_peaq_event_registry
 ```
 
-Supply a reviewed address that Agung InfoDesk confirms through its `EVENT_REGISTRY` peer.
-The inspector also requires that registry's identity-registry binding to match the approved MachineRegistry.
-These relationships remain unverified on the live deployment. A missing relationship blocks submission.
-Do not substitute a mainnet or legacy registry to pass this gate.
+The diagnostic accepts the reviewed official address or a matching InfoDesk peer.
+It still requires the registry's identity binding to match the approved MachineRegistry.
+The published Agung address currently binds the legacy IdentityRegistry. It fails this compatibility check.
+Do not submit the Tokenomics 2.0 identity to that registry. Do not substitute a mainnet address.
+[Deployment evidence and the separate native-storage path](PEAQ_INTEGRATION.md#october-11-host-preflight).
 
 After explicit test-write approval, run:
 

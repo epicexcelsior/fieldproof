@@ -48,11 +48,12 @@ DISPATCH and WAIT are recommendations. This prototype controls no equipment.
 
 The identity-linked job route resolves a registered device key before payment.
 Its activity outbox links the job, original receipt, and Solana transaction.
-Controlled tests cover the interfaces and recovery paths.
+Controlled tests cover the interfaces and recovery paths, including an explicit official peaq Storage activity route.
 
 **No live FieldProof peaq identity or activity event exists.**
 Current paid runs use Solana only and report peaq as not used.
-An authoritative event deployment, funded testnet operator, activation, and independent readback remain open.
+Faucet funding, activation, an identity-gated paid job, and independent activity readback remain open.
+The published EventRegistry binds a different identity system. The Storage route retains genuine identity and settlement checks.
 [Integration facts](docs/PEAQ_INTEGRATION.md) · [Paid-job execution and recovery](docs/JOBS.md).
 
 ## Run without hardware

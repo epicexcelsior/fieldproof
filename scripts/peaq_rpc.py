@@ -154,8 +154,8 @@ def validate_snapshot(snapshot, policy, *, now=None):
     return snapshot
 
 
-def read_agung():
-    """Return one read-only Web3 session pinned after the finalized block read."""
+def read_agung(*, block_number=None):
+    """Pin reads to the finalized head or an explicitly bounded historical block."""
     from importlib.metadata import version
     if version("peaq-os-sdk") != SDK_VERSION:
         raise ValueError(f"Use peaq-os-sdk=={SDK_VERSION}")
@@ -175,6 +175,12 @@ def read_agung():
     if w3.eth.chain_id != 9990 or deployment.chain_id != 9990:
         raise ValueError("RPC chain differs from Agung deployment")
     block = w3.eth.get_block("finalized")
+    if block_number is not None:
+        if type(block_number) is not int or not 0 < block_number <= block["number"]:
+            raise ValueError("historical identity reads require an already finalized positive block")
+        block = w3.eth.get_block(block_number)
+        if block["number"] != block_number:
+            raise ValueError("RPC returned a different historical identity block")
     number = block["number"]
     transport.read_block = number
     contracts = asdict(deployment.contracts)

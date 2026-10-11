@@ -1,11 +1,12 @@
 """Buyer policy and finalized identity snapshot checks."""
 
 from types import SimpleNamespace as Row
+from importlib import import_module
 
 import pytest
 
 from scripts.peaq_rpc import CONTRACT_ROLES, validate_policy, validate_snapshot
-from scripts.resolve_peaq_identity import snapshot_from_state
+from scripts.resolve_peaq_identity import authority_at_block, snapshot_from_state
 
 
 PIN = "046218c52391433f9a687743192c5558a121320b8fa664931e5aaa1b6e5fbf342f9411913c8b72c91a3e7b9762e34e77955ed6035b81fa27ab7770dd8d4922ed63"
@@ -94,3 +95,37 @@ def test_resolver_checks_authenticated_method_and_active_state():
     with pytest.raises(ValueError, match="unavailable"):
         snapshot_from_state(policy(), bad, computed_id=int(MACHINE), block=block,
                             contracts=CONTRACTS, resolved_at=1000)
+
+
+def test_historical_authority_reads_exact_block_and_keeps_its_actual_time(monkeypatch):
+    pytest.importorskip("peaq_os_sdk", reason="Run with the isolated peaq SDK")
+    import scripts.resolve_peaq_identity as resolver
+    sdk_state = import_module("peaq_os_sdk.tokenomics.get_machine_management_state")
+    calls = []
+    context = object()
+    block = {"number": 42, "hash": Row(to_0x_hex=lambda: "0x" + "ab" * 32), "timestamp": 990}
+    def pinned_read(**kwargs):
+        calls.append(kwargs)
+        return None, None, block, CONTRACTS, context
+    def read_state(actual_context, machine_id):
+        assert actual_context is context and machine_id == int(MACHINE)
+        return _state()
+    monkeypatch.setattr(resolver, "read_agung", pinned_read)
+    monkeypatch.setattr(sdk_state, "get_machine_management_state", read_state)
+    actual = authority_at_block(policy(), 42)
+    assert calls == [{"block_number": 42}]
+    assert actual == {"machine_id": MACHINE, "owner": OWNER, "controller": CONTROLLER,
+                      "receipt_public_key": PIN, "finalized_block": 42,
+                      "block_hash": "0x" + "ab" * 32, "block_timestamp": 990}
+
+
+def test_historical_authority_rejects_a_different_registered_key(monkeypatch):
+    pytest.importorskip("peaq_os_sdk", reason="Run with the isolated peaq SDK")
+    import scripts.resolve_peaq_identity as resolver
+    sdk_state = import_module("peaq_os_sdk.tokenomics.get_machine_management_state")
+    state = _state()
+    state.did_document.verification_methods[0].public_key_multibase = "zDifferent"
+    monkeypatch.setattr(resolver, "read_agung", lambda **_kwargs: (None, None, {}, {}, None))
+    monkeypatch.setattr(sdk_state, "get_machine_management_state", lambda *_args: state)
+    with pytest.raises(ValueError, match="approved public receipt key"):
+        authority_at_block(policy(), 42)

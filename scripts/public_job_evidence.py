@@ -12,6 +12,12 @@ PAYMENT_FIELDS = {"network", "slot", "transaction", "mint", "payer", "merchant",
 CONFIRMATION_FIELDS = {"schema", "verified", "chain_id", "deployment_id", "machine_id", "registry",
                        "registry_machine_binding", "index", "event_count", "data_hash", "raw_data_sha256",
                        "job_sha256", "transaction_hash", "submission_block", "finalized_block", "block_hash"}
+STORAGE_ADDRESS = "0x0000000000000000000000000000000000000801"
+STORAGE_CONFIRMATION_FIELDS = {"schema", "route", "verified", "chain_id", "deployment_id", "machine_id",
+                              "owner", "storage_address", "key_utf8", "value_utf8", "data_hash", "job_sha256",
+                              "transaction_hash", "submission_block", "finalized_block", "block_hash",
+                              "official_event_registry", "machine_credit_rating", "storage_mutable_by_owner",
+                              "machine_authority_at_request_verified", "machine_authority_at_submission_verified"}
 RECEIPT_REQUIRED = {"protocol", "request_id", "status", "provider", "capability", "parameters", "nonce",
                     "result", "started_at", "completed_at", "receipt_signature"}
 RECEIPT_NULLABLE = {"authorization_ref", "delivery_proof", "error"}
@@ -67,9 +73,16 @@ def public_evidence(manifest, policy, *, require_peaq=False):
             raise ValueError("Pending event states cannot claim a submitted transaction.")
         if not _hash(transaction) or not _hash(data_hash):
             raise ValueError("Event transaction and data hashes must be complete.")
-        if not isinstance(reference, dict) or not _address(reference.get("registry")) or type(reference.get("index")) is not int or reference["index"] < 0:
-            raise ValueError("The event requires its reviewed registry and index.")
-        public_reference = {"registry": reference["registry"], "index": reference["index"]}
+        if isinstance(reference, dict) and reference.get("route") == "storage":
+            if (reference.get("storage_address") != STORAGE_ADDRESS
+                    or reference.get("key_utf8") != f'fieldproof.job:{job["job_id"]}'):
+                raise ValueError("Storage reference changes the official precompile or paid job key.")
+            public_reference = {"route": "storage", "storage_address": STORAGE_ADDRESS,
+                                "key_utf8": reference["key_utf8"]}
+        else:
+            if not isinstance(reference, dict) or not _address(reference.get("registry")) or type(reference.get("index")) is not int or reference["index"] < 0:
+                raise ValueError("The event requires its reviewed registry and index.")
+            public_reference = {"registry": reference["registry"], "index": reference["index"]}
         # The isolated peaq SDK supplies eth_utils. Core static exports do not need it.
         expected_hash = prepare(raw, policy)["data_hash"]
         if data_hash.lower() != expected_hash.lower():
@@ -77,18 +90,33 @@ def public_evidence(manifest, policy, *, require_peaq=False):
     elif data_hash is not None or reference is not None or confirmation is not None or state in {"submitted", "confirmed"}:
         raise ValueError("Event metadata has no matching transaction reference.")
     if state == "confirmed":
-        if payment is None or not isinstance(confirmation, dict) or set(confirmation) != CONFIRMATION_FIELDS:
+        storage = public_reference.get("route") == "storage"
+        fields = STORAGE_CONFIRMATION_FIELDS if storage else CONFIRMATION_FIELDS
+        if payment is None or not isinstance(confirmation, dict) or set(confirmation) != fields:
             raise ValueError("Confirmed evidence requires complete recorded payment and peaq readbacks.")
-        expected = {"schema": "fieldproof-peaq-event-inspection-v1", "verified": True, "chain_id": 9990,
+        expected = {"schema": "fieldproof-peaq-storage-inspection-v1" if storage else "fieldproof-peaq-event-inspection-v1",
+                    "verified": True, "chain_id": 9990,
                     "deployment_id": policy["deployment_id"], "machine_id": policy["machine_id"],
-                    "index": public_reference["index"], "job_sha256": digest, "raw_data_sha256": digest}
+                    "job_sha256": digest}
+        if storage:
+            expected.update({"route": "storage", "storage_address": STORAGE_ADDRESS,
+                             "key_utf8": public_reference["key_utf8"],
+                             "value_utf8": canonical({"v": 1, "machine_id": policy["machine_id"],
+                                                      "data_hash": expected_hash}).decode(),
+                             "official_event_registry": False, "machine_credit_rating": False,
+                             "storage_mutable_by_owner": True, "machine_authority_at_request_verified": True,
+                             "machine_authority_at_submission_verified": True})
+        else:
+            expected.update({"index": public_reference["index"], "raw_data_sha256": digest})
         if (any(confirmation[name] != value or type(confirmation[name]) is not type(value) for name, value in expected.items())
-                or not _positive(confirmation["event_count"]) or confirmation["event_count"] <= confirmation["index"]
+                or (not storage and (not _positive(confirmation["event_count"]) or confirmation["event_count"] <= confirmation["index"]))
                 or not _positive(confirmation["submission_block"]) or not _positive(confirmation["finalized_block"])
                 or confirmation["submission_block"] > confirmation["finalized_block"] or not _hash(confirmation["block_hash"])):
             raise ValueError("Recorded peaq readback fields do not match this job.")
-        for name, expected_value in [("registry", public_reference["registry"]), ("transaction_hash", transaction),
-                                     ("data_hash", data_hash), ("registry_machine_binding", job["identity"]["contracts"]["machine_registry"])]:
+        authority = [("owner", policy["owner"])] if storage else [
+            ("registry", public_reference["registry"]),
+            ("registry_machine_binding", job["identity"]["contracts"]["machine_registry"])]
+        for name, expected_value in authority + [("transaction_hash", transaction), ("data_hash", data_hash)]:
             if not isinstance(confirmation[name], str) or confirmation[name].lower() != expected_value.lower():
                 raise ValueError("Recorded peaq readback authority or hashes differ from the saved job.")
     elif confirmation is not None:

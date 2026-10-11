@@ -30,7 +30,10 @@ ASSETS = {
     "evidence/device-signed-purchase-click-20261005.json": "docs/evidence/device-signed-purchase-click-20261005.json",
     "evidence/device-signed-purchase-fast-20261005.json": "docs/evidence/device-signed-purchase-fast-20261005.json",
     "evidence/device-signed-contact-states.json": "docs/evidence/device-signed-contact-states.json",
+    "evidence/peaq-agung-event-registry-20261011.json": "docs/evidence/peaq-agung-event-registry-20261011.json",
+    "evidence/peaq-agung-storage-readiness-20261011.json": "docs/evidence/peaq-agung-storage-readiness-20261011.json",
     "assets/fieldproof-signed-receipt.webm": "docs/assets/fieldproof-signed-receipt.webm",
+    "assets/fieldproof-paid-check-feedback.webm": "docs/assets/fieldproof-paid-check-feedback.webm",
     "assets/fieldproof-service-boundaries.svg": "docs/assets/fieldproof-service-boundaries.svg",
     "assets/fieldproof-payment-to-observation.svg": "docs/assets/fieldproof-payment-to-observation.svg",
     "assets/fieldproof-evidence-window.svg": "docs/assets/fieldproof-evidence-window.svg",
@@ -122,7 +125,8 @@ def export(output, *, job_manifest=None, provider_policy=None, require_peaq=Fals
             "3. Verify the original receipt, then alter its state, challenge, or public key.\n"
             "4. Select Verify recorded payment for a read-only Solana Devnet RPC query.\n"
             "5. Inspect the separately signed BOOT held/released input pair. Those checks moved no funds.\n"
-            "6. Watch assets/fieldproof-signed-receipt.webm.\n\n"
+            "6. Watch assets/fieldproof-paid-check-feedback.webm for the 58-second captioned feedback cut.\n"
+            "   The longer technical walkthrough is assets/fieldproof-signed-receipt.webm.\n\n"
             "Open jobs.html for the job workbench. Import a reviewed saved job or evidence manifest.\n"
             "Imported peaq snapshots remain recorded evidence, not a live registry query.\n\n"
             "For the October 5 real purchase, open Inspect a new paid buyer run.\n"

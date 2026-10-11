@@ -20,8 +20,8 @@ Colosseum also judges business viability and traction. No validated customer or 
 | ESP32 | Real BLE request, pinned P-256 signature, five matching GPIO9 samples | Today's founder-held opposite-state footage |
 | Buyer | Request, key, contact profile, sample, and ten-second age checks | Real customer policy and production integration |
 | Recovery | Shared wallet operation cap, durable records, fail-closed uncertain payments | Production refund and delivery guarantees |
-| Public demo | Real recorded evidence, current-time expiry, tamper rejection, read-only RPC query | External feedback and final narrated videos |
-| peaq | Current Agung deployment reads, identity/activity adapters and controlled tests | Funded operator, authoritative event deployment, activation, independent readback |
+| Public demo | Real recorded evidence, expiry, tamper rejection, RPC query, 58-second captioned feedback cut | External feedback and final narrated hardware videos |
+| peaq | Current Agung deployment reads, identity gate, explicit Storage activity route and controlled tests | Faucet funding, activation, gated paid job, independent activity readback |
 | Seeker | Earlier independent browser verification, current authorized ADB, photo-app offline build | Today's phone rehearsal. Photo app installation/capture and paid provider remain unverified |
 | Business | Explicit buyer hypothesis and falsifiable pilot | Recurring buyer problem, willingness to pay, pricing, acquisition, and margins |
 | Entries | Requirements verified against current official pages | Completed forms, video uploads, and saved submission confirmations |

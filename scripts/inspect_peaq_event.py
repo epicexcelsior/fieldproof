@@ -9,6 +9,18 @@ import sys
 from scripts.peaq_rpc import load_policy, read_agung
 from scripts.prepare_peaq_event import prepare
 
+# Reviewed official guide commit. This Agung address is a provenance lead,
+# not permission to accept a registry that targets a different identity system.
+OFFICIAL_AGUNG_REGISTRY = "0x2DAD8905380993940e340C5cE6d313d5c2780040"
+REGISTRY_SOURCE = "https://github.com/peaqnetwork/peaq-os-skills/blob/d1f7e87db50f5f16c62527344673a470dcec3c39/skills/peaqos/GUIDE.md#network-reference"
+
+
+class RegistryBindingMismatch(ValueError):
+    def __init__(self, evidence):
+        self.evidence = evidence
+        super().__init__("The published EventRegistry targets a different identity registry. "
+                         "Do not submit this Tokenomics 2.0 machine to the legacy registry.")
+
 
 def verify_event(event, prepared):
     if len(event) != 10:
@@ -60,21 +72,33 @@ def bind_verified_registry(w3, block, contracts, registry_address):
     if not w3.eth.get_code(registry_address, block_identifier=number):
         raise ValueError("no deployed EventRegistry code exists at the explicit address")
     info = w3.eth.contract(address=Web3.to_checksum_address(contracts["info_desk"]), abi=INFO_DESK_ABI)
-    try:
-        peer = info.functions.peer(w3.keccak(text="EVENT_REGISTRY")).call(block_identifier=number)
-    except Exception as error:
-        raise ValueError("Agung EventRegistry address source is unresolved") from error
-    if peer.lower() != registry_address.lower():
-        raise ValueError("Agung InfoDesk does not confirm the supplied EventRegistry address")
+    peer = info.functions.peer(w3.keccak(text="EVENT_REGISTRY")).call(block_identifier=number)
+    # The operator guide explicitly configures EventRegistry separately. An
+    # unset optional peer is not proof that the published address is absent.
+    if peer.lower() != registry_address.lower() and registry_address.lower() != OFFICIAL_AGUNG_REGISTRY.lower():
+        raise ValueError("EventRegistry address has no reviewed official source or matching InfoDesk peer")
     registry = w3.eth.contract(address=registry_address, abi=load_abi("EventRegistry"))
-    # The SDK's 0.10.0 Agung deployment has no EventRegistry address. The
-    # registry's own binding must match the deployed MachineRegistry.
+    # Source provenance alone does not establish compatibility. Legacy and
+    # Tokenomics 2.0 registries have different owner/controller authorities.
     try:
         bound = registry.functions.identityRegistryAddress().call(block_identifier=number)
     except Exception as error:
         raise ValueError("EventRegistry provenance could not be established") from error
     if bound.lower() != contracts["machine_registry"].lower():
-        raise ValueError("EventRegistry does not bind the approved MachineRegistry")
+        code = w3.eth.get_code(registry_address, block_identifier=number)
+        raise RegistryBindingMismatch({
+            "schema": "fieldproof-peaq-registry-discovery-v1", "verified": False,
+            "reason": "identity_registry_mismatch", "chain_id": 9990,
+            "deployment_id": "agung-2026-08-28", "registry": registry_address,
+            "source": REGISTRY_SOURCE if registry_address.lower() == OFFICIAL_AGUNG_REGISTRY.lower() else "InfoDesk peer",
+            "info_desk_peer": peer, "registry_machine_binding": bound,
+            "expected_machine_registry": contracts["machine_registry"],
+            "code_bytes": len(code), "code_keccak": w3.keccak(code).to_0x_hex(),
+            "finalized_block": number, "block_hash": block["hash"].to_0x_hex(),
+            "signing": False,
+        })
+    if registry.functions.paused().call(block_identifier=number):
+        raise ValueError("EventRegistry is paused")
     return registry, bound
 
 

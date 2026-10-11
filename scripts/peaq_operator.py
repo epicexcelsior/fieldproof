@@ -424,15 +424,10 @@ def execute_event(policy, raw, registry_address, max_total_gas_wei, key_file, jo
     journal = PrivateJournal(journal_path)
     try:
         from web3 import Web3
-        from peaq_os_sdk.abis import load_abi
-        from peaq_os_sdk.tokenomics.abis import INFO_DESK_ABI
 
         w3, provider = _operator_web3()
-        registry = w3.eth.contract(address=Web3.to_checksum_address(registry_address), abi=load_abi("EventRegistry"))
-        info = w3.eth.contract(address=Web3.to_checksum_address(contracts["info_desk"]), abi=INFO_DESK_ABI)
-        if (info.functions.peer(w3.keccak(text="EVENT_REGISTRY")).call().lower() != registry.address.lower()
-                or registry.functions.identityRegistryAddress().call().lower() != contracts["machine_registry"].lower()):
-            raise ValueError("EventRegistry binding changed before signing")
+        latest = w3.eth.get_block("latest")
+        registry, _bound_registry = bind_verified_registry(w3, latest, contracts, registry_address)
         function = registry.functions.submitEvent(
             int(policy["machine_id"]), 1, 1, "", prepared["timestamp"],
             bytes.fromhex(prepared["data_hash"][2:]), 0, 0, b"\0" * 32,
@@ -504,7 +499,7 @@ def main(argv=None):
     event = sub.add_parser("event")
     event.add_argument("--policy", required=True)
     event.add_argument("--raw", required=True, help="Exact canonical paid job file")
-    event.add_argument("--registry", required=True, help="InfoDesk-confirmed Agung EventRegistry")
+    event.add_argument("--registry", required=True, help="Officially sourced, MachineRegistry-bound Agung EventRegistry")
     event.add_argument("--execute-agung-test-write", action="store_true", required=True)
     event.add_argument("--max-total-gas-wei", type=int, required=True)
     event.add_argument("--key-file", required=True)

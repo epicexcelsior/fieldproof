@@ -10,7 +10,8 @@ from scripts.peaq_rpc import SNAPSHOT_SCHEMA, load_policy, read_agung, validate_
 from scripts.prepare_peaq_identity import MACHINE_TYPE, public_multikey
 
 
-def snapshot_from_state(policy, state, *, computed_id, block, contracts, resolved_at):
+def check_state_authority(policy, state, computed_id):
+    """Check identity authority without claiming that historical state is fresh."""
     if state.machine_id != computed_id or str(computed_id) != policy["machine_id"]:
         raise ValueError("on-chain machine ID differs from approved policy")
     if state.owner.lower() != policy["owner"].lower() or state.controller.lower() != policy["controller"].lower():
@@ -41,6 +42,11 @@ def snapshot_from_state(policy, state, *, computed_id, block, contracts, resolve
                   flags.is_subscription_paused))
     if paused or state.is_available is not True or state.is_homed_locally is not True or state.is_relocating is not False:
         raise ValueError("machine is paused, unavailable, foreign, or relocating")
+    return method, service
+
+
+def snapshot_from_state(policy, state, *, computed_id, block, contracts, resolved_at):
+    method, service = check_state_authority(policy, state, computed_id)
     snapshot = {
         "schema": SNAPSHOT_SCHEMA, "chain_id": 9990, "deployment_id": policy["deployment_id"],
         "machine_id": policy["machine_id"], "owner": state.owner, "controller": state.controller,
@@ -53,6 +59,17 @@ def snapshot_from_state(policy, state, *, computed_id, block, contracts, resolve
         "resolved_at": resolved_at, "contracts": contracts, "peers_match": True,
     }
     return validate_snapshot(snapshot, policy, now=resolved_at)
+
+
+def authority_at_block(policy, block_number):
+    """Verify an activity signer's actual registered authority at its submission block."""
+    from peaq_os_sdk.tokenomics.get_machine_management_state import get_machine_management_state
+    w3, _deployment, block, _contracts, context = read_agung(block_number=block_number)
+    state = get_machine_management_state(context, int(policy["machine_id"]))
+    check_state_authority(policy, state, int(policy["machine_id"]))
+    return {"machine_id": policy["machine_id"], "owner": state.owner, "controller": state.controller,
+            "receipt_public_key": policy["receipt_public_key"], "finalized_block": block["number"],
+            "block_hash": block["hash"].to_0x_hex(), "block_timestamp": block["timestamp"]}
 
 
 def resolve(policy):
