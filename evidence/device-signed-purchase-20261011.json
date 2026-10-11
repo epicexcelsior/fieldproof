@@ -1,0 +1,37 @@
+{
+  "purchase_id": "0208a7ac7a484ff9",
+  "challenge": {
+    "id": "0208a7ac7a484ff9",
+    "nonce": 341431541,
+    "created_at": 1791721176,
+    "location": "demo-gate",
+    "max_age_seconds": 10
+  },
+  "settlement": {
+    "success": true,
+    "payer": "2U7Bz5u4bVMsUtNcF4b4xdWG7K3N7WmbsGCqMQmjevMf",
+    "transaction": "3R8BHWyVCMMnMdH3J3dXoDmpHvwBcpMGk345Qf1XXwLDeHHkYZbqSwGaRBoCh3HK8Ksqbb7fvjuukBgSURLpA1Fj",
+    "network": "solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1"
+  },
+  "receipt": {
+    "protocol": "capmesh/0.1",
+    "request_id": "0208a7ac7a484ff9",
+    "status": "success",
+    "provider": "esp32-c6-96a2",
+    "capability": "state.observe",
+    "parameters": {
+      "location": "demo-gate"
+    },
+    "nonce": 341431541,
+    "result": {
+      "metric": "gate.closed",
+      "sensor": "gpio9-contact",
+      "closed": false,
+      "stable_samples": 5,
+      "total_samples": 5
+    },
+    "started_at": 1791721185,
+    "completed_at": 1791721185,
+    "receipt_signature": "v3:RK6YAc0rvEpa/WcNPSdo0fVrrQTyNCRZp4rR81hr+BH/03oK74Lsl+KhQJeIrgjMFst1iOfrkJpLHwJfe/DFuA=="
+  }
+}

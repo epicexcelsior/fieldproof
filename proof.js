@@ -482,6 +482,14 @@ async function init() {
   };
   setInterval(refreshDecision, 250);
   if (packageView || new URL(location.href).searchParams.get('live') === '1') void watchBuyerRun();
+  else if (new URL(location.href).searchParams.get('record') === '20261011') {
+    // Fixed public asset only. A URL cannot select a wallet, arbitrary file, or verification key.
+    const response = await fetch(new URL('./evidence/device-signed-purchase-20261011.json', import.meta.url));
+    if (!response.ok) throw new Error('The October 11 recorded purchase is unavailable.');
+    await showPurchase(await response.json(), true);
+    el('source-description').textContent = 'Recorded October 11 paid physical check. No new payment or measurement occurs.';
+    el('payment-source').textContent = 'Actual recorded test payment · October 11 · No new payment here';
+  }
   else await archived();
   if (!packageView) await inspectContactStates();
   else {

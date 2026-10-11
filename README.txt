@@ -2,12 +2,16 @@ FieldProof: inspect recorded physical evidence
 
 1. Serve this directory on localhost or HTTPS.
    python3 -m http.server 8787 --bind 127.0.0.1
+   Open http://127.0.0.1:8787/review.html for the one-minute feedback walkthrough.
 2. Open http://127.0.0.1:8787/guide.html for the story, radio explanation, and rehearsal.
    Open http://127.0.0.1:8787 for actual recorded-receipt verification.
 3. Verify the original receipt, then alter its state, challenge, or public key.
 4. Select Verify recorded payment for a read-only Solana Devnet RPC query.
 5. Inspect the separately signed BOOT held/released input pair. Those checks moved no funds.
 6. Watch assets/fieldproof-signed-receipt.webm.
+
+Open jobs.html for the job workbench. Import a reviewed saved job or evidence manifest.
+Imported peaq snapshots remain recorded evidence, not a live registry query.
 
 For the October 5 real purchase, open Inspect a new paid buyer run.
 Select evidence/device-signed-purchase-20261005.json, then Verify buyer payment.
