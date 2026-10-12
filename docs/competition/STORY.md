@@ -27,7 +27,7 @@ It rejects an altered answer and refuses to refresh an old answer through a page
 |---|---|---|
 | Payment | Settled | Still settled |
 | Signed answer | Authentic and within the age limit | Authentic but outside the age limit |
-| Permission to use the answer | Passes the configured buyer checks | Requires a new check |
+| Buyer freshness check | Passes the age policy | Requires a new check |
 
 This creates a paid service from a connected device's sensing capability.
 The larger hypothesis is that software can commission useful checks from independent operators through one interface.

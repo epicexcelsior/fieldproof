@@ -17,6 +17,9 @@ No Copilot account field or submission changed. Private account checks remain lo
 At October 12, 11:47 CEST, both latest and finalized Agung operator balances remain zero. No signer ran.
 The export checks passed eight tests, with one optional SDK skip. Syntax and whitespace checks passed.
 The guided replay behavior and payment/security code remain unchanged in this documentation revision.
+The later visual-copy check exposed a stale "Verified signature" arrow label after the changed-answer test.
+The actual signature check already rejected that copy. The arrow now states "Signature mismatch" and "Rejected copy".
+A focused test reproduced the misleading label before the change. The correction changes presentation only.
 
 ## October 12 guided visual review
 

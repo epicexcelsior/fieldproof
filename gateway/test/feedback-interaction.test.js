@@ -88,6 +88,7 @@ test('visual guide replays one unchanged real receipt without buying or measurin
   assert.equal(el.get('result').dataset.tone, 'warn');
   await click('alter');
   assert.equal(el.get('result').dataset.tone, 'bad');
+  assert.equal(el.get('exchange-note').textContent, 'Signature mismatch');
   assert.equal(el.get('device-state').textContent, 'Recorded answer: OPEN');
   await click('restore');
   assert.equal(el.get('result').dataset.tone, 'ok');

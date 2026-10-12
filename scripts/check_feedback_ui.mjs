@@ -46,6 +46,7 @@ try {
     await page.click('#alter');
     await ready(page);
     assert.equal(await page.$eval('#result', element => element.dataset.tone), 'bad');
+    assert.equal(await page.$eval('#exchange-note', element => element.textContent), 'Signature mismatch');
     assert.match(await page.$eval('#device-state', element => element.textContent), /Recorded answer: OPEN/);
     await page.click('#restore');
     await ready(page);
