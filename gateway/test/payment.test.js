@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { once } from 'node:events';
+import { request as httpRequest } from 'node:http';
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
@@ -15,18 +16,18 @@ import { PurchaseStore } from '../store.js';
 import { decodePaymentRequiredHeader, encodePaymentSignatureHeader } from '@x402/core/http';
 import { publicBuyerRun } from '../../docs/settlement.mjs';
 
-async function fixture(t, { valid = true, settled = true, unknown = false, deliveryFails = false, path = ':memory:', sensor = 'simulated-contact', provider, receiptPins, assetsRoot, buyerRunPath, buyerPurpose } = {}) {
+async function fixture(t, { valid = true, settled = true, unknown = false, deliveryFails = false, path = ':memory:', sensor = 'simulated-contact', provider, receiptPins, assetsRoot, buyerRunPath, buyerPurpose, simulated = true, settlementResult, confirmPending, paymentRpcFetch } = {}) {
   const events = [];
   const observations = [];
   const facilitator = {
     getSupported: async () => ({ kinds: [{ x402Version: 2, scheme: 'exact', network: NETWORK, extra: { feePayer: PAY_TO } }], extensions: [], signers: {} }),
     verify: async () => { events.push('verify'); return { isValid: valid, payer: PAY_TO }; },
     settle: async () => { events.push('settle'); if (unknown) throw new Error('timeout');
-      return { success: settled, transaction: 'SIMULATED-TRANSACTION', network: NETWORK, payer: PAY_TO }; },
+      return settlementResult ?? { success: settled, transaction: 'SIMULATED-TRANSACTION', network: NETWORK, payer: PAY_TO }; },
   };
   const paymentServer = await createPaymentServer(facilitator);
   const store = new PurchaseStore(path);
-  const app = await createGateway({ paymentServer, store, simulated: true, sensor, provider, receiptPins, assetsRoot, buyerRunPath, buyerPurpose, observe: async purchase => {
+  const app = await createGateway({ paymentServer, store, simulated, sensor, provider, receiptPins, assetsRoot, buyerRunPath, buyerPurpose, confirmPending, paymentRpcFetch, observe: async purchase => {
     events.push('measure');
     observations.push(purchase);
     if (deliveryFails) throw new Error('device unavailable');
@@ -47,8 +48,15 @@ async function fixture(t, { valid = true, settled = true, unknown = false, deliv
     const response = await fetch(route);
     assert.equal(response.status, 402);
     const challenge = decodePaymentRequiredHeader(response.headers.get('PAYMENT-REQUIRED'));
+    let transaction = Buffer.from('FIELDPROOF-SIM:fixture-proof').toString('base64');
+    if (!simulated) {
+      let message = createTransactionMessage({ version: 0 });
+      message = setTransactionMessageFeePayer(address(PAY_TO), message);
+      message = setTransactionMessageLifetimeUsingBlockhash({ blockhash: '11111111111111111111111111111111', lastValidBlockHeight: 1n }, message);
+      transaction = Buffer.from(getTransactionEncoder().encode(compileTransaction(message))).toString('base64');
+    }
     return { route, request, payload: { x402Version: 2, accepted: challenge.accepts[0], resource: challenge.resource,
-      payload: { transaction: Buffer.from('FIELDPROOF-SIM:fixture-proof').toString('base64') } }, challenge };
+      payload: { transaction } }, challenge };
   }
   const pay = (route, payload) => fetch(route, { headers: { 'PAYMENT-SIGNATURE': encodePaymentSignatureHeader(payload) } });
   return { url, events, observations, store, purchase, pay };
@@ -374,6 +382,57 @@ test('concurrent requests settle and measure once', async t => {
   assert.ok(responses.some(r => r.status === 200));
   assert.equal(f.events.filter(e => e === 'settle').length, 1);
   assert.equal(f.events.filter(e => e === 'measure').length, 1);
+});
+
+test('pending facilitator confirmation uses an exact readback and a cached client retry never pays or measures again', async t => {
+  let checks = 0;
+  const pending = { success: false, errorReason: 'settlement_pending', transaction: '2'.repeat(88), network: NETWORK, payer: PAY_TO };
+  const f = await fixture(t, { simulated: false, sensor: 'gpio9-contact', settlementResult: pending,
+    confirmPending: async (settlement, hash) => { checks++; assert.deepEqual(settlement, pending); assert.match(hash, /^[0-9a-f]{64}$/); return { ...pending, success: true }; } });
+  const p = await f.purchase();
+  assert.equal((await f.pay(p.route, p.payload)).status, 200);
+  const settlementCalls = f.events.filter(e => e === 'settle').length;
+  assert.equal((await f.pay(p.route, p.payload)).status, 200);
+  assert.equal(checks, 1);
+  // The resource SDK can reconfirm the same pending payload. The cached retry must add no settlement call.
+  assert.equal(f.events.filter(x => x === 'settle').length, settlementCalls);
+  assert.equal(f.events.filter(x => x === 'measure').length, 1);
+});
+
+test('an unavailable pending-confirmation query blocks measurement and preserves the original signature', async t => {
+  const pending = { success: false, errorReason: 'settlement_pending', transaction: '2'.repeat(88), network: NETWORK, payer: PAY_TO };
+  const f = await fixture(t, { simulated: false, sensor: 'gpio9-contact', settlementResult: pending,
+    confirmPending: async () => { throw new Error('RPC unavailable'); } });
+  const p = await f.purchase();
+  assert.equal((await f.pay(p.route, p.payload)).status, 503);
+  assert.equal(f.store.get(p.request.id).state, 'settlement_unknown');
+  assert.equal(JSON.parse(f.store.get(p.request.id).settlement).transaction, pending.transaction);
+  assert.equal(f.events.filter(x => x === 'measure').length, 0);
+  assert.equal((await f.pay(p.route, p.payload)).status, 409);
+});
+
+test('browser payment inspection can query only a stored signature and exposes no RPC credential', async t => {
+  let queries = 0;
+  const recorded = JSON.parse(readFileSync(new URL('../../docs/evidence/device-signed-purchase.json', import.meta.url))).purchase;
+  const rpc = JSON.parse(readFileSync(new URL('./fixtures/settlement-rpc.json', import.meta.url)));
+  const f = await fixture(t, { paymentRpcFetch: async (_url, options) => {
+    queries++;const body = JSON.parse(options.body);
+    assert.equal(body.method, 'getTransaction');assert.equal(body.params[0], recorded.settlement.transaction);
+    return Response.json({ jsonrpc: '2.0', id: body.id, result: rpc });
+  } });
+  f.store.create({ ...recorded.challenge, expires_at: recorded.challenge.created_at + 120 });
+  f.store.finish(recorded.purchase_id, 'delivered', { settlement: recorded.settlement });
+  const headers = { Host: '127.0.0.1:4021' };
+  const read = (id, extra = {}) => new Promise((resolve, reject) => {
+    const req = httpRequest(f.url+'/payment-transactions/'+id, { headers: { ...headers, ...extra } }, res => {
+      res.resume(); res.on('end', () => resolve(res.statusCode));
+    });
+    req.on('error', reject); req.end();
+  });
+  assert.equal(await read(recorded.purchase_id), 200);
+  assert.equal(await read(recorded.purchase_id, { Origin: 'https://foreign.example' }), 403);
+  assert.equal(await read('fedcba9876543210'), 404);
+  assert.equal(queries, 1);
 });
 for (const [name, options, status, state] of [
   ['failed settlement', { settled: false }, 402, 'payment_failed'],

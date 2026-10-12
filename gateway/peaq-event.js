@@ -9,7 +9,7 @@ import { PurchaseStore } from './store.js';
 import { EventStore } from './event-store.js';
 import { loadProviderPolicy } from './peaq.js';
 import { verifyJob, sha256, canonicalJSON } from './job.js';
-import { querySettlement } from '../docs/settlement.mjs';
+import { queryDevnetSettlement, configureLocalDevnetRpc } from './devnet-rpc.js';
 import { createLocalBuyer } from './local-buyer.js';
 
 const ROOT = fileURLToPath(new URL('../', import.meta.url));
@@ -74,7 +74,7 @@ export async function prepareSavedEvent({ events, id, policy, policyPath, run = 
   return withRaw(row, async raw => checkPreparation(await run('scripts.prepare_peaq_event', ['--policy', policyPath, '--raw', raw]), row, policy));
 }
 
-export async function verifySavedPayment({ events, id, policy, query = querySettlement }) {
+export async function verifySavedPayment({ events, id, policy, query = queryDevnetSettlement }) {
   const row = checkedRow(events, id, policy), job = JSON.parse(row.job_utf8);
   const result = await query({ settlement: { success: true, network: job.payment.network,
     transaction: job.payment.transaction, payer: job.payment.payer } });
@@ -82,7 +82,7 @@ export async function verifySavedPayment({ events, id, policy, query = querySett
   return { purchase_id: id, state: events.get(id).state, payment_verification: result, spending: false };
 }
 
-export async function recoverSavedBuyer({ events, id, policy, operation, query = querySettlement,
+export async function recoverSavedBuyer({ events, id, policy, operation, query = queryDevnetSettlement,
     directory = join(ROOT, '.local', 'live-buyer', JSON.parse(checkedRow(events, id, policy).job_utf8).payment.payer) }) {
   const row = checkedRow(events, id, policy), job = JSON.parse(row.job_utf8);
   await verifySavedPayment({ events, id, policy, query }); // read the existing transfer, never buy again
@@ -293,6 +293,7 @@ export async function saveEvidenceManifest(manifest, output) {
 }
 
 async function main() {
+  configureLocalDevnetRpc();
   const { values } = parseArgs({ options: {
     action: { type: 'string', default: 'list' }, database: { type: 'string', default: '.local/purchases.sqlite' },
     purchase: { type: 'string' }, operation: { type: 'string' }, policy: { type: 'string' }, registry: { type: 'string' }, transaction: { type: 'string' }, output: { type: 'string' },

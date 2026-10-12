@@ -28,6 +28,23 @@ SOLANA_RPC = "https://api.devnet.solana.com"
 SOLANA_TOKEN_PROGRAM = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
 
 
+def solana_rpc_url():
+    """Keep the Devnet API key in the operator process, never the public evidence."""
+    key = os.environ.get("HELIUS_API_KEY")
+    if not key:
+        configured = os.environ.get("FIELDPROOF_HELIUS_KEY_FILE")
+        path = Path(configured) if configured else ROOT / ".local/competition/helius-devnet.secret"
+        if not configured and not path.exists():
+            return SOLANA_RPC
+        try:
+            key = path.read_text().strip()
+        except OSError:
+            raise ValueError("configured Helius Devnet key file is unavailable") from None
+    if not isinstance(key, str) or not re.fullmatch(r"[A-Za-z0-9_-]{16,128}", key):
+        raise ValueError("configured Helius API key is invalid")
+    return "https://devnet.helius-rpc.com/?api-key=" + key
+
+
 def _bound(value, name, *, positive=True):
     if type(value) is not int or value < int(positive) or value >= UINT256:
         raise ValueError(f"{name} must be a reviewed uint256 bound")
@@ -266,7 +283,7 @@ def verify_solana_settlement(job, *, rpc_call=None):
     transaction = job["payment"]["transaction"]
     def request(method, params):
         body = json.dumps({"jsonrpc": "2.0", "id": 1, "method": method, "params": params}).encode()
-        with urlopen(Request(SOLANA_RPC, body, {"Content-Type": "application/json"}), timeout=15) as response:
+        with urlopen(Request(solana_rpc_url(), body, {"Content-Type": "application/json"}), timeout=15) as response:
             raw = response.read(262145)
         if len(raw) > 262144:
             raise ValueError("Solana RPC response exceeds the verification limit")

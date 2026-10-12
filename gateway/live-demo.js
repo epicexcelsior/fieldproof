@@ -9,6 +9,7 @@ import { PurchaseStore } from './store.js';
 import { createLocalBuyer, inspectLocalBuyer, buyerLockMessage, mountLocalBuyer, DEFAULT_BUYER_MAXIMUM } from './local-buyer.js';
 import { EventStore } from './event-store.js';
 import { performPaidJob } from './paid-job.js';
+import { configureLocalDevnetRpc } from './devnet-rpc.js';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const { positionals, values } = parseArgs({ allowPositionals: true, options: {
@@ -17,6 +18,7 @@ const { positionals, values } = parseArgs({ allowPositionals: true, options: {
 const [keyPath] = positionals;
 if (!keyPath || positionals.length !== 1) throw new Error('Usage: node gateway/live-demo.js /path/to/disposable-devnet.keypair.json [--ble-address AA:BB:CC:DD:EE:FF] [--peaq-policy public-policy.json]');
 const bleAddress = values['ble-address'] ?? process.env.FIELDPROOF_BLE_ADDRESS;
+const rpcConfiguration = configureLocalDevnetRpc();
 if (bleAddress !== undefined) {
   if (!/^(?:[0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$/.test(bleAddress)) throw new Error('Use the configured board Bluetooth MAC address');
   process.env.FIELDPROOF_BLE_ADDRESS = bleAddress;
@@ -50,9 +52,10 @@ try {
   if (error.code === 'EEXIST' && error.path === resolve(directory, '.lock')) stopForBuyerLock();
   throw error;
 }
-mountLocalBuyer(app, controller, origin);
+mountLocalBuyer(app, controller, origin, { paymentRpcProxy: true });
 const server = app.listen(port, '127.0.0.1', () => {
   console.log(`FieldProof real Devnet buyer: ${origin}/${events ? 'jobs' : 'proof?present=1'}`);
+  console.log(`Solana RPC: ${rpcConfiguration.provider}. Network: ${rpcConfiguration.network}.`);
   console.log(`Buyer ${signer.address}. Each click pays up to 0.001 Devnet USDC. Maximum ${DEFAULT_BUYER_MAXIMUM} shared lifetime purchases (${(DEFAULT_BUYER_MAXIMUM / 1000).toFixed(3)} test USDC).`);
   console.log('The private key remains in this process. No purchase starts until the local button is selected.');
 });

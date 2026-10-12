@@ -91,12 +91,18 @@ export function inspectLocalBuyer({ directory, maximum = DEFAULT_BUYER_MAXIMUM, 
 }
 
 // Explicit host-terminal recovery only. Never clear pending records or reset the operation count.
-export function recoverCompletedBuyerLock({ directory, maximum = DEFAULT_BUYER_MAXIMUM, ownerState = processState }) {
+function archiveAbsentBuyerLock({ directory, maximum = DEFAULT_BUYER_MAXIMUM, ownerState = processState, review }) {
   const mutex = join(directory, '.lock-recovery');
   writePrivate(mutex, { pid: process.pid, started_at: new Date().toISOString() }, true);
   try {
     const state = inspectLocalBuyer({ directory, maximum, ownerState });
-    if (state.blocked) throw new Error('An earlier purchase needs review. The buyer lock remains unchanged.');
+    if (review) {
+      if (!operationId.test(review.operation) || !/^[0-9a-f]{16}$/.test(review.purchaseId ?? '')) throw new Error('Use the preserved review IDs.');
+      const record = JSON.parse(readFileSync(join(directory, review.operation + '.json'), 'utf8'));
+      if (record.operation_id !== review.operation || record.purchase_id !== review.purchaseId || !['review', 'pending'].includes(record.status)) {
+        throw new Error('The operation does not match the preserved review. The lock remains unchanged.');
+      }
+    } else if (state.blocked) throw new Error('An earlier purchase needs review. The buyer lock remains unchanged.');
     if (!state.locked) return { recovered: false, remaining: state.remaining, spending: false };
     if (state.owner_state !== 'absent') throw new Error('The buyer owner is active or unknown. Stop its original process. The lock remains unchanged.');
     const archive = `.lock.recovered-${randomUUID()}.json`;
@@ -104,6 +110,13 @@ export function recoverCompletedBuyerLock({ directory, maximum = DEFAULT_BUYER_M
     return { recovered: true, archive, operations: state.operations, remaining: state.remaining, spending: false };
   } finally { unlinkSync(mutex); }
 }
+
+export const recoverCompletedBuyerLock = options => archiveAbsentBuyerLock({ ...options, review: undefined });
+
+// Archives only a dead owner's lease. All unresolved journals still block signing.
+// The read-only refund reconciler invokes this only after both chain queries pass.
+export const recoverBuyerLockForReview = options => archiveAbsentBuyerLock({ ...options,
+  review: { operation: options.operation, purchaseId: options.purchaseId } });
 
 export function createLocalBuyer({ directory, payer, payTo, buy, maximum = DEFAULT_BUYER_MAXIMUM, readPurchaseState, readPurchaseSettlement }) {
   if (!Number.isInteger(maximum) || maximum < 1 || maximum > DEFAULT_BUYER_MAXIMUM) {
@@ -216,9 +229,12 @@ export function createLocalBuyer({ directory, payer, payTo, buy, maximum = DEFAU
       if (active) throw new Error('Stop the active purchase before completing refund review.');
       const record = read(id), resolution = publicRefundResolution(input);
       const original = readPurchaseSettlement?.(resolution.purchase_id);
+      const state = readPurchaseState?.(record?.purchase_id);
+      const unresolved = state === 'delivery_failed' && original?.success === true ||
+        ['payment_failed', 'settlement_unknown'].includes(state) && original?.success === false && original.errorReason === 'settlement_pending';
       if (!record || record.operation_id !== id || record.purchase_id !== resolution.purchase_id ||
           resolution.original_payment.payer !== payer || resolution.original_payment.merchant !== payTo ||
-          readPurchaseState?.(record.purchase_id) !== 'delivery_failed' || original?.success !== true ||
+          !unresolved ||
           original.transaction !== resolution.original_payment.transaction || original.payer !== payer ||
           original.network !== 'solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1') {
         throw new Error('Refund does not match the preserved operation and failed purchase payment.');
@@ -252,7 +268,7 @@ export function createLocalBuyer({ directory, payer, payTo, buy, maximum = DEFAU
   };
 }
 
-export function mountLocalBuyer(app, controller, origin) {
+export function mountLocalBuyer(app, controller, origin, { paymentRpcProxy = false } = {}) {
   const url = new URL(origin), token = randomBytes(24).toString('hex');
   if (url.protocol !== 'http:' || url.hostname !== '127.0.0.1') throw new Error('Local buyer requires a loopback origin');
   app.use('/local-buyer', (req, res, next) => {
@@ -265,7 +281,7 @@ export function mountLocalBuyer(app, controller, origin) {
     }
     next();
   });
-  app.get('/local-buyer/config', (_req, res) => res.json({ ...controller.config(), token }));
+  app.get('/local-buyer/config', (_req, res) => res.json({ ...controller.config(), token, payment_rpc_proxy: paymentRpcProxy }));
   app.post('/local-buyer/purchase', (req, res) => {
     if (!req.body || Object.keys(req.body).length !== 1 || typeof req.body.operation_id !== 'string') {
       return res.status(400).json({ error: 'Send only an operation ID. Payment terms come from local configuration.' });

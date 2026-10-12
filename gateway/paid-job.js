@@ -1,10 +1,10 @@
 import { buyObservation } from './buyer.js';
 import { createJob } from './job.js';
 import { loadProviderPolicy, resolveIdentity } from './peaq.js';
-import { querySettlement } from '../docs/settlement.mjs';
+import { queryDevnetSettlement } from './devnet-rpc.js';
 
 export async function performPaidJob({ signer, origin, policyPath, events, onProgress,
-    resolve = () => resolveIdentity(policyPath), buy = buyObservation, verifyPayment = querySettlement }) {
+    resolve = () => resolveIdentity(policyPath), buy = buyObservation, verifyPayment = queryDevnetSettlement }) {
   const policy = await loadProviderPolicy(policyPath);
   const run = await buy(signer, origin, { contact: { provider: policy.provider, sensor: policy.sensor },
     receiptPublicKey: policy.receipt_public_key, peaq: { policy, resolve }, onProgress });

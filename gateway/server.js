@@ -11,7 +11,8 @@ import { ExactSvmScheme } from '@x402/svm/exact/server';
 import { getTransactionDecoder } from '@solana/kit';
 import { PurchaseStore } from './store.js';
 import { contactContract, DEFAULT_CONTACT, loadReceiptPins, receiptKey } from './contact.js';
-import { publicBuyerRun, contactPolicy } from '../docs/settlement.mjs';
+import { publicBuyerRun, contactPolicy, DEVNET_RPC } from '../docs/settlement.mjs';
+import { confirmPendingSettlement, configureLocalDevnetRpc, devnetFetch } from './devnet-rpc.js';
 
 import { NETWORK, USDC, PAY_TO } from './constants.js';
 export { NETWORK, USDC, PAY_TO } from './constants.js';
@@ -50,6 +51,7 @@ export async function createGateway({ paymentServer, store, observe = observeHar
     origin = 'http://127.0.0.1:4021', payTo = PAY_TO, simulated = false,
     sensor = simulated ? 'simulated-contact' : 'gpio9-contact',
     provider = sensor === 'simulated-contact' ? 'sim-contact-01' : DEFAULT_CONTACT.provider, assetsRoot = root,
+    confirmPending = confirmPendingSettlement, paymentRpcFetch = devnetFetch,
     receiptPins = loadReceiptPins(process.env.FIELDPROOF_RECEIPT_PINS), buyerRunPath, buyerPurpose = 'gate-access', events } = {}) {
   const contact = contactContract({ provider, sensor }, { simulated });
   contactPolicy(buyerPurpose, sensor);
@@ -111,6 +113,30 @@ export async function createGateway({ paymentServer, store, observe = observeHar
     res.json({ job: JSON.parse(saved.job_utf8), event: { state: saved.state,
       transaction_hash: saved.transaction_hash, data_hash: saved.data_hash,
       confirmation: saved.confirmation ? JSON.parse(saved.confirmation) : null } });
+  });
+  app.get('/payment-transactions/:id', async (req, res) => {
+    if (req.get('host') !== new URL(origin).host || (req.get('origin') && req.get('origin') !== origin) ||
+        (req.get('sec-fetch-site') && !['same-origin', 'none'].includes(req.get('sec-fetch-site')))) {
+      return res.status(403).json({ error: 'Use the local demo page.' });
+    }
+    if (!/^[0-9a-f]{16}$/.test(req.params.id)) return res.status(400).json({ error: 'Use a valid purchase ID.' });
+    try {
+      const row = store.get(req.params.id), settlement = row?.settlement && JSON.parse(row.settlement);
+      if (settlement?.network !== NETWORK || !/^[1-9A-HJ-NP-Za-km-z]{64,88}$/.test(settlement.transaction ?? '')) {
+        return res.status(404).json({ error: 'No preserved Devnet payment exists for this purchase.' });
+      }
+      // Only this stored signature can enter the proxy. HTTP cannot select a method, RPC, or API key.
+      const response = await paymentRpcFetch(DEVNET_RPC, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        signal: AbortSignal.timeout(15000), body: JSON.stringify({ jsonrpc: '2.0', id: 'fieldproof-payment-check',
+          method: 'getTransaction', params: [settlement.transaction,
+            { commitment: 'confirmed', encoding: 'jsonParsed', maxSupportedTransactionVersion: 0 }] }) });
+      if (!response.ok) throw new Error('RPC unavailable');
+      const raw = await response.text();
+      if (raw.length > 262144) throw new Error('RPC response exceeds the inspection limit');
+      const body = JSON.parse(raw);
+      if (body?.jsonrpc !== '2.0' || body.id !== 'fieldproof-payment-check' || Object.hasOwn(body, 'error')) throw new Error('RPC result unavailable');
+      res.json(body);
+    } catch { res.status(503).json({ error: 'The configured Devnet RPC cannot verify this original transfer. No payment started.' }); }
   });
   app.get('/health', (_req, res) => res.json({ ready: true, network: NETWORK, payTo,
     capability: 'state.observe', location: 'demo-gate', price_base_units: '1000',
@@ -217,8 +243,15 @@ export async function createGateway({ paymentServer, store, observe = observeHar
     try {
       settlement = await paymentServer.settlePayment(payload, requirements[0]);
       if (!settlement.success) {
-        store.finish(purchase.id, 'payment_failed', { settlement, error: 'Settlement failed. No measurement occurred.' });
-        return challenge('Settlement failed');
+        if (!simulated && settlement.errorReason === 'settlement_pending') {
+          // The facilitator can broadcast successfully and then hit a confirmation rate limit.
+          // Query this exact signed message. Never sign, resend, or select another payment.
+          store.finish(purchase.id, 'settlement_unknown', { settlement, error: 'Payment confirmation pending. No measurement occurred.' });
+          settlement = await confirmPending(settlement, proofHash);
+        } else {
+          store.finish(purchase.id, 'payment_failed', { settlement, error: 'Settlement failed. No measurement occurred.' });
+          return challenge('Settlement failed');
+        }
       }
       if (settlement.network !== NETWORK || !settlement.transaction) throw new Error('Invalid settlement response');
     } catch {
@@ -265,6 +298,7 @@ export async function createGateway({ paymentServer, store, observe = observeHar
   return app;
 }
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  configureLocalDevnetRpc();
   const port = Number(process.env.CAPMESH_GATEWAY_PORT || 4021);
   const contact = contactContract({ provider: process.env.FIELDPROOF_PROVIDER_ID || DEFAULT_CONTACT.provider,
     sensor: process.env.FIELDPROOF_CONTACT_SENSOR || DEFAULT_CONTACT.sensor });

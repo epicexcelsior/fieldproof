@@ -13,8 +13,8 @@ import { contactToolPreview, runContactOperation } from './agent-contact.js';
 import { PurchaseStore } from './store.js';
 import { saveBuyerRun } from './buyer-output.js';
 import { buyerLockMessage, inspectLocalBuyer, recoverCompletedBuyerLock, DEFAULT_BUYER_MAXIMUM } from './local-buyer.js';
-import { DEVNET_RPC } from '../docs/settlement.mjs';
 import { USDC } from './constants.js';
+import { devnetRpcUrl, configureLocalDevnetRpc } from './devnet-rpc.js';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 
@@ -52,7 +52,7 @@ export async function checkBuyerReadiness({ keyPath = resolve(root, '.local/disp
     note: 'This command derives the wallet public address and reads local metadata. It creates no lock and signs no transaction. Process status applies only to this process namespace.' };
 }
 
-export async function checkDevnetFunds(payer, count, rpc = createSolanaRpc(DEVNET_RPC)) {
+export async function checkDevnetFunds(payer, count, rpc = createSolanaRpc(devnetRpcUrl())) {
   checkCount(count);
   const encode = getAddressEncoder();
   const [tokenAccount] = await getProgramDerivedAddress({
@@ -224,6 +224,7 @@ async function main() {
     return;
   }
   const keyPath = values.keypair ?? resolve(root, '.local/disposable-buyer.keypair.json');
+  configureLocalDevnetRpc();
   const output = values['output-directory'] ?? resolve(root, '.local/paid-checks', randomUUID());
   let store, server, signer;
   const origin = `http://127.0.0.1:${port}`;

@@ -31,7 +31,7 @@ Practice without funds at `http://127.0.0.1:4023/?present=1` after `python3 scri
 That separate page uses the same physical input with simulated payment.
 
 The signing server accepts only loopback requests with its exact origin and session token.
-It fixes the recipient, Devnet mint, and price limit. It allows ten purchases, totaling at most 0.01 test USDC.
+It fixes the recipient, Devnet mint, and price limit. It allows 100 shared purchases, totaling at most 0.100 test USDC.
 It preserves operation records in ignored `.local/live-buyer/<public-address>/`. A directory lock prevents a second signer process.
 Failures and unresolved records block another purchase. No automatic paid retry or refund exists.
 If an operation fails, preserve its operation ID, purchase ID, local log, and ledger. Review the chain before recovery.
@@ -39,6 +39,21 @@ Do not delete a pending record or lock to bypass review. Normal shutdown removes
 
 The ordinary inspector and standalone inspector remain read-only. Their servers contain no buyer-signing endpoint or private wallet.
 `CAPMESH_GATEWAY_PORT` selects another free port for this explicit signing-server command.
+
+### Use a private Helius Devnet RPC
+
+Store the Helius API key in ignored `.local/competition/helius-devnet.secret`. Set file permissions to `0600`.
+The local CLI tools load this file automatically. `HELIUS_API_KEY` or `FIELDPROOF_HELIUS_KEY_FILE` can supply another private configuration.
+The endpoint remains fixed to `https://devnet.helius-rpc.com/`. Startup prints the provider hostname, never the key or complete URL.
+The buyer, payment queries, and peaq operator's Solana checks use this configuration.
+The local job inspector queries a server proxy for the selected purchase's stored transaction.
+The browser independently checks the returned transfer data. It receives no RPC key and cannot select another RPC method.
+Public static inspectors retain the public Devnet endpoint. They contain no private credential.
+
+The external x402 facilitator controls its own RPC. Its pending response does not prove that a payment failed.
+If it reports `settlement_pending`, the gateway independently queries the exact transaction through the configured RPC.
+It checks the token transfer and original signed-message hash before measurement. It signs or broadcasts no replacement payment.
+An unavailable or mismatched query preserves `settlement_unknown` and blocks another payment.
 
 For a board with a known Bluetooth MAC address, add `--ble-address AA:BB:CC:DD:EE:FF`.
 Use the actual address from trusted local setup. This path uses one connection for its manifest and observation.
@@ -343,8 +358,13 @@ node gateway/reconcile-refund.js \
 The command independently verifies the original transfer, reverse transfer, amount, mint, payer, and purchase-bound memo.
 It signs no transaction and makes no payment. A running buyer lock blocks reconciliation.
 It preserves the original review backup and records `refunded` in the buyer journal.
-The purchase database retains `delivery_failed` and no receipt. The operation still counts toward the spending limit.
+The purchase database retains its original failed state and no receipt. The operation still counts toward the spending limit.
 An unavailable query or mismatched refund retains the review block. Restart the buyer only after reconciliation passes.
+
+A pending facilitator response can also enter refund review after independent proof of its actual transfer.
+If its original buyer process is absent, add `--recover-stale-lock` to the reconciliation command.
+The command verifies both transfers before it archives the dead owner's lock. It preserves every operation and the remaining budget.
+An active or unknown owner blocks this recovery. Do not delete its lock.
 
 ### Device authorization expires
 

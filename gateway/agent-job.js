@@ -1,5 +1,6 @@
 // A bounded CLI tool for an agent. Job input cannot choose wallets, recipients, networks, or budgets.
 import { parseArgs } from 'node:util';
+import { configureLocalDevnetRpc } from './devnet-rpc.js';
 import { randomUUID } from 'node:crypto';
 import { resolve } from 'node:path';
 import { loadBuyerSigner } from './buyer.js';
@@ -10,6 +11,7 @@ import { createLocalBuyer, DEFAULT_BUYER_MAXIMUM } from './local-buyer.js';
 import { performPaidJob } from './paid-job.js';
 
 async function main() {
+  configureLocalDevnetRpc();
 const { values } = parseArgs({ options: {
   policy: { type: 'string' }, keypair: { type: 'string' }, origin: { type: 'string', default: 'http://127.0.0.1:4026' },
   execute: { type: 'boolean', default: false }, operation: { type: 'string' },

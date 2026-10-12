@@ -5,7 +5,7 @@ import { mkdtempSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { PurchaseStore } from '../store.js';
-import { createLocalBuyer, inspectLocalBuyer } from '../local-buyer.js';
+import { createLocalBuyer, inspectLocalBuyer, recoverBuyerLockForReview } from '../local-buyer.js';
 import { reconcileRefund } from '../reconcile-refund.js';
 import { PAY_TO, USDC } from '../constants.js';
 
@@ -71,6 +71,32 @@ test('the running buyer lock prevents refund reconciliation and remains intact',
     await assert.rejects(reconcileRefund(f), /EEXIST/);
     assert.equal(controller.config().blocked, true);
   } finally { controller.close(); }
+});
+
+test('a pending facilitator result can resolve only after a verified payment and exact refund', async t => {
+  const f = fixture(t);
+  const pending = { ...purchase.settlement, success: false, errorReason: 'settlement_pending' };
+  f.store.finish(f.purchaseId, 'payment_failed', { settlement: pending, error: 'Facilitator confirmation rate limited' });
+  const result = await reconcileRefund(f);
+  assert.equal(result.status, 'refunded');
+  assert.equal(result.blocked, false);
+  assert.equal(result.remaining, 99);
+  assert.deepEqual(JSON.parse(f.store.get(f.purchaseId).settlement), pending);
+  assert.equal(f.store.get(f.purchaseId).result, null);
+});
+
+test('a dead-owner lock can archive for review while the unresolved operation still blocks spending', t => {
+  const f = fixture(t);
+  writeFileSync(join(f.directory, '.lock'), JSON.stringify({ pid: 1000000, started_at: new Date().toISOString() }));
+  for (const ownerState of [() => 'alive', () => 'unknown']) {
+    assert.throws(() => recoverBuyerLockForReview({ ...f, ownerState }), /active or unknown/);
+  }
+  assert.throws(() => recoverBuyerLockForReview({ ...f, purchaseId: 'fedcba9876543210', ownerState: () => 'absent' }), /preserved review/);
+  const result = recoverBuyerLockForReview({ ...f, ownerState: () => 'absent' });
+  assert.equal(result.recovered, true);
+  assert.equal(inspectLocalBuyer(f).blocked, true);
+  assert.deepEqual(JSON.parse(readFileSync(join(f.directory, f.operation + '.json'))), f.record);
+  assert.equal(inspectLocalBuyer(f).remaining, 99);
 });
 
 test('a copied refund cannot resolve a second operation and corrupt refund records fail closed', async t => {

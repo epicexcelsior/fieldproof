@@ -12,6 +12,7 @@ import { contactContract, DEFAULT_CONTACT, loadReceiptPins, receiptKey } from '.
 import { saveBuyerRun } from './buyer-output.js';
 import { contactPolicy } from '../docs/settlement.mjs';
 import { checkIdentity, validateProviderPolicy } from './peaq.js';
+import { devnetRpcUrl, configureLocalDevnetRpc } from './devnet-rpc.js';
 
 const provisionedKey = loadReceiptPins()[DEFAULT_CONTACT.provider];
 
@@ -93,7 +94,7 @@ export async function buyObservation(signer, origin = 'http://127.0.0.1:4021', o
   options.onProgress?.({ phase: 'request', purchase_id: purchase.id });
   const client = new x402Client();
   client.registerPolicy((_version, offers) => allowedOffers(offers));
-  client.register(NETWORK, new ExactSvmScheme(signer));
+  client.register(NETWORK, new ExactSvmScheme(signer, { rpcUrl: devnetRpcUrl() }));
   const trackedFetch = async (input, init) => {
     const headers = new Headers(init?.headers ?? (input instanceof Request ? input.headers : undefined));
     if (headers.has('PAYMENT-SIGNATURE')) options.onProgress?.({ phase: 'paying', purchase_id: purchase.id });
@@ -121,6 +122,7 @@ export async function buyObservation(signer, origin = 'http://127.0.0.1:4021', o
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  configureLocalDevnetRpc();
   const { values, positionals } = parseArgs({ allowPositionals: true, options: {
     provider: { type: 'string', default: DEFAULT_CONTACT.provider },
     sensor: { type: 'string', default: DEFAULT_CONTACT.sensor }, pins: { type: 'string' }, output: { type: 'string' },

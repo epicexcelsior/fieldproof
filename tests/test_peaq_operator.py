@@ -12,6 +12,22 @@ from test_peaq_job_event import recorded_job
 from test_peaq_job_identity import policy
 
 
+def test_devnet_rpc_config_keeps_key_private_and_rejects_url_injection(monkeypatch, tmp_path):
+    monkeypatch.setattr(operator, "ROOT", tmp_path)
+    monkeypatch.delenv("HELIUS_API_KEY", raising=False)
+    monkeypatch.delenv("FIELDPROOF_HELIUS_KEY_FILE", raising=False)
+    assert operator.solana_rpc_url() == operator.SOLANA_RPC
+    key = "test-key-not-a-real-key"
+    path = tmp_path / "key.secret"
+    path.write_text(key)
+    monkeypatch.setenv("FIELDPROOF_HELIUS_KEY_FILE", str(path))
+    assert operator.solana_rpc_url() == "https://devnet.helius-rpc.com/?api-key=" + key
+    monkeypatch.setenv("HELIUS_API_KEY", "invalid&PRIVATE")
+    with pytest.raises(ValueError, match="API key is invalid") as caught:
+        operator.solana_rpc_url()
+    assert "PRIVATE" not in str(caught.value)
+
+
 def _transaction(*, target="0x" + "11" * 20, data="0xdeadbeef", gas=100, price=2):
     return {"chainId": 9990, "from": policy()["owner"], "nonce": 1, "value": 0,
             "to": target, "data": data, "gas": gas, "gasPrice": price}

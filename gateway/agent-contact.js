@@ -7,7 +7,7 @@ import { DEFAULT_CONTACT, loadReceiptPins, receiptKey } from './contact.js';
 import { NETWORK, USDC, PAY_TO } from './constants.js';
 import { PurchaseStore } from './store.js';
 import { createLocalBuyer, DEFAULT_BUYER_MAXIMUM } from './local-buyer.js';
-import { querySettlement } from '../docs/settlement.mjs';
+import { queryDevnetSettlement, configureLocalDevnetRpc } from './devnet-rpc.js';
 import { saveBuyerRun } from './buyer-output.js';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
@@ -32,7 +32,7 @@ export function contactToolPreview(origin = 'http://127.0.0.1:4021') {
 }
 
 export async function runContactOperation({ signer, operation, origin = 'http://127.0.0.1:4021', directory,
-    readPurchaseState, buy = buyObservation, verifyPayment = querySettlement,
+    readPurchaseState, buy = buyObservation, verifyPayment = queryDevnetSettlement,
     now = () => Math.floor(Date.now() / 1000), report = () => {} }) {
   if (!operationPattern.test(operation ?? '')) throw new Error('Supply one UUID v4 operation ID. Reuse it to inspect the same purchase.');
   const terms = contactToolPreview(origin);
@@ -88,6 +88,7 @@ async function main() {
     throw new Error('Explicit execution requires --keypair and --operation UUID-v4. Review the test-token budget first.');
   }
   const execute = async () => {
+    configureLocalDevnetRpc();
     const signer = await loadBuyerSigner(values.keypair);
     const purchases = new PurchaseStore(resolve(root, '.local/purchases.sqlite'));
     try {
