@@ -2,10 +2,19 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
-import { canonicalJSON, inspectSource, loadTrustedPin, INSTALLED_PIN, paymentQueryInput, decisionAt } from '../../docs/jobs.mjs';
+import { canonicalJSON, inspectSource, loadTrustedPin, INSTALLED_PIN, paymentQueryInput, decisionAt, savedJobPath } from '../../docs/jobs.mjs';
 
 const original = JSON.parse(readFileSync(new URL('../../docs/evidence/device-signed-purchase.json', import.meta.url)));
 const atCapture = original.purchase.receipt.completed_at + 7;
+
+test('saved-job links select only one valid local job without a purchase request', () => {
+  assert.equal(savedJobPath('', 'example.com'), null);
+  assert.equal(savedJobPath('?job=9a55700292864641', '127.0.0.1'), '/jobs/9a55700292864641');
+  for (const query of ['?job=../../secrets', '?job=https://example.com', '?job=bad', '?job=9a55700292864641&job=d50e3d86b7c24704']) {
+    assert.throws(() => savedJobPath(query, '127.0.0.1'), /valid job ID/);
+  }
+  assert.throws(() => savedJobPath('?job=9a55700292864641', 'example.com'), /local buyer/);
+});
 
 test('historical paid evidence verifies the original P-256 signature and expires', async () => {
   const fresh = await inspectSource(original, { now: atCapture });

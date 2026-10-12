@@ -119,7 +119,10 @@ export function createLocalBuyer({ directory, payer, payTo, buy, maximum = DEFAU
   const publicStatus = record => ({ operation_id: record.operation_id, status: record.status,
     elapsed_ms: record.elapsed_ms ?? 0, events: record.events ?? [], purchase_id: record.purchase_id ?? null,
     ...(record.status === 'done' ? { run: publicBuyerRun(record.result) } : {}),
-    ...(record.status === 'review' ? { error: 'Purchase requires review. Preserve the purchase ID. No automatic paid retry.' } : {}) });
+    ...(record.status === 'review' ? { error: typeof record.purchase_id === 'string' && /^[0-9a-f]{16}$/.test(record.purchase_id) &&
+      readPurchaseState?.(record.purchase_id) === 'delivery_failed'
+      ? 'The gateway recorded a settled payment, but the device answer was not delivered. Refund review is required. No automatic retry.'
+      : 'Purchase requires review. Preserve the purchase ID. No automatic paid retry.' } : {}) });
   return {
     config: () => ({ payer, payTo, price_usdc: '0.001', maximum, maximum_payment_base_units: String(maximum * 1000),
       maximum_test_usdc: (maximum / 1000).toFixed(3), remaining: Math.max(0, maximum - files().length),

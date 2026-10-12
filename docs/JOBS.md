@@ -334,6 +334,12 @@ These checks do not query either chain. Imported readbacks remain recorded evide
 Open `jobs.html` in the export. Select **Load reviewed job from this export**.
 The inspector retains the original capture time. Expired evidence remains WAIT.
 No payment starts on page load, file import, transfer inspection, or packet export.
+On the running local buyer, open `http://127.0.0.1:4026/jobs?job=JOB_ID` to inspect one completed job.
+Replace `JOB_ID` with its saved sixteen-character ID. This link makes a read-only request to the local job store.
+The page retains the capture time and marks the result as recorded evidence. It starts no new measurement or payment.
+An unresolved buyer operation still blocks new purchases. It does not block inspection of other completed jobs.
+If payment settles but observation delivery fails, the buyer reports that stage and retains the refund-review block.
+Do not erase the failed operation or substitute another receipt. Inspect its original transfer before recovery.
 An in-flight transfer query cannot apply its result to another imported ticket.
 The browser refreshes the age decision every second. A verified transfer does not keep an expired answer usable.
 The browser resumes that timer after a page-cache return. It does not repeat the transfer query.

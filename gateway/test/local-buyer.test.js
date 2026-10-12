@@ -103,6 +103,23 @@ test('a payment failure preserves the purchase ID and blocks another payment, in
   restarted.close();
 });
 
+test('delivery failure explains the gateway state while retaining the payment-review block', async t => {
+  const { controller, directory } = fixture(t, async progress => {
+    progress({ phase: 'request', purchase_id: run.purchase_id });
+    throw new Error('private bridge failure /home/private-key.json');
+  }, 10, () => 'delivery_failed');
+  const id = randomUUID();
+  controller.start(id);
+  const result = await finish(controller, id);
+  assert.equal(result.status, 'review');
+  assert.match(result.error, /settled payment.*device answer was not delivered/);
+  assert.doesNotMatch(result.error, /private-key|private bridge/);
+  assert.equal(controller.start(randomUUID()).code, 409);
+  assert.equal(controller.config().remaining, 9);
+  assert.equal(JSON.parse(readFileSync(join(directory, id + '.json'))).status, 'review');
+  controller.close();
+});
+
 test('incomplete and corrupt records fail closed without calling the buyer', t => {
   const { directory, controller } = fixture(t, () => assert.fail('No purchase is allowed'));
   const id = randomUUID();

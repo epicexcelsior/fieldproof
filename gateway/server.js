@@ -234,8 +234,13 @@ export async function createGateway({ paymentServer, store, observe = observeHar
       store.finish(purchase.id, 'delivered', { settlement, result });
       return res.json(result);
     } catch (error) {
-      console.error('Observation delivery failed:', error.name);
-      store.finish(purchase.id, 'delivery_failed', { settlement, error: 'Payment settled. Evidence delivery failed. Refund review required.' });
+      // Keep a useful failure category without exposing bridge stderr, device input, or local paths.
+      const detail = String(error?.message ?? '');
+      const reason = /TimeoutError/.test(detail) ? 'Device operation timed out.'
+        : /(?:configured Bluetooth board|provisioned contact provider) is unavailable/.test(detail)
+          ? 'Configured device is unavailable.' : 'Device answer is unavailable or failed verification.';
+      console.error('Observation delivery failed:', { purchase_id: purchase.id, reason });
+      store.finish(purchase.id, 'delivery_failed', { settlement, error: `Payment settled. Evidence delivery failed. ${reason} Refund review required.` });
       return res.status(503).json({ error: 'Payment settled. Evidence delivery failed. Keep the purchase ID for refund review.', purchase_id: purchase.id });
     }
   });
