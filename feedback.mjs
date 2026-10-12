@@ -64,6 +64,8 @@ async function render() {
       text('result-copy', 'Only a local copy changed. The device still reported OPEN. The buyer rejects this copy.');
       text('buyer-title', 'Answer rejected');
       text('buyer-note', 'Changed copy · original preserved');
+      text('exchange-label', '← Rejected copy');
+      text('exchange-note', 'Signature mismatch');
     } else if (step === 4 && !result.fresh) {
       el('result').dataset.tone = 'warn';
       text('result-title', 'Too old. Ask for a new check.');
