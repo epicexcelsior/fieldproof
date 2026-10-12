@@ -1,9 +1,32 @@
 # FieldProof: current state and next actions
 
-Verified October 11, 2026. The founder is physically with the ESP32 and Seeker.
+Updated October 12, 2026. The founder has 12 hours available for the final submission work.
 Primary entry: peaq Germany. Secondary entries: Germany Colosseum track and Colosseum.
 
-**Open [the material hub](start.html) first.** Read [the plain-language story](competition/STORY.md), then use [the physical rehearsal](competition/REHEARSAL.md).
+**Read [the story and actual difference](competition/STORY.md) first.** Follow [one check visually](feedback.html), then use [the physical rehearsal](competition/REHEARSAL.md).
+
+## The final 12 hours
+
+The outcome is three submitted entries with working links and an understandable physical demonstration.
+The working target remains October 12 at 18:00 CEST. Finish within the founder's available window if that target slips.
+Do not depend on the October 13 morning cutoff for additional development.
+
+| Time from start | Founder action | Coordinator action | Acceptance |
+|---|---|---|---|
+| First 30 minutes | Send the visual replay to the Superteam lead. Open all three submission forms | Keep story, evidence, and public links current | Review request sent. Required fields and access known |
+| Hours 0–2 | Rehearse BOOT held/released. Record the working baseline | Run peaq activation if approved testnet funding arrives. Preserve the existing Solana path | One usable physical take exists. peaq states remain accurate |
+| Hours 2–5 | Record a 2–3 minute presentation and a separate product demo of at most 3 minutes | Assist recording, evidence selection, editing, captions, and link checks | Readable buyer, payment, device response, and verification footage |
+| Hours 5–7 | Review the two cuts and required account answers | Finish edits, current docs, source publication, and signed-out checks | Two accessible videos. No unsupported claim |
+| Hours 7–10 | Submit Colosseum, then both Earn entries. Verify Germany selection | Check fields and save supplied confirmation evidence | Three actual submitted confirmations |
+| Hours 10–12 | Resolve an upload or form failure | Fix only blocking defects | Reserve time protects the completed entries |
+
+Run the peaq funding work in parallel with recording. Do not let a faucet delay consume the video or submission window.
+If funding remains unavailable after two hours, preserve the pending labels and complete the prototype submission package.
+Revisit peaq only if funding or authoritative sponsor guidance arrives. Do not invent an identity, event, or customer.
+The official peaq listing accepts promising prototypes. Missing live peaq integration still weakens this entry.
+
+No new hardware, marketplace, camera provider, reputation score, or broad research enters the final window.
+The permitted improvements close a demonstrated gap in the paid-check sequence, peaq attribution, video, or submitted status.
 
 ## Submission assessment
 
@@ -20,7 +43,7 @@ Colosseum also judges business viability and traction. No validated customer or 
 | ESP32 | Real BLE request, pinned P-256 signature, five matching GPIO9 samples | Today's founder-held opposite-state footage |
 | Buyer | Request, key, contact profile, sample, and ten-second age checks | Real customer policy and production integration |
 | Recovery | Shared wallet operation cap, durable records, fail-closed uncertain payments | Production refund and delivery guarantees |
-| Public demo | Real recorded evidence, expiry, tamper rejection, RPC query, 58-second captioned feedback cut | External feedback and final narrated hardware videos |
+| Public demo | Guided visual replay, real device image, receipt verification, expiry, tamper rejection, working legacy bookmarks | External feedback and final narrated hardware videos |
 | peaq | Current Agung deployment reads, identity gate, explicit Storage activity route and controlled tests | Faucet funding, activation, gated paid job, independent activity readback |
 | Seeker | October 11 physical-phone Chrome signature, expiry, tamper, and finalized transfer verification | Founder footage. Photo app installation/capture and paid provider remain unverified |
 | Business | Explicit buyer hypothesis and falsifiable pilot | Recurring buyer problem, willingness to pay, pricing, acquisition, and margins |
@@ -30,6 +53,8 @@ The October 11 no-spend check found the deployed GPIO9 board OPEN with a valid s
 It found no buyer lock and no unresolved operation. The founder authorized a 100-operation cap. Eight operations leave **92** available, with no ledger reset.
 Recheck readiness before recording. This snapshot does not guarantee the next payment succeeds.
 The Seeker was asleep during the earlier audit. The later unlocked-phone check passed independent evidence and payment verification.
+The October 12 visual release passed 128 gateway tests, the export checks, and desktop/mobile browser checks.
+All 32 public assets matched the reviewed export. [Executed verification](VERIFICATION.md).
 
 ## Do these actions in order
 

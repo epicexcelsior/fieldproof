@@ -1,124 +1,113 @@
-# Explain FieldProof in plain language
+# FieldProof: the story and the actual difference
 
-Current story, October 11, 2026. This page owns the product explanation. [Start here](../start.html) owns the material index.
+Updated October 12, 2026. This page owns the explanation. [Follow one check visually](https://epicexcelsior.github.io/fieldproof/).
 
-## Say these two sentences
+## The promise you can stand behind
 
-**FieldProof lets software pay a device for a fresh physical check. The device signs its answer so the buyer can verify the source, request, and age.**
+**Software pays a device operator for a new physical check. The device signs its answer. The buyer verifies the source, request, and age.**
 
-For the demonstration: a laptop buys a new contact reading from an ESP32. You change the physical input and show the answer.
-The buyer accepts usable evidence, rejects changed evidence, and stops using an answer after ten seconds.
+The prototype does this with an ESP32 and an actual Solana Devnet payment.
+The device operator receives test tokens. A CLOSED answer fulfills the check just as an OPEN answer does.
+The buyer pays for an observation, not a favorable result.
 
-## What problem does this address?
+## Tell the story in your own words
 
-Software cannot read an unconnected physical condition. A database answer can also be too old for the decision.
-A fresh check can matter when someone currently makes a call, sends a person, or maintains a separate integration.
+Software needs a current physical answer before its next decision. That answer can sit at a site another operator controls.
+An existing API can supply it. When that integration is absent, someone still needs to obtain the answer.
 
-**Buyer hypothesis:** remote-operations software companies need repeated checks at sites that other operators manage.
-An authorized device can supply the check through a common request, payment, and evidence interface.
-The first product to test is paid remote inspection jobs. A customer and willingness to pay remain unvalidated.
+FieldProof tests a common way to commission the check. The buyer selects a device, fixes the price, and sets an age limit.
+Payment settles. The device takes a new measurement and signs its answer for that request.
+The buyer checks the answer before use.
 
-We have not established a specific costly workflow that FieldProof improves. The entrance in the public replay illustrates a decision.
-No entrance, warehouse, robot, or paying inspection customer connects to this prototype.
-Do not present that illustration as customer research.
+**The important lesson: a payment can remain final while the physical answer becomes too old to use.**
+A signature still passes after expiry. FieldProof applies the buyer's age policy to the original timestamp.
+It rejects an altered answer and refuses to refresh an old answer through a page reload.
 
-## Why can someone pay?
-
-The check must change a real decision or replace a documented cost. Bytes and signatures do not create that value.
-Ask an operator about the last physical check they paid someone to make. Record the workaround and cost before proposing FieldProof.
-
-The demonstration charges 0.001 **Devnet test USDC**. This verifies payment behavior, not a commercial price.
-At that price, one million checks total 1,000 token units before costs. A marketplace needs viable provider margins and actual demand.
-Paid integration and support are an early revenue hypothesis. Per-check pricing requires a useful workflow and buyer validation.
-
-## What happens in the working system?
-
-1. The buyer selects a device, trusted public key, question, price, and ten-second age limit.
-2. The gateway returns a machine-readable x402 payment quote.
-3. Solana Devnet settles 0.001 test USDC to the operator wallet.
-4. The ESP32 samples its input and signs the request and answer.
-5. The buyer verifies the signature, request, sample agreement, and age.
-6. The demo policy produces DISPATCH for fresh OPEN, or WAIT for CLOSED, expired, or rejected evidence.
-
-DISPATCH and WAIT are software recommendations. They control no equipment.
-An honest CLOSED answer still fulfills the purchased check. Payment buys an observation, not a preferred result.
-Payment precedes measurement. No escrow, automatic refund, or payment-after-acceptance guarantee exists.
-
-## Why is this more than a dashboard?
-
-The buyer creates a new job. An actual transfer settles. The physical device measures after that payment and signs its answer.
-The browser exposes that transaction and verifies evidence. The useful mechanism is the paid request and device response.
-Showing only a historical result hides this mechanism. Film a new check beside the physical input.
-
-## How is this different from existing products?
-
-| Alternative | When it is enough | FieldProof's distinction or gap |
+| What the buyer has | Just after the check | Later |
 |---|---|---|
-| Existing telemetry API | A trusted operator already supplies a current answer | Use that API. A lower integration burden across independent operators remains unproven |
-| Sensor dashboard | The owner wants continuous monitoring | FieldProof commissions one new measurement with a buyer-specific request and age limit |
-| Ordinary signed API | Buyer and provider already agree on payment and keys | Request binding and signatures alone are not unique. The common commerce interface is the hypothesis |
-| Remote inspection service | A buyer needs reviewed photos, installation checks, or stronger capture assurance | This prototype supplies a signed contact claim. It does not replace a complete inspection product |
-| Generic agent payments | Software needs a payment method | FieldProof couples payment with a requested physical measurement and explicit acceptance checks |
+| Payment | Settled | Still settled |
+| Signed answer | Authentic and within the age limit | Authentic but outside the age limit |
+| Permission to use the answer | Passes the configured buyer checks | Requires a new check |
 
-Verified remote inspections already form a product category. Truepic is a serious existing alternative.
-That category does not establish demand for FieldProof contact readings.
-[Truepic equipment inspections](https://www.truepic.com/vision/equipment-leasing-financing).
+This creates a paid service from a connected device's sensing capability.
+The larger hypothesis is that software can commission useful checks from independent operators through one interface.
+The current prototype does not establish an open marketplace or independent customer demand.
 
-## Why Solana? Why peaq?
+## Who pays, and what value do they buy?
 
-**Solana works now:** x402 settles the actual Devnet token transfer. No custom Solana program exists.
+**First buyer hypothesis:** remote-inspection software companies that need repeated checks at sites another operator controls.
+**Value to test:** replace a manual check or avoid an unnecessary visit when existing telemetry cannot supply a reliable current answer.
 
-**peaq role under implementation:** the buyer resolves a registered provider identity and signing key before purchase.
-A linked activity record attributes the completed paid check to that provider.
-This can let an operator carry its identity and work history across applications.
+The customer buys a useful answer for a decision. The customer does not buy blockchain signatures for their own sake.
+A contact reading is the smallest demonstration. It does not replace a complete equipment inspection or prove repair completion.
 
-No live FieldProof peaq identity or activity record exists. The adapters and recovery paths pass controlled software tests.
-Agung readiness reads do not establish activation. The current paid route reports `peaq: not_used`.
-The published Agung EventRegistry binds a legacy identity registry. The prepared path uses official native Storage for a linked job hash.
-The buyer checks registered authority before purchase. Storage retains separate request-time and submission-time authority checks.
-This record is operator-controlled. It is not a peaqOS event or a credit rating.
-Testnet funding, activation, a new identity-gated purchase, and independent activity readback remain open.
-[Integration facts and gates](../PEAQ_INTEGRATION.md).
+No recurring buyer problem, customer, or willingness to pay is validated.
+The next commercial step is one authorized operator, one repeated question, and a comparison with its current method.
+[Buyer and pilot questions](PILOT.md).
 
-The peaq bounty permits early prototypes. It also penalizes superficial integrations.
-Live registered-key readback and a receipt-linked event remain the strongest sponsor-specific improvement.
-[Official peaq criteria](https://superteam.fun/earn/listing/build-solutions-advancing-the-machine-economy-with-peaq).
+## What is differentiated today?
 
-## What does the signature prove?
+**The product focus is a commissioned physical check with one linked request, payment, device response, and acceptance policy.**
+This is a working combination. It is not a new signature algorithm or a proven competitive moat.
 
-The signature binds the provisioned key to its original request and reported measurement.
-It does not prove truthful sensing, installation, calibration, independence, contents, safe passage, or completed work.
-The ESP32 key resides in ordinary unencrypted storage. The prototype clock and request authorization also need production hardening.
-A machine identity or paid-job count does not remove these trust limits.
+| Alternative | FieldProof's focus and limit |
+|---|---|
+| Sensor dashboard | A buyer requests a new measurement for its own question and age limit. Continuous monitoring remains a different workflow |
+| Generic payment API | The paid response comes from a real device measurement. Payment alone does not establish delivery or useful freshness |
+| Signed sensor API | Request signing and freshness checks are not exclusive to FieldProof. FieldProof also connects the purchase and buyer acceptance |
+| Existing trusted facility API | That API can be enough. Lower integration effort across independent operators remains unproven |
 
-## Is this worthy of submission?
+[x402 already enables payment for API access](https://docs.cdp.coinbase.com/x402/welcome).
+FieldProof's contribution is its physical observation workflow, device-signed response, and buyer checks.
+Do not claim that ordinary APIs cannot implement these features.
 
-**Yes as a technical prototype. No as an already validated business.**
-The real payment, fresh signed hardware answer, independent verifier, and explicit failure behavior form a credible submission.
-The peaq prototype criteria fit this mechanism. The missing live peaq integration weakens the sponsor entry.
-Colosseum also judges business viability, user insight, and traction. Those remain material gaps.
-No honest assessment can guarantee a win.
+## Why Solana, and why peaq?
 
-## What makes the next demonstration stronger?
+**Solana works now:** x402 settles the actual Devnet transfer before the ESP32 measurement. The chip signs evidence, not a Solana transaction.
+The configured operator wallet receives payment. No custom Solana program exists.
 
-Show your hand changing the real input. Keep the device and screen in one continuous shot.
-Show a new paid check, its original answer, the actual transfer, and the phone's independent verification.
-Then show expiry and one changed-answer rejection. Preserve the original receipt and capture time.
-Use a tested door-contact fixture only after the BOOT baseline recording succeeds.
-[Physical rehearsal](REHEARSAL.md) · [Hardware checklist](../HARDWARE_NEXT.md).
+**peaq role under implementation:** before purchase, the buyer checks a registered machine identity and its device key.
+After delivery, a linked work record attributes the paid check to that provider.
+This can make identity and work history inspectable across applications.
 
-## What future is worth testing?
+No FieldProof identity or work record exists on peaq yet. Live activation, a new identity-gated purchase, and readback await completion.
+The prepared path uses official native Storage because the published Agung EventRegistry binds a different identity registry.
+Storage is operator-controlled. It does not supply a peaqOS activity event or a Machine Credit Rating.
+[Exact integration evidence and status](../PEAQ_INTEGRATION.md).
 
-Independent device operators can offer useful inspection jobs to software buyers through one interface.
-Repeated paid jobs can reveal which capabilities deserve deployment. That is a future hypothesis, not current traction.
-First prove one recurring buyer need. Then test a second operator and compare integration effort.
-Expand the network only after those tests justify it.
+## What can become a business advantage?
 
-## Ask for feedback tonight
+Repeatable integrations, authorized providers, reliable capture, and a buyer workflow with measurable value can create an advantage.
+Those assets remain hypotheses. Adding more device types does not establish demand.
 
-“Can you explain what the buyer paid for after one minute? What important claim does the evidence fail to prove?”
+The first revenue hypothesis is paid integration and support for one useful inspection workflow.
+Per-check fees require real pricing and provider margins.
+At the prototype price, one million checks total 1,000 test USDC before costs. That is arithmetic, not a business forecast.
 
-For an operator: “What was the last physical check you paid someone to make, and why did an existing API fail?”
+## What the demonstration proves
 
-Record actual answers with the [tester guide](TESTER_GUIDE.md). Feedback is not customer traction.
-The [pilot questions](PILOT.md) define the next commercial test.
+- A real test-token transfer precedes a requested physical measurement.
+- The ESP32 signs the original request and contact answer.
+- The buyer verifies the configured key, request, samples, signature, and age.
+- The Seeker independently verifies recorded evidence and the original transfer.
+- Expired and changed answers fail the relevant buyer checks.
+
+The BOOT button represents a contact. No door or customer operation connects to the prototype.
+A signature authenticates the device's claim. It does not prove physical truth, calibration, safe passage, or completed work.
+The buyer is bounded software callable by an AI agent. Autonomous AI reasoning is not demonstrated.
+Payment precedes measurement. No escrow or automatic refund exists.
+
+## Sell the competition entry honestly
+
+The peaq entry demonstrates a device providing a paid physical service. Live registered identity and linked work remain the main sponsor gap.
+The [peaq criteria](https://superteam.fun/earn/listing/build-solutions-advancing-the-machine-economy-with-peaq) welcome promising prototypes and emphasize a working economic mechanism.
+
+Colosseum also evaluates insight, execution, communication, business viability, and traction.
+The engineering supports execution. The customer and business evidence remain weaker.
+[Official judging FAQ](https://colosseum.com/hackathon#h-faq-12).
+
+You can believe in the demonstrated mechanism while testing the business hypothesis.
+For this entry, explain the actual transaction, show the physical input, and name the next falsifiable customer test.
+Do not claim a universal sensor marketplace, guaranteed honest sensing, customer revenue, or a guaranteed win.
+
+[Video and speaking sequence](VIDEO_SCRIPTS.md) · [Physical recording procedure](REHEARSAL.md) · [Final priorities](../FOCUS.md).

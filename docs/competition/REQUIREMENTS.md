@@ -1,6 +1,6 @@
 # Current competition requirements
 
-Checked October 11, 2026 against official pages and rules. This page owns current requirements.
+Rechecked October 12, 2026 against official pages, listing data, rules, and the canonical Colosseum FAQ. This page owns current requirements.
 Earlier MVP and Radar listings do not govern these entries.
 
 ## One deadline for all three entries

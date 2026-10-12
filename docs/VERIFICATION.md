@@ -4,6 +4,20 @@ Current continuation: October 11, 2026, Europe/Berlin. Public paid evidence incl
 The historical local MVP completes a public Devnet purchase, a real ESP32 observation, and both human-controlled contact states.
 This record does not claim production security, safety certification, or standards compliance.
 
+## October 12 story and final priorities
+
+The canonical [story](competition/STORY.md) now separates demonstrated functionality, product focus, business hypotheses, and unproven defensibility.
+It names the buyer hypothesis and explains why a final payment does not keep a physical answer useful forever.
+The [recording sequence](competition/VIDEO_SCRIPTS.md) and [final priorities](FOCUS.md) use that same argument.
+The public visual page links the full story directly. The older founder video remains behind the evidence disclosure.
+
+The official listing data and Colosseum rules again agree on October 13, 08:59 CEST.
+The authenticated canonical Colosseum FAQ confirms the deadline and startup judging criteria.
+No Copilot account field or submission changed. Private account checks remain local.
+At October 12, 11:47 CEST, both latest and finalized Agung operator balances remain zero. No signer ran.
+The export checks passed eight tests, with one optional SDK skip. Syntax and whitespace checks passed.
+The guided replay behavior and payment/security code remain unchanged in this documentation revision.
+
 ## October 12 guided visual review
 
 The public home page now presents one guided visual replay. It shows the buyer, actual device, operator payment, and signed answer.

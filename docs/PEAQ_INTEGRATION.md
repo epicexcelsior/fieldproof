@@ -26,6 +26,8 @@ The existing operator still needs faucet funding. The API request returned HTTP 
 The official browser form then reported its 24-hour limit. Latest and finalized balances still read zero.
 The founder requested manual testnet funding from peaq support. Funding remains unconfirmed.
 The signer remains unused. Activation and finalized identity readback remain pending.
+An October 12 read at 11:47 CEST again found both latest and finalized operator balances at zero.
+No private key or signing operation followed that read.
 
 peaq native storage supplies a separate activity-anchor path through precompile `0x0000000000000000000000000000000000000801`.
 That implemented path records a paid job hash under the current operator and verifies finalized storage and transaction data.
