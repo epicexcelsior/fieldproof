@@ -222,7 +222,7 @@ if (typeof document !== 'undefined' && document.body?.dataset.fieldproofPage ===
     mark('terms-check', terms ? 'MATCH' : 'REJECTED', terms ? 'ok' : 'bad');
     mark('age-check', fresh ? `FRESH · ${Math.max(0,ageSeconds)}s` : 'EXPIRED / UNAVAILABLE', fresh ? 'ok' : 'warn');
     mark('payment-check', 'NOT QUERIED', 'pending');
-    mark('peaq-check', 'NOT LIVE VERIFIED', 'pending');
+    mark('peaq-check', job ? `RECORDED · BLOCK ${job.identity?.finalized_block ?? 'unavailable'}` : 'NO PEAQ IN THIS RUN', 'pending');
     text('decision', inspection.decision);
     el('decision').className = 'result ' + (inspection.decision === 'DISPATCH' ? 'ok' : 'warn');
     text('decision-note', !signature ? 'The original receipt signature failed against the installed public pin.' :
@@ -230,7 +230,7 @@ if (typeof document !== 'undefined' && document.body?.dataset.fieldproofPage ===
         !fresh ? 'The signed answer is too old for the ten-second buyer policy.' :
           'Signature and terms match. Verify the Devnet transfer separately before relying on this paid run.');
     text('ticket-note', source.kind === 'historical' ? 'Historical paid run. No peaq identity or activity is claimed.' :
-      'The peaq fields are recorded data. This page has not queried the registry.');
+      'The buyer recorded this registry check before payment. This inspector does not query current peaq state.');
     el('tamper').disabled = false; el('restore').disabled = true;
     status(signature && terms ? (fresh ? 'Receipt checks passed. Payment and current peaq state need separate verification.' :
       'Original receipt checks passed. This saved contact answer is expired.') : 'Evidence check failed. Inspect the original and request terms.',
