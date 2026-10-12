@@ -20,6 +20,10 @@ The guided replay behavior and payment/security code remain unchanged in this do
 The later visual-copy check exposed a stale "Verified signature" arrow label after the changed-answer test.
 The actual signature check already rejected that copy. The arrow now states "Signature mismatch" and "Rejected copy".
 A focused test reproduced the misleading label before the change. The correction changes presentation only.
+The full gateway suite passed 128 tests after that correction. The published browser check passed the updated rejection label.
+GitHub Pages completed at `6735a8c`. All 32 public assets and four canonical source documents matched the reviewed files.
+The local buyer readiness check found eight used operations, 92 available, no active lock, and no unresolved operation.
+That readiness check verified no current wallet funds and created no payment, device request, or network request.
 
 ## October 12 guided visual review
 
