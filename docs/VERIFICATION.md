@@ -27,6 +27,11 @@ The work record uses native peaq Storage. It does not claim an EventRegistry eve
 The full gateway suite passed 130 tests. The isolated SDK identity/event/Storage/operator/export subset passed 72 tests.
 The guided page now verifies this new job and rejects altered copies. Earlier receipts retain their original bytes.
 The reviewer can inspect the recorded job without a wallet. A live hardware purchase still requires the local gateway and authorized buyer.
+The deployed Chrome guide passed desktop/mobile layout, keyboard, expiry, tamper, restore, failure-input, and legacy-bookmark checks.
+GitHub Pages built at `97b29b4`. All 33 public assets and four canonical source files matched the reviewed bytes.
+The deployed job workbench independently verified the original Devnet transfer at slot `510265773`.
+The physical Seeker repeated signature, altered-copy rejection, restoration, and transfer verification for this new job.
+Its unchanged expired answer remained WAIT. These reviewer checks made no new payment or measurement.
 
 ## October 12 story and final priorities
 
