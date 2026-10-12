@@ -20,6 +20,7 @@ ASSETS = {
     "competition/fieldproof-pitch.pptx": "docs/competition/fieldproof-pitch.pptx",
     "competition/assets/fieldproof-project.png": "docs/competition/assets/fieldproof-project.png",
     "competition/assets/fieldproof-logo.png": "docs/competition/assets/fieldproof-logo.png",
+    **{f"competition/assets/pitch-slide-{n}.png": f"docs/competition/assets/pitch-slide-{n}.png" for n in range(1, 6)},
     "review.html": "docs/review.html",
     "review.mjs": "docs/review.mjs",
     "guide.html": "docs/HOW_IT_WORKS.html",
@@ -141,8 +142,9 @@ def export(output, *, job_manifest=None, provider_policy=None, require_peaq=Fals
             "3. Verify the original receipt, then alter its state, challenge, or public key.\n"
             "4. Select Verify recorded payment for a read-only Solana Devnet RPC query.\n"
             "5. Inspect the separately signed BOOT held/released input pair. Those checks moved no funds.\n"
-            "6. Watch assets/fieldproof-peaq-check-feedback.webm for the 56-second peaq-linked review cut.\n"
-            "   The longer technical walkthrough is assets/fieldproof-signed-receipt.webm.\n\n"
+            "6. Watch the final product demo: https://youtu.be/eDuEJVad3oY (1:37).\n"
+            "   Watch the founder pitch: https://www.youtube.com/watch?v=LToCUlqJuao (1:38).\n"
+            "   Earlier captioned recordings remain under assets/ for reference.\n\n"
             "Open jobs.html for the job workbench. Import a reviewed saved job or evidence manifest.\n"
             "Imported peaq snapshots remain recorded evidence, not a live registry query.\n\n"
             "For the October 5 real purchase, open Inspect a new paid buyer run.\n"

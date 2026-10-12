@@ -5,39 +5,16 @@
 <title>FieldProof · simple pitch</title>
 <style>
 :root{font-family:Arial,"Liberation Sans",sans-serif;color:#111;background:#eee}*{box-sizing:border-box}body{margin:0}.tools{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:15px 24px;background:white;border-bottom:1px solid #ccc;font-size:15px}.tools button{font:inherit;padding:8px 13px;border:1px solid #777;background:white;cursor:pointer}.tools a{color:#111}a:focus-visible,button:focus-visible{outline:3px solid #176a62;outline-offset:3px}.deck{max-width:1280px;margin:auto}.slide{height:720px;width:1280px;max-width:100%;background:white;padding:62px 72px;position:relative;margin:24px 0;overflow:hidden}.slide h1{font-size:52px;line-height:1.12;letter-spacing:-1.4px;margin:0 0 44px}.slide h2{font-size:30px;line-height:1.2;margin:0 0 13px}.slide p{font-size:25px;line-height:1.4;margin:0 0 18px}.slide .minor{font-size:18px;color:#555}.cover{display:flex;flex-direction:column;justify-content:center;gap:24px}.cover .project{font-size:30px;margin:0;letter-spacing:1px}.cover h1{font-size:76px;line-height:1.03;letter-spacing:-2px;max-width:1080px;margin:0}.exchange{display:grid;grid-template-columns:1fr 210px 1fr;gap:35px;align-items:center;margin-top:90px}.exchange h2{font-size:38px}.exchange .middle{text-align:center}.exchange .middle p{font-size:20px}.exchange .arrow{font-size:48px;line-height:1}.return{margin-top:70px!important;font-size:30px!important}.prototype{display:grid;grid-template-columns:410px 1fr;gap:56px;align-items:start}.prototype img{display:block;width:410px;height:235px;object-fit:contain}.prototype .minor{margin-top:12px}.prototype p{margin-bottom:24px}.chain-roles{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:35px}.chain-roles p{font-size:23px}.expiry{display:grid;grid-template-columns:1fr 1fr;gap:70px;margin-top:95px}.expiry h2{font-size:42px}.expiry p{font-size:28px}.closing p{font-size:29px;max-width:1010px}.closing .lead{font-size:42px;font-weight:bold;margin-bottom:42px}.closing .minor{font-size:20px;margin-top:48px}.closing .logo{position:absolute;right:64px;top:35px;width:100px;height:100px;object-fit:contain}.closing h1{max-width:990px}.bottom{position:absolute;bottom:56px;left:72px;right:72px;font-size:19px!important;color:#555}.present .tools{display:none}.present{background:white;overflow:hidden}.present .deck{max-width:none}.present .slide{display:none;position:fixed;top:50%;left:50%;margin:0;max-width:none;transform:translate(-50%,-50%) scale(var(--deck-scale,1));transform-origin:center}.present .slide.active{display:block}.present .slide.cover.active{display:flex}@media(max-width:800px){body:not(.present) .slide{height:auto;min-height:570px;padding:34px 26px}body:not(.present) .slide h1{font-size:35px}body:not(.present) .cover h1{font-size:43px}body:not(.present) .cover .project{font-size:23px}body:not(.present) .exchange{grid-template-columns:1fr;margin-top:20px;gap:10px}body:not(.present) .exchange .middle{text-align:left}body:not(.present) .exchange .arrow{font-size:30px}body:not(.present) .return{margin-top:20px!important;font-size:24px!important}body:not(.present) .prototype,body:not(.present) .expiry,body:not(.present) .chain-roles{grid-template-columns:1fr;gap:24px;margin-top:28px}body:not(.present) .prototype img{max-width:100%;height:auto}body:not(.present) .bottom{position:static;margin-top:32px;font-size:17px!important}body:not(.present) .closing .lead{font-size:31px}body:not(.present) .closing p{font-size:23px}body:not(.present) .closing .logo{width:65px;height:65px;position:static}}@media print{.tools{display:none}body{background:white}.deck{max-width:none}.slide{margin:0;height:720px;width:1280px;max-width:none;break-after:page}@page{size:13.333in 7.5in;margin:0}}
+.slide{padding:0;height:auto;aspect-ratio:16/9}.deck-image{display:block;width:100%;height:100%;object-fit:contain}.present .slide{width:1280px;height:720px}@media(max-width:800px){body:not(.present) .slide{padding:0;min-height:0;height:auto}}
 </style></head>
 <body>
 <nav class="tools" aria-label="Deck controls"><button id="present" type="button">Present</button><span>Arrow keys change slides. Escape returns here.</span><a href="fieldproof-pitch.pdf">PDF</a><a href="fieldproof-pitch.pptx">Editable PowerPoint</a></nav>
 <main class="deck">
-<section class="slide cover" aria-label="Slide 1: FieldProof">
-<p class="project">FIELDPROOF</p><h1>BUY FRESH READINGS<br>FROM SENSORS</h1>
-</section>
-<section class="slide" aria-label="Slide 2: The transaction">
-<h1>One request, one new reading</h1>
-<div class="exchange"><div><h2>Software buyer</h2><p>Question and budget</p></div><div class="middle"><p>Request and payment</p><p class="arrow" aria-label="to the operator">→</p></div><div><h2>Device operator</h2><p>New measurement</p></div></div>
-<p class="return">A signed answer returns to the buyer.</p>
-<p class="minor bottom">One paid check connects a software buyer and a device operator.</p>
-</section>
-<section class="slide" aria-label="Slide 3: Working prototype">
-<h1>A working three-device prototype</h1>
-<div class="prototype"><div><img src="../assets/fieldproof-real-device.webp" alt="The actual ESP32 prototype connected by USB"><p class="minor">ESP32 contact input. BOOT represents the contact.</p></div><div><h2>ESP32</h2><p>Measures and signs</p><h2>Laptop</h2><p>Buys a new reading</p><h2>Seeker</h2><p>Independently verifies the receipt</p></div></div>
-<div class="chain-roles"><div><h2>Solana Devnet</h2><p>0.001 test USDC to the operator</p></div><div><h2>peaq Agung</h2><p>Registered device key and linked work record</p></div></div>
-</section>
-<section class="slide" aria-label="Slide 4: Freshness">
-<h1>Payment stays final. Answers expire.</h1>
-<div class="expiry"><div><h2>Payment</h2><p>The operator keeps the test payment.</p></div><div><h2>Physical answer</h2><p>The buyer needs a new check after ten seconds.</p></div></div>
-<p class="return">An edited answer fails signature verification.</p>
-<p class="minor bottom">A signature identifies a claim's source. Physical truth needs separate controls.</p>
-</section>
-<section class="slide closing" aria-label="Slide 5: Next customer test">
-<img class="logo" src="assets/fieldproof-logo.png" alt="FieldProof logo">
-<h1>One useful check. Then a network.</h1>
-<p class="lead">Next: one recurring paid check</p>
-<p>First buyers to recruit: software teams that pay for remote checks.</p>
-<p>Pilot plan: one operator, one buyer, measured cost and reliability.</p>
-<p>Revenue plan: integration and service fees.</p>
-<p class="minor">Today: one provider. The paid pilot will test demand and pricing.</p>
-</section>
+<section class="slide" aria-label="Slide 1"><img class="deck-image" src="assets/pitch-slide-1.png" alt="FieldProof. Buy fresh readings from sensors."></section>
+<section class="slide" aria-label="Slide 2"><img class="deck-image" src="assets/pitch-slide-2.png" alt="When software needs a physical answer. Request, pay, measure, verify. The operator receives payment. The buyer receives a signed reading."></section>
+<section class="slide" aria-label="Slide 3"><img class="deck-image" src="assets/pitch-slide-3.png" alt="Working prototype. ESP32 BOOT contact input, peaq Agung identity, Solana Devnet x402 payment of 0.001 test USDC, peaq work record, and Seeker receipt verification."></section>
+<section class="slide" aria-label="Slide 4"><img class="deck-image" src="assets/pitch-slide-4.png" alt="Payment stays final. The reading expires after ten seconds. Editing the signed answer fails verification."></section>
+<section class="slide" aria-label="Slide 5"><img class="deck-image" src="assets/pitch-slide-5.png" alt="One useful check. Then a network. Test software teams managing remote equipment. Find one repeated costly check and run a pilot."></section>
 </main>
 <script>
 const slides=[...document.querySelectorAll('.slide')];let current=0;function fit(){document.documentElement.style.setProperty('--deck-scale',Math.min(innerWidth/1280,innerHeight/720));}function show(){for(const [i,s]of slides.entries())s.classList.toggle('active',i===current);}function present(){document.body.classList.add('present');fit();show();}document.querySelector('#present').onclick=present;addEventListener('resize',fit);addEventListener('keydown',e=>{if(!document.body.classList.contains('present'))return;if(e.key==='Escape'){document.body.classList.remove('present');return;}if(['ArrowRight','ArrowDown',' '].includes(e.key)){e.preventDefault();current=Math.min(slides.length-1,current+1);show();}if(['ArrowLeft','ArrowUp'].includes(e.key)){e.preventDefault();current=Math.max(0,current-1);show();}});if(new URLSearchParams(location.search).get('present')==='1')present();

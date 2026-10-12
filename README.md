@@ -2,7 +2,7 @@
 
 **Pay a device for a fresh physical check. Verify its signed answer before using it.**
 
-[Follow one paid check visually](https://epicexcelsior.github.io/fieldproof/) · [Founder materials](https://epicexcelsior.github.io/fieldproof/start.html) · [Inspect the linked paid job](https://epicexcelsior.github.io/fieldproof/jobs.html)
+[Product demo · 1:37](https://youtu.be/eDuEJVad3oY) · [Founder pitch · 1:38](https://www.youtube.com/watch?v=LToCUlqJuao) · [Try the recorded check](https://epicexcelsior.github.io/fieldproof/) · [Inspect the linked paid job](https://epicexcelsior.github.io/fieldproof/jobs.html)
 
 Allow two minutes. Select **Show the request**, then follow Ask, Pay, Check, and Verify.
 Try **Use this old answer now** and **Change the answer**. Open the linked job to verify the transfer.

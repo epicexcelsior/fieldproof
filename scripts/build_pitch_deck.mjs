@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// The HTML deck owns slide copy. This exports editable PowerPoint text.
+// Legacy HTML-to-PowerPoint exporter. The supplied PowerPoint now owns the deck.
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { createRequire } from 'node:module';
@@ -7,6 +7,9 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+if ((await fs.readFile(path.join(root, 'docs/competition/slides.html'), 'utf8')).includes('class="deck-image"')) {
+  throw new Error('The supplied docs/competition/fieldproof-pitch.pptx is canonical. Render it to refresh the PDF and slide images. This legacy exporter cannot rebuild the supplied deck.');
+}
 const outputDirectory = process.argv[2] && path.resolve(process.argv[2]);
 const runtimeModules = process.env.RUNTIME_NODE_MODULES;
 const skillDirectory = process.env.PRESENTATIONS_SKILL_DIR;

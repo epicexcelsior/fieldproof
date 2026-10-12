@@ -1,8 +1,34 @@
 # FieldProof verification record
 
-Current continuation: October 12, 2026, Europe/Berlin. Public paid evidence includes October 1, October 5, and October 11.
+Current verification: October 13, 2026, Europe/Berlin. Public paid evidence includes October 1, October 5, and October 11.
 The historical local MVP completes a public Devnet purchase, a real ESP32 observation, and both human-controlled contact states.
 This record does not claim production security, safety certification, or standards compliance.
+
+## October 13 submission release checks
+
+The declared gateway suite passed **147 tests**. The core Python suite passed **249 tests with 40 skips**.
+The isolated peaq SDK integration and export subset passed **79 tests with no skips**.
+These suites overlap. Their counts must not be added together.
+The core skips cover hardware and optional SDK dependencies. This final audit ran no new hardware capture or payment.
+
+A new read-only Agung inspection passed at finalized block `11142157`.
+It matched the original public job hash, successful Storage transaction, and both historical machine-authority checks.
+The original public evidence remains unchanged. Native Storage remains owner-controlled.
+
+Anonymous YouTube metadata confirms the [product demo](https://youtu.be/eDuEJVad3oY) at 97 seconds
+and the [founder pitch](https://www.youtube.com/watch?v=LToCUlqJuao) at 98 seconds.
+Both videos are unlisted. Automated video downloads returned HTTP 403, so they do not establish playback or audio review.
+
+The public guide passed Chrome checks at 1280, 390, and 320 pixels.
+Checks covered keyboard navigation, original signature, expiry, changed-copy rejection, restoration, and legacy links.
+The check made only read requests and started no measurement or payment.
+The production npm audit reports no known vulnerabilities. A selected-pattern scan found no credentials in tracked text files.
+These checks are not a security audit or a guarantee about competition judging.
+
+The local job page now reads the operator's finalized work-record status without resetting payment verification or receipt age.
+Regression tests cover unchanged job binding, readback hash and authority, and switching tickets during a pending query.
+The static export includes all five slide images. The deck states registered identity and signing key instead of claiming reputation.
+Final submission confirmations remain founder tasks.
 
 ## October 12 real peaq activation and paid work
 
@@ -1468,7 +1494,7 @@ Node's built-in SQLite emits an experimental-feature warning.
 
 Historical receipts use the public demo HMAC key. Current physical receipts use the provisioned P-256 identity with unencrypted device storage.
 Host-anchored time, reboot-cleared replay state, and the single observer remain prototype limits.
-No external gate sensor, protected identity, calibrated confidence, vehicle controller, customer pilot, peaq activation, or hosted live hardware gateway exists. The recorded static inspector is public.
+No external gate sensor, protected identity, calibrated confidence, vehicle controller, customer pilot, or hosted live hardware gateway exists. The recorded static inspector is public.
 The [product review](STRATEGY.md#product-risks-and-decisions) identifies the decisions that require further evidence.
 
 Git, sockets, USB, and BLE access are restored. No current access restriction blocks the completed local integration.

@@ -1,6 +1,6 @@
 # Current competition requirements
 
-Rechecked October 12, 2026 against official pages, listing data, rules, and the canonical Colosseum FAQ. This page owns current requirements.
+Rechecked October 13, 2026 against official pages, listing data, rules, and the canonical Colosseum FAQ. This page owns current requirements.
 Earlier MVP and Radar listings do not govern these entries.
 
 ## One deadline for all three entries
@@ -8,7 +8,7 @@ Earlier MVP and Radar listings do not govern these entries.
 **Tuesday, October 13, 2026, 08:59 CEST / 06:59 UTC.**
 The Colosseum rules express this as Monday, October 12, 23:59 Pacific Time.
 Both Earn listings publish 2026-10-13T06:59:00.000Z as their deadline in the page's public listing data.
-The internal target is Monday, October 12, 18:00 CEST.
+Complete the final Colosseum submission and both separate Earn entries before this cutoff.
 [Colosseum rules, section 5](https://colosseum.com/legal/Crypto%20World%27s%20Fair%20Hackathon%20Rules.pdf),
 [peaq listing](https://superteam.fun/earn/listing/build-solutions-advancing-the-machine-economy-with-peaq),
 [Germany listing](https://superteam.fun/earn/listing/colosseum-crypto-worlds-fair-hackathon-superteam-germany-track/).
@@ -17,9 +17,9 @@ The internal target is Monday, October 12, 18:00 CEST.
 
 | Entry | Requirements and judging focus | FieldProof gap |
 |---|---|---|
-| peaq Germany | Germany eligibility. English working demo or compelling prototype. Innovation, technical quality, Machine Economy impact, clarity | Real Agung identity and Storage work record verified. Narrated physical demo and submission remain |
+| peaq Germany | Germany eligibility. English working demo or compelling prototype. Innovation, technical quality, Machine Economy impact, clarity | Real Agung identity and Storage work record verified. Final demo uploaded. Submission remains |
 | Germany Colosseum track | Solana project. Both Colosseum and Earn submissions. Select GERMANY when eligible. Defined user, early evidence, ecosystem impact, growth | No validated customer, commercial revenue, or submitted confirmations |
-| Colosseum World's Fair | Register each member. One team and project per entrant. English. Functionality, impact, novelty, UX, open source, business viability | Final founder videos, business-field evidence, prior-development disclosure, submission |
+| Colosseum World's Fair | Register each member. One team and project per entrant. English. Functionality, impact, novelty, UX, open source, business viability | Videos uploaded. Review business fields, disclose prior development, and complete final submission |
 
 Sources: [peaq criteria](https://superteam.fun/earn/listing/build-solutions-advancing-the-machine-economy-with-peaq),
 [Germany criteria](https://superteam.fun/earn/listing/colosseum-crypto-worlds-fair-hackathon-superteam-germany-track/),

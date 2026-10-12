@@ -174,12 +174,75 @@ export function decisionAt(inspection, paymentVerified, now = Math.floor(Date.no
     decision: paymentVerified && inspection.signature && inspection.terms && fresh && r.result.closed === false ? 'DISPATCH' : 'WAIT' };
 }
 
+// Validate a recorded operator readback. This function makes no chain query.
+export async function matchingStorageRecord(job, event) {
+  const c = event?.confirmation;
+  if (event?.state !== 'confirmed' || c?.verified !== true || c.chain_id !== 9990 ||
+      c.schema !== 'fieldproof-peaq-storage-inspection-v1' || c.machine_id !== job.identity?.machine_id ||
+      c.machine_authority_at_request_verified !== true || c.machine_authority_at_submission_verified !== true ||
+      !Number.isSafeInteger(c.finalized_block) || c.finalized_block < 1 ||
+      c.key_utf8 !== `fieldproof.job:${job.job_id}` ||
+      !/^0x[0-9a-f]{64}$/.test(event.transaction_hash ?? '') || c.transaction_hash !== event.transaction_hash) return false;
+  const digest = await crypto.subtle.digest('SHA-256', encoder.encode(canonicalJSON(job)));
+  return c.job_sha256 === [...new Uint8Array(digest)].map(x => x.toString(16).padStart(2, '0')).join('');
+}
+
 // Other pages reuse the verification exports without starting the workbench or its local buyer.
 if (typeof document !== 'undefined' && document.body?.dataset.fieldproofPage === 'jobs') {
   const el = id => document.getElementById(id);
   let original = null, inspection = null, pin = INSTALLED_PIN, paymentVerified = false;
   let localConfig = null, lastOperation = null, publishedJob = null;
   let generation = 0;
+  let peaqPoll = null;
+  function stopPeaqPoll() {
+    if (peaqPoll !== null) window.clearInterval(peaqPoll);
+    peaqPoll = null;
+  }
+  function renderPeaqEvent(event) {
+    const state = event?.status ?? event?.state;
+    const storage = event?.reference?.route === 'storage' ||
+      event?.confirmation?.schema === 'fieldproof-peaq-storage-inspection-v1';
+    const block = event?.confirmation?.finalized_block;
+    text('event-status', state ? `Recorded peaq ${storage ? 'Storage ' : ''}work record: ${state}` +
+      (block ? ` at finalized block ${block}` : '') + '. Operator readback; no browser chain query.' : 'No linked peaq activity shown');
+  }
+  function startPeaqPoll(source, version) {
+    stopPeaqPoll();
+    if (!localConfig || typeof window === 'undefined' || !/^[0-9a-f]{16}$/.test(source.id ?? '')) return;
+    let count = 0, querying = false;
+    const originalJob = canonicalJSON(source.job);
+    peaqPoll = window.setInterval(async () => {
+      if (version !== generation || ++count > 90) {
+        stopPeaqPoll();
+        return;
+      }
+      if (querying) return;
+      querying = true;
+      try {
+        const res = await fetch(`/jobs/${encodeURIComponent(source.id)}`, { cache: 'no-store', signal: AbortSignal.timeout(10000) });
+        if (!res.ok) throw new Error(`Job status returned HTTP ${res.status}.`);
+        const raw = await res.text();
+        if (raw.length > 65536) throw new Error('Job status exceeds 64 KB.');
+        const updated = normalizeSource(JSON.parse(raw));
+        if (version !== generation) return;
+        if (updated.id !== source.id || canonicalJSON(updated.job) !== originalJob) {
+          throw new Error('Job status differs from the selected paid job.');
+        }
+        if (updated.event?.state === 'confirmed') {
+          if (!await matchingStorageRecord(updated.job, updated.event)) throw new Error('peaq readback does not match the selected job.');
+          if (version !== generation) return;
+          source.event = updated.event;
+          renderPeaqEvent(updated.event);
+          stopPeaqPoll();
+          status(`peaq work record confirmed at finalized block ${updated.event.confirmation.finalized_block}. Recorded operator readback.`, 'warn');
+        }
+      } catch (error) {
+        if (version !== generation) return;
+        stopPeaqPoll();
+        status(`${error.message} Reload this job to inspect its work record. No payment started.`, 'error');
+      } finally { querying = false; }
+    }, 2000);
+  }
   const text = (id, value) => { el(id).textContent = value; };
   const mark = (id, value, cls) => { text(id, value); el(id).className = cls; };
   const status = (value, cls = '') => { text('status', value); el('status').className = 'statusline ' + cls; };
@@ -187,6 +250,7 @@ if (typeof document !== 'undefined' && document.body?.dataset.fieldproofPage ===
 
   async function render(input, label = 'Imported local file', replaceOriginal = true) {
     const version = ++generation;
+    stopPeaqPoll();
     inspection = null; paymentVerified = false;
     el('verify-payment').disabled = true;
     text('decision', 'WAIT');
@@ -213,10 +277,10 @@ if (typeof document !== 'undefined' && document.body?.dataset.fieldproofPage ===
     } else el('explorer').removeAttribute('href');
     text('machine-id', job?.identity?.machine_id ?? 'No peaq identity in this historical run');
     const eventState = source.event?.status ?? source.event?.state;
-    const storage = source.event?.reference?.route === 'storage' ||
-      source.event?.confirmation?.schema === 'fieldproof-peaq-storage-inspection-v1';
-    const activityRoute = storage ? 'peaq Storage work record' : 'peaq work record';
-    text('event-status', eventState ? `Recorded ${activityRoute}: ${eventState}; no live query here` : 'No linked peaq activity shown');
+    renderPeaqEvent(source.event);
+    if (source.kind === 'job' && source.id && eventState !== 'confirmed') {
+      startPeaqPoll(source, version);
+    }
     mark('pin-check', 'INSTALLED', 'ok');
     mark('signature-check', signature ? 'VALID' : 'REJECTED', signature ? 'ok' : 'bad');
     mark('terms-check', terms ? 'MATCH' : 'REJECTED', terms ? 'ok' : 'bad');
@@ -318,7 +382,7 @@ if (typeof document !== 'undefined' && document.body?.dataset.fieldproofPage ===
       refreshDecision();
     };
     resumeExpiry();
-    window.addEventListener('pagehide', () => { window.clearInterval(refresh); refresh = null; });
+    window.addEventListener('pagehide', () => { window.clearInterval(refresh); refresh = null; stopPeaqPoll(); });
     window.addEventListener('pageshow', resumeExpiry);
     document.addEventListener('visibilitychange', refreshDecision);
   }

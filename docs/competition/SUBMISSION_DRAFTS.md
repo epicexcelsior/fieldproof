@@ -1,7 +1,8 @@
-# Three entry drafts and founder checklist
+# Historical entry drafting notes and founder checklist
 
 These are draft paragraphs, not completed submissions. The founder must verify each live form, eligibility, links, and final implementation state.
-Use the verified October 12 peaq identity and native Storage references below. The final video links remain pending.
+Use the verified October 12 peaq identity and native Storage references below. Final videos: [product demo](https://youtu.be/eDuEJVad3oY) and [founder pitch](https://www.youtube.com/watch?v=LToCUlqJuao).
+These earlier drafts are reference material. The founder owns the current submission wording.
 
 Read the [current requirements](REQUIREMENTS.md) and [buyer hypothesis](PILOT.md) before using these drafts.
 The [plain-language story](STORY.md) owns the explanation and differentiation.

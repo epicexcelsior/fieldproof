@@ -1,6 +1,6 @@
 # FieldProof: current status
 
-Updated October 12, 2026. This page records product state. Internal recording priorities stay local.
+Updated October 13, 2026. This page records product state. Internal recording priorities stay local.
 
 ## Working prototype
 
@@ -20,9 +20,9 @@ The ESP32 signs the answer. The buyer verifies its source, request, signature, s
 
 ## Remaining submission work
 
-Final narrated pitch and physical-demo videos remain incomplete.
-The current portal needs both video links and resolution of its team warning.
-No submitted confirmations establish completed Colosseum, Germany, or peaq entries.
+[Product demo, 1:37](https://youtu.be/eDuEJVad3oY) and [founder pitch, 1:38](https://www.youtube.com/watch?v=LToCUlqJuao) are uploaded.
+Anonymous video metadata access passed. Both durations fit the current portal limits.
+The founder must complete Colosseum and both separate Earn entries, then save each confirmation.
 
 Customer demand, pricing, and distribution remain hypotheses.
 One provider works today. Automatic discovery, reputation, and additional provider ports remain future work.
