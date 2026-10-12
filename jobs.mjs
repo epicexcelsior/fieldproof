@@ -282,7 +282,10 @@ if (typeof document !== 'undefined' && document.body?.dataset.fieldproofPage ===
     const version = generation, selected = inspection;
     el('verify-payment').disabled = true; mark('payment-check','QUERYING','warn');
     try {
-      const result = await querySettlement(paymentQueryInput(selected.source));
+      const fetcher = localConfig?.payment_rpc_proxy === true
+        ? (_url, options) => fetch(`/payment-transactions/${encodeURIComponent(selected.source.id)}`, { cache: 'no-store', signal: options.signal })
+        : fetch;
+      const result = await querySettlement(paymentQueryInput(selected.source), fetcher);
       // A slow query belongs to its original ticket. Import, tamper, or restore invalidates it.
       if (version !== generation || inspection !== selected) return;
       paymentVerified = true; mark('payment-check',`VERIFIED · SLOT ${result.slot}`,'ok');
