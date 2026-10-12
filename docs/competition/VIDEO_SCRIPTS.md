@@ -1,7 +1,7 @@
 # Record FieldProof in plain language
 
 Record the hardware sequence first. Record narration after the sequence works.
-Use the [five-slide deck](slides.html) to rehearse the pitch.
+Use your own simple slides or the [optional draft deck](slides.html).
 Use the [rehearsal](REHEARSAL.md) for commands, device checks, and the remaining payment budget.
 The [requirements](REQUIREMENTS.md) own upload rules and cutoffs.
 The [story and actual difference](STORY.md) own the argument. Rehearse that argument in your own words.
@@ -61,7 +61,6 @@ This pitch explains the proposed business. It is separate from the product demo.
 | 1:40–2:05 | Slides 4 and 5 | “Payment can stay final while the physical answer becomes too old to use. FieldProof connects the purchase to a new device reading and buyer verification. The peaq route checks the registered device key before purchase and links a work record afterward. The October 12 job passed real identity and native Storage readbacks.” |
 | 2:05–2:30 | Founder and slide 5 | “The next test is one authorized operator and one repeated physical question. I will compare useful answers, latency, failures, and integration effort with the current process. The business hypothesis is paid inspection and integration. No customer demand or commercial revenue is validated yet.” |
 
-If peaq readback succeeds before recording, replace its pending sentence with the verified identity and work-record references.
 Name the network. Explain that test activity is not customer revenue.
 Keep any specific site or workflow labeled as an example until an operator validates it.
 
@@ -77,7 +76,7 @@ Use it as the technical demo. Use its transaction sequence for the peaq video.
 | 0:40–1:15 | Quote, payment, steady physical input, new answer | “I start one bounded purchase. Solana x402 settles 0.001 test USDC to the operator before capture. The ESP32 now samples this input and signs the original answer for this request.” |
 | 1:15–1:40 | Receipt verification and transaction | “The buyer checks the provisioned device key, request, signed result, and age. This transaction paid for the observation. The result does not need to be favorable to fulfill the job.” |
 | 1:40–2:05 | Same receipt after expiry, then edited-copy test | “This original answer is now too old. Its signature remains valid, but the buyer waits. I change a copy of the signed answer. Verification rejects that copy. The original receipt stays unchanged.” |
-| 2:05–2:25 | peaq status or verified readbacks | If pending: “The peaq identity and work-record path has tests, but no live identity or work record is established. This take proves the Solana payment and original signed contact result.” If verified: “Here is the independently readable machine identity and registered device key. Here is the work record linked to this completed check.” |
+| 2:05–2:25 | Identity and matching work record | “Here is the independently readable machine identity and registered device key. The operator submitted this job's work record separately after purchase. Here is its finalized record.” |
 | 2:25–2:40 | Public replay and GitHub links | “Reviewers can inspect recorded payment and evidence without a wallet. The public page makes no new paid check. This is a working observation prototype. Physical truth and commercial demand remain separate questions.” |
 
 If the paid take uses the October 11 archive, replace “now” with “during this recorded run.”
@@ -85,12 +84,22 @@ State that no new physical measurement occurs in the replay.
 Do not stage a fresh screen result beside unrelated old hardware footage.
 If a live screen does not support an edited-copy test, use the labeled public replay for that cut.
 
+### A new purchase needs its own peaq work record
+
+The October 12 job `31be41e44b1e40c5` has a finalized peaq Storage record.
+A new purchase creates a new job ID and a pending work record.
+The operator must submit and verify that new record before the video calls it finalized.
+Keep the same job ID in the payment, receipt, and work-record shots.
+Do not use the earlier job's confirmed record as evidence for a new purchase.
+Native Storage is operator-controlled and mutable. This is not an EventRegistry event or a credit rating.
+
 ## Feedback clip: target 45–60 seconds
 
 The [58-second captioned feedback cut](../assets/fieldproof-paid-check-feedback.webm) is ready for review.
 It shows the original October 11 purchase, payment readback, signed answer, expiry, and altered-copy rejection.
 It contains no narration or new physical footage. Its last frame labels the earlier peaq integration pending. The October 12 job supersedes that status.
-Use it tonight for concept feedback. The final founder pitch and hardware demo still need recording.
+Use it only as historical supporting footage. The current public walkthrough contains the October 12 peaq-linked job.
+The final founder pitch and physical demo still need recording.
 
 For a founder-led cut, use this sequence:
 
@@ -99,8 +108,8 @@ For a founder-led cut, use this sequence:
    Say: “This replays a real Solana Devnet payment and signed ESP32 reading. It makes no new measurement.”
 3. **0:30–0:45:** Show expiry and the edited-copy rejection.
    Say: “An authentic answer can be too old. Editing the answer breaks its signature.”
-4. **0:45–1:00:** Say: “The paid-check loop works. Customer demand and live peaq integration remain open.
-   What physical check do you already pay for? What is missing for this bounty?”
+4. **0:45–1:00:** Say: “The paid-check loop, peaq identity, and linked Storage record work on testnets.
+   Customer demand remains unvalidated. Is the product clear? What is missing for this bounty?”
 
 The entrance illustration explains a possible decision. No real entrance is connected.
 Treat reviewer enthusiasm as feedback. Record a pilot or payment commitment separately.

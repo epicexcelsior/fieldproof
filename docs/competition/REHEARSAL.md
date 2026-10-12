@@ -4,13 +4,13 @@ Outcome: a paid hardware check, one legible recording, and preserved evidence.
 The Solana-only fallback remains available. The peaq-linked route now has a real activated Agung identity and work record.
 Start from the repository root. Keep wallets, ledgers, and journals private.
 
-## Show the feedback demo now
+## Show the current feedback demo
 
-The October 11 check completed a real 0.001 Devnet USDC purchase and a fresh signed ESP32 OPEN observation.
-Its independent payment query verified the exact transfer. The public copy contains only the whitelisted purchase fields.
-Open `review.html` in the latest reviewed static export for the one-minute walkthrough.
-It links the new receipt, the earlier video, and the actual transaction. Its evidence is recorded and expires normally.
-The public review needs no wallet or hardware. Live peaq identity and activity remain pending.
+The October 12 job `31be41e44b1e40c5` completed a real 0.001 Devnet USDC purchase and a fresh signed ESP32 OPEN observation.
+The buyer checked the registered peaq identity before payment. Its native Storage work record has a finalized readback.
+Open the [public walkthrough](https://epicexcelsior.github.io/fieldproof/) or `index.html` in the latest reviewed export.
+Open [the job inspector](https://epicexcelsior.github.io/fieldproof/jobs.html) for the receipt and independent Devnet payment query.
+The public review replays recorded evidence. It starts no measurement or payment and needs no wallet or hardware.
 
 ## Diagnose a buyer lock without payment
 
@@ -31,7 +31,8 @@ Use stale-lock recovery only when the normal host reports the original owner abs
 The October 11 host diagnosis identified PID 1824662 as the original idle browser buyer from October 5.
 That active process caused the recovery refusal. It was not a missing key, board failure, or reused PID.
 The coordinator verified its idle status and stopped it with SIGTERM. It removed its own lock.
-The next real paid check passed. The founder authorized 100 operations. Eight completed operations leave 92 available. The original records remain intact.
+The next real paid check passed. The founder authorized 100 operations, totaling at most 0.100 Devnet USDC.
+The buyer readiness command reports the current remaining budget. The original records remain intact.
 
 ## Check without payment
 
@@ -112,7 +113,7 @@ If the previous owner process still exists or its status is unknown, the command
 If an operation is pending, damaged, or under review, the command preserves the lock and stops.
 If all records are complete and the host reports the owner absent, it archives the old lock.
 Recovery preserves every operation and its original receipt. It does not reset the shared spending limit.
-The current ledger contains eight completed operations. Use `--count 1` for a take or `--count 3` for a useful batch.
+Use `--count 1` for a take or `--count 3` for a useful batch within the reported remaining budget.
 An archived lock is local recovery evidence. It does not verify a new payment.
 
 Expected files in the new output directory:
