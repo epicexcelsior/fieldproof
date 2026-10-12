@@ -11,8 +11,9 @@ FieldProof: follow one actual recorded paid check
 3. Verify the original receipt, then alter its state, challenge, or public key.
 4. Select Verify recorded payment for a read-only Solana Devnet RPC query.
 5. Inspect the separately signed BOOT held/released input pair. Those checks moved no funds.
-6. Watch assets/fieldproof-peaq-check-feedback.webm for the 56-second peaq-linked review cut.
-   The longer technical walkthrough is assets/fieldproof-signed-receipt.webm.
+6. Watch the final product demo: https://youtu.be/eDuEJVad3oY (1:37).
+   Watch the founder pitch: https://www.youtube.com/watch?v=LToCUlqJuao (1:38).
+   Earlier captioned recordings remain under assets/ for reference.
 
 Open jobs.html for the job workbench. Import a reviewed saved job or evidence manifest.
 Imported peaq snapshots remain recorded evidence, not a live registry query.
@@ -29,8 +30,3 @@ It never charges funds or measures hardware. Authentic expired evidence remains 
 The optional RPC check needs internet access and trusts api.devnet.solana.com.
 The installed code and public pin are the buyer configuration trust root.
 Use the repository README for the complete live MVP and simulated purchase rehearsal.
-
-A reviewed job is included at evidence/current-job.json.
-Open jobs.html and select Load reviewed job from this export.
-The saved readbacks are recorded evidence. This export made no live chain query.
-The original capture timestamp remains unchanged. Old evidence remains expired.
