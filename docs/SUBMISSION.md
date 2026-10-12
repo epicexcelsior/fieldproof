@@ -6,7 +6,7 @@ Use [the material hub](start.html) to find every artifact.
 
 ## Required fields that remain incomplete
 
-1. Upload the founder presentation video: two to three minutes.
+1. Upload the founder pitch video: at most two minutes.
 2. Upload the separate product-demo video: at most three minutes.
 3. Add repository, demo, presentation, team, and business-field answers to Colosseum.
 4. Disclose prior development and verify eligibility.
@@ -33,7 +33,8 @@ Verify each link in a private browser window. Videos must play without login or 
 A supporting deck does not replace the required Colosseum videos.
 Answer the Colosseum submission field in Earn from actual submitted status.
 
-Use the working Solana and hardware claims. Keep peaq pending until independent finalized readback exists.
+Use the verified Solana, hardware, peaq identity, and native Storage claims.
+The October 12 published job has independent finalized peaq readbacks. A new job requires its own work-record readback.
 Devnet transfers are test activity, not customer revenue. Reviewer feedback is not customer traction.
 
 The [earlier submission notes](https://github.com/epicexcelsior/fieldproof/blob/474b92e/docs/SUBMISSION.md) remain in Git.

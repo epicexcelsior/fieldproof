@@ -35,12 +35,13 @@ It supports no EventRegistry event, credit rating, or marketplace admission clai
 
 ## Prepare two Colosseum videos
 
-- **Presentation:** two to three minutes. Explain the problem, product, team, proposed market, and business assumptions.
+- **Founder pitch:** at most two minutes. Introduce yourself, explain the product, and explain why you can build it.
 - **Product demo:** at most three minutes. Show the actual product and verified technical behavior.
 
-The [Germany checklist](https://de.superteam.fun/buildstation#submission-checklist) recommends a presentation under two minutes.
-The current Colosseum FAQ specifies two to three minutes. Use the primary competition requirement for the submitted presentation.
-Target approximately 2:05. A shorter feedback cut can precede it.
+The founder supplied the authenticated Colosseum portal instructions on October 12.
+That form specifies a separate founder pitch of **up to two minutes**. This limit supersedes the earlier public FAQ guidance.
+The [Germany checklist](https://de.superteam.fun/buildstation#submission-checklist) also recommends a presentation under two minutes.
+Keep the founder pitch below two minutes. The founder owns its wording and delivery.
 
 The FAQ also requests team context, location, logo, repository, go-to-market strategy, demand validation, and distribution plans.
 Disclose prior development. The rules judge work within the competition period.
@@ -48,7 +49,7 @@ Disclose prior development. The rules judge work within the competition period.
 [prior-development and judging rules](https://colosseum.com/legal/Crypto%20World%27s%20Fair%20Hackathon%20Rules.pdf).
 
 The existing captioned technical video supplies supporting evidence. It does not supply the missing founder-led presentation.
-The [video scripts](VIDEO_SCRIPTS.md) define the two recordings. Reuse the clearest product demo for peaq when it meets the form.
+The [recording notes](VIDEO_SCRIPTS.md) describe the physical demo and its technical claims. Reuse the clearest product demo for peaq when it meets the form.
 
 ## Required Earn fields
 

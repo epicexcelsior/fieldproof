@@ -48,21 +48,10 @@ If a verified external contact replaces BOOT, name its actual input and installe
 Do not relabel an old GPIO9 receipt as evidence from another sensor.
 Do not call a contact state proof that an item is present or a job is complete.
 
-## Startup pitch: target 2:30
+## Founder pitch: at most two minutes
 
-This pitch explains the proposed business. It is separate from the product demo.
-
-| Time | Picture | Spoken script |
-|---|---|---|
-| 0:00–0:20 | Founder and slide 1 | “FieldProof lets software pay a device for a fresh physical check. The device signs its answer. The buyer verifies who answered and whether the answer is still fresh.” |
-| 0:20–0:50 | Slide 2 | “The buyer hypothesis is remote-operations software. An operator already pays someone to check a physical fact at another site. Its software lacks a reliable answer from an existing API. FieldProof tests whether a device on site can provide that check.” |
-| 0:50–1:15 | Physical board and slide 3 | “The prototype uses an ESP32 contact input. A software buyer requests a new reading and prepays 0.001 test USDC on Solana Devnet. The operator receives the payment. The board signs the new answer for that request.” |
-| 1:15–1:40 | Fresh result, then expiry | “The buyer accepts the answer only within its age limit. The same answer becomes too old for the next decision. An edited answer fails signature verification. OPEN and CLOSED both complete the paid check.” |
-| 1:40–2:05 | Slides 4 and 5 | “Payment can stay final while the physical answer becomes too old to use. FieldProof connects the purchase to a new device reading and buyer verification. The peaq route checks the registered device key before purchase and links a work record afterward. The October 12 job passed real identity and native Storage readbacks.” |
-| 2:05–2:30 | Founder and slide 5 | “The next test is one authorized operator and one repeated physical question. I will compare useful answers, latency, failures, and integration effort with the current process. The business hypothesis is paid inspection and integration. No customer demand or commercial revenue is validated yet.” |
-
-Name the network. Explain that test activity is not customer revenue.
-Keep any specific site or workflow labeled as an example until an operator validates it.
+The founder writes and records this separate introduction. Explain yourself, the product, and why you can build it.
+Use the current portal limit in [requirements](REQUIREMENTS.md). The previous longer script is superseded.
 
 ## Product demo: target 2:40
 
