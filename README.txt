@@ -11,7 +11,7 @@ FieldProof: follow one actual recorded paid check
 3. Verify the original receipt, then alter its state, challenge, or public key.
 4. Select Verify recorded payment for a read-only Solana Devnet RPC query.
 5. Inspect the separately signed BOOT held/released input pair. Those checks moved no funds.
-6. Watch assets/fieldproof-paid-check-feedback.webm for the 58-second captioned feedback cut.
+6. Watch assets/fieldproof-peaq-check-feedback.webm for the 56-second peaq-linked review cut.
    The longer technical walkthrough is assets/fieldproof-signed-receipt.webm.
 
 Open jobs.html for the job workbench. Import a reviewed saved job or evidence manifest.

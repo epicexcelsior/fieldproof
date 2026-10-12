@@ -1,15 +1,17 @@
 {
-  "README.txt": "09d299c56116e87b32c5e841765d3d2dc06ae2e90f24acd8bd67df540d6bbb2d",
+  "README.txt": "71b898c5dbc7ce7de6776d0f3f29801786d9e891e9b65ade0a34036e2af7c8a5",
   "assets/fieldproof-evidence-window.svg": "377b10402bb13bd2787cec33a72c8509e7e4615f282d0a582d909732aab476e9",
   "assets/fieldproof-paid-check-feedback.webm": "0bb4df35f8f62821b9474d7671ef1eb1755cc401b987072d6b0c9f1a3133d564",
   "assets/fieldproof-payment-to-observation.svg": "faa42577ef796bc09332a848ac0d3d380e06c74eaf1fd0c77ec2d4e874b5034e",
+  "assets/fieldproof-peaq-check-feedback.webm": "69b7280324a1504466467af14cd4866e466557eed9267b7dc1ecebf87d3ae5b7",
   "assets/fieldproof-real-device.webp": "ffc8d95d35b4f32f5ca5469374947a712386712db8368be1ae05f2d8bc30ec52",
   "assets/fieldproof-service-boundaries.svg": "62648320848115a211c6a4affe9ee2d3aa46df184f005164457d45f05102a3d5",
   "assets/fieldproof-signed-receipt.webm": "42e7ec97daacd0cb04d5af39d50ebae1c9dc127d6e552f47aa9219b49357159b",
+  "competition/assets/fieldproof-logo.png": "55cb639b6a3b811b6a6a511c0d5845eabfc68b544af5460ec32bd6c3db605e83",
   "competition/assets/fieldproof-project.png": "e5dee407b2cee4921c79b1211552daf65ed1de91291f57af014045f90a2c0fd7",
-  "competition/fieldproof-pitch.pdf": "cdaedab94b26af2a6318ae12272a42f9a3d8cf18512abf7f5fd040c0c1bff61d",
-  "competition/fieldproof-pitch.pptx": "3ed7e160645ab71907d9a0a28167ef0cdf7fb2a07c68395d84fef84303ad6db8",
-  "competition/slides.html": "c5e1a43b224cf9405549dd2a5020f2eefb80d6350acf0890b9cbf8168a7f80b1",
+  "competition/fieldproof-pitch.pdf": "a5b67d760606e55503ce2b6c7451cea5f2336045294bddefc0d459c0d5cb997a",
+  "competition/fieldproof-pitch.pptx": "60efc04b4338c1e3a8c596d8e987c95ba1a67b0c5f40935663beb41e4eb3c0c1",
+  "competition/slides.html": "bcc7d96be60745298a3da97a6c418e647ed2675edc2b5132c277194bce1dc3e7",
   "evidence/current-job.json": "b965dea48a2ba9354383d93741547ba926b691438166d5ccdd22950999db0a47",
   "evidence/device-signed-contact-states.json": "b4d541240fa2423cca36bb79f38c8cce4dab26f205269c51e693bff4383de863",
   "evidence/device-signed-purchase-20261005.json": "30e656d8c7e4d08f84cde6bc4ee31b90d481627b067ec848e7fdb05cdb6afd61",
@@ -31,5 +33,5 @@
   "review.html": "af778c3b9f535dd123bf8f30ea516b430333bc04cdf879a5bead4ca1c4c4870d",
   "review.mjs": "d34e6409a203e918e6b6165074bdb31daf9007ad898ba2b6a3f53decad5ae2f1",
   "settlement.mjs": "144e5dac218d6644db90277f6ab5fcd9a771a93e01951115cb4b56ac3409000d",
-  "start.html": "0b96d33fa74c94877386171fc60f8b30ca54708c237a6c2f9ceca7d6b487d98c"
+  "start.html": "352a11043e897dc61a8217ab02a7f06b386c1b878823395d0a7486b198ce938a"
 }
