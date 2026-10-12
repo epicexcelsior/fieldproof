@@ -6,7 +6,7 @@ import { HTTPFacilitatorClient } from '@x402/core/server';
 import { createGateway, createPaymentServer, PAY_TO } from './server.js';
 import { buyObservation, loadBuyerSigner } from './buyer.js';
 import { PurchaseStore } from './store.js';
-import { createLocalBuyer, mountLocalBuyer, DEFAULT_BUYER_MAXIMUM } from './local-buyer.js';
+import { createLocalBuyer, inspectLocalBuyer, buyerLockMessage, mountLocalBuyer, DEFAULT_BUYER_MAXIMUM } from './local-buyer.js';
 import { EventStore } from './event-store.js';
 import { performPaidJob } from './paid-job.js';
 
@@ -25,16 +25,31 @@ const signer = await loadBuyerSigner(keyPath);
 const port = Number(process.env.CAPMESH_GATEWAY_PORT || 4026);
 if (!Number.isInteger(port) || port < 1024 || port > 65535) throw new Error('Use a local port from 1024 to 65535');
 const origin = `http://127.0.0.1:${port}`;
+const directory = resolve(root, '.local/live-buyer', signer.address);
+function stopForBuyerLock() {
+  const state = inspectLocalBuyer({ directory });
+  console.error(`STOP: ${buyerLockMessage(state)}`);
+  console.error('No new buyer or payment started. Do not delete the lock.');
+  process.exit(1);
+}
+// Diagnose an existing owner before facilitator reads or gateway setup.
+// The exclusive create below still protects two simultaneous starters.
+if (inspectLocalBuyer({ directory }).locked) stopForBuyerLock();
 const paymentServer = await createPaymentServer(new HTTPFacilitatorClient({ url: 'https://x402.org/facilitator' }));
 const store = new PurchaseStore(resolve(root, '.local/purchases.sqlite'));
 const events = values['peaq-policy'] ? new EventStore(store) : undefined;
 const policyPath = values['peaq-policy'] ? resolve(values['peaq-policy']) : undefined;
 const app = await createGateway({ paymentServer, store, origin, events });
-const directory = resolve(root, '.local/live-buyer', signer.address);
-const controller = createLocalBuyer({ directory, payer: signer.address, payTo: PAY_TO,
-  readPurchaseState: id => store.get(id)?.state,
-  buy: onProgress => events ? performPaidJob({ signer, origin, policyPath, events, onProgress })
-    : buyObservation(signer, origin, { onProgress }) });
+let controller;
+try {
+  controller = createLocalBuyer({ directory, payer: signer.address, payTo: PAY_TO,
+    readPurchaseState: id => store.get(id)?.state,
+    buy: onProgress => events ? performPaidJob({ signer, origin, policyPath, events, onProgress })
+      : buyObservation(signer, origin, { onProgress }) });
+} catch (error) {
+  if (error.code === 'EEXIST' && error.path === resolve(directory, '.lock')) stopForBuyerLock();
+  throw error;
+}
 mountLocalBuyer(app, controller, origin);
 const server = app.listen(port, '127.0.0.1', () => {
   console.log(`FieldProof real Devnet buyer: ${origin}/${events ? 'jobs' : 'proof?present=1'}`);

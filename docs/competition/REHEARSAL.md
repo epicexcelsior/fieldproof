@@ -145,21 +145,33 @@ The later setup checks keep this known configuration failure separate from an un
 Prerequisites: working BLE input, a funded disposable Devnet buyer, and approval for the displayed test-token budget.
 Each purchase costs at most 0.001 Devnet USDC. The shared controller permits at most 100 operations. Keep each take to one useful check.
 
-1. Start the browser buyer with your local wallet path.
+Run `node gateway/paid-checks.js --check-buyer` before starting a buyer.
+If it reports an active `browser_buyer`, use that running instance. Do not start another buyer or delete its lock.
+The prepared recording instance uses `http://127.0.0.1:4026/jobs`.
+
+1. If no buyer is running, start the peaq-linked browser buyer with the configured SDK and public provider policy.
 
    ```bash
-   node gateway/live-demo.js .local/disposable-buyer.keypair.json
+   node gateway/live-demo.js .local/disposable-buyer.keypair.json \
+     --ble-address 10:BD:A3:AC:96:A2 \
+     --peaq-policy .local/competition/provider-policy.json
    ```
 
-2. Open `http://127.0.0.1:4026/proof?present=1`.
-3. Select **Pay 0.001 USDC** once.
+2. Open or refresh `http://127.0.0.1:4026/jobs`.
+3. Select **Pay 0.001 Devnet USDC and check** once.
 4. Preserve the purchase ID, operation ID, original receipt, and transfer reference.
 5. Record the physical input and fresh answer together.
 6. Wait eleven seconds. Record the unchanged receipt and WAIT decision.
 7. Use the changed-state attack control. Record signature rejection.
 8. Restore the original. Verify that the original signature result returns.
 
-The shared cap permits 100 operations. Nine completed checks leave 91 available before the next take.
+Record the same job ID in its finalized peaq work record. The [paid-job runbook](../JOBS.md) owns operator writes and readbacks.
+The prepared private recording helper handles one new job. A public replay starts no payment or new measurement.
+The BLE address selects the provisioned board. Its installed public key still controls signature verification.
+For the Solana-only fallback, omit `--peaq-policy` and open `http://127.0.0.1:4026/proof?present=1`.
+That fallback establishes no peaq identity or work record.
+
+The shared cap permits 100 operations. The readiness command reports the current remaining budget.
 Record one paid check after the unpaid rehearsal. Recheck readiness before another purchase.
 These are founder test jobs, not customer traction. Keep BOOT visible to show the physical input.
 Stop on any unknown payment outcome. Do not click again to diagnose it.
