@@ -1,6 +1,7 @@
 # Three entry drafts and founder checklist
 
-These are paste-ready draft paragraphs, not completed submissions. The founder must verify each live form, eligibility, links, and final implementation state. Keep peaq **INTEGRATION PENDING** language until the coordinator supplies independent readback.
+These are draft paragraphs, not completed submissions. The founder must verify each live form, eligibility, links, and final implementation state.
+Use the verified October 12 peaq identity and native Storage references below. The final video links remain pending.
 
 Read the [current requirements](REQUIREMENTS.md) and [buyer hypothesis](PILOT.md) before using these drafts.
 The [plain-language story](STORY.md) owns the explanation and differentiation.

@@ -7,11 +7,12 @@ Final founder videos and submitted confirmations remain incomplete.
 | Material | Use it for |
 |---|---|
 | [Guided visual replay](../feedback.html) | Follow one actual paid check before opening technical evidence |
+| [56-second peaq-linked review cut](../assets/fieldproof-peaq-check-feedback.webm) | Captioned recorded evidence. No narration or new purchase |
 | [Plain-language story](STORY.md) | What it does, proposed buyer, alternatives, limitations, and future test |
 | [Earlier technical replay](https://epicexcelsior.github.io/fieldproof/review.html?view=20261011-story) | Detailed recorded-purchase explanation after the visual overview |
 | [Physical rehearsal](REHEARSAL.md) | Unpaid input changes, new bounded payment, phone verification, and recovery |
 | [Video scripts](VIDEO_SCRIPTS.md) | Separate 2–3 minute pitch and at-most-three-minute product demo |
-| [HTML deck](slides.html), [PDF](fieldproof-pitch.pdf), [editable PowerPoint](fieldproof-pitch.pptx) | Five supporting slides. A deck does not replace the required videos |
+| [Present the deck](slides.html?present=1), [PDF](fieldproof-pitch.pdf), [editable PowerPoint](fieldproof-pitch.pptx) | Five simple white-background slides. A deck does not replace the required videos |
 | [Tester guide](TESTER_GUIDE.md) | Specific comprehension, verification, and buyer questions |
 | [Pilot questions](PILOT.md) | Falsifiable buyer and pricing research after the technical demonstration |
 | [Current requirements](REQUIREMENTS.md) | Exact deadlines, required fields, eligibility, and disclosures |

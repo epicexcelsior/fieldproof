@@ -19,6 +19,7 @@ ASSETS = {
     "competition/fieldproof-pitch.pdf": "docs/competition/fieldproof-pitch.pdf",
     "competition/fieldproof-pitch.pptx": "docs/competition/fieldproof-pitch.pptx",
     "competition/assets/fieldproof-project.png": "docs/competition/assets/fieldproof-project.png",
+    "competition/assets/fieldproof-logo.png": "docs/competition/assets/fieldproof-logo.png",
     "review.html": "docs/review.html",
     "review.mjs": "docs/review.mjs",
     "guide.html": "docs/HOW_IT_WORKS.html",
@@ -38,6 +39,7 @@ ASSETS = {
     "evidence/peaq-agung-storage-readiness-20261011.json": "docs/evidence/peaq-agung-storage-readiness-20261011.json",
     "assets/fieldproof-signed-receipt.webm": "docs/assets/fieldproof-signed-receipt.webm",
     "assets/fieldproof-paid-check-feedback.webm": "docs/assets/fieldproof-paid-check-feedback.webm",
+    "assets/fieldproof-peaq-check-feedback.webm": "docs/assets/fieldproof-peaq-check-feedback.webm",
     "assets/fieldproof-real-device.webp": "docs/assets/fieldproof-real-device.webp",
     "assets/fieldproof-service-boundaries.svg": "docs/assets/fieldproof-service-boundaries.svg",
     "assets/fieldproof-payment-to-observation.svg": "docs/assets/fieldproof-payment-to-observation.svg",
@@ -139,7 +141,7 @@ def export(output, *, job_manifest=None, provider_policy=None, require_peaq=Fals
             "3. Verify the original receipt, then alter its state, challenge, or public key.\n"
             "4. Select Verify recorded payment for a read-only Solana Devnet RPC query.\n"
             "5. Inspect the separately signed BOOT held/released input pair. Those checks moved no funds.\n"
-            "6. Watch assets/fieldproof-paid-check-feedback.webm for the 58-second captioned feedback cut.\n"
+            "6. Watch assets/fieldproof-peaq-check-feedback.webm for the 56-second peaq-linked review cut.\n"
             "   The longer technical walkthrough is assets/fieldproof-signed-receipt.webm.\n\n"
             "Open jobs.html for the job workbench. Import a reviewed saved job or evidence manifest.\n"
             "Imported peaq snapshots remain recorded evidence, not a live registry query.\n\n"

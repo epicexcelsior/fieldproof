@@ -93,13 +93,13 @@ Keep the same job ID in the payment, receipt, and work-record shots.
 Do not use the earlier job's confirmed record as evidence for a new purchase.
 Native Storage is operator-controlled and mutable. This is not an EventRegistry event or a credit rating.
 
-## Feedback clip: target 45–60 seconds
+## Feedback clip: 56 seconds
 
-The [58-second captioned feedback cut](../assets/fieldproof-paid-check-feedback.webm) is ready for review.
-It shows the original October 11 purchase, payment readback, signed answer, expiry, and altered-copy rejection.
-It contains no narration or new physical footage. Its last frame labels the earlier peaq integration pending. The October 12 job supersedes that status.
-Use it only as historical supporting footage. The current public walkthrough contains the October 12 peaq-linked job.
-The final founder pitch and physical demo still need recording.
+The [current captioned review cut](../assets/fieldproof-peaq-check-feedback.webm) shows the October 12 peaq-linked job.
+It checks the original signature, expiry, and edited-copy rejection. A live read-only Devnet query verifies the original payment.
+Its peaq fields show independently verified recorded readbacks. The browser makes no new Agung query.
+The cut contains no audio, new payment, or new physical measurement. The founder pitch and physical demo remain separate recordings.
+The earlier October 11 cut remains historical supporting material. Its older integration status does not describe the current implementation.
 
 For a founder-led cut, use this sequence:
 
