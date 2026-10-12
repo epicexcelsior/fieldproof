@@ -37,11 +37,10 @@ export function recordedPaymentDetails(purchase) {
     amount_usdc: Number(AMOUNT) / 1e6, network: 'Solana Devnet' };
 }
 
-export function verifySettlement(result, purchase) {
-  const settlement = validatePurchase(purchase);
+function verifyTransfer(result, transaction, sender, recipient) {
   if (!result) throw new Error('The RPC cannot find this transaction at confirmed commitment.');
   if (result.meta?.err !== null || !Number.isSafeInteger(result.slot) || result.slot < 1 ||
-      result.transaction?.signatures?.[0] !== settlement.transaction) {
+      result.transaction?.signatures?.[0] !== transaction) {
     throw new Error('The RPC result does not confirm the expected successful transaction.');
   }
   const keys = result.transaction.message?.accountKeys;
@@ -73,7 +72,7 @@ export function verifySettlement(result, purchase) {
     deltas.set(owner, (deltas.get(owner) || 0n) + (post?.amount || 0n) - (pre?.amount || 0n));
     accounts.set(keys[index].pubkey, owner);
   }
-  if (deltas.get(settlement.payer) !== -AMOUNT || deltas.get(MERCHANT) !== AMOUNT) {
+  if (deltas.get(sender) !== -AMOUNT || deltas.get(recipient) !== AMOUNT) {
     throw new Error('The payer and merchant did not exchange exactly 0.001 Devnet USDC.');
   }
   const outer = result.transaction.message.instructions;
@@ -88,22 +87,47 @@ export function verifySettlement(result, purchase) {
     const info = instruction.parsed?.info;
     return instruction.programId === TOKEN_PROGRAM && instruction.parsed?.type === 'transferChecked' &&
       info?.mint === MINT && info.tokenAmount?.amount === String(AMOUNT) && info.tokenAmount.decimals === 6 &&
-      info.authority === settlement.payer && accounts.get(info.source) === settlement.payer &&
-      accounts.get(info.destination) === MERCHANT;
+      info.authority === sender && accounts.get(info.source) === sender &&
+      accounts.get(info.destination) === recipient;
   });
   if (!transfer) throw new Error('The RPC result has no matching SPL Token transfer instruction.');
+}
+
+export function verifySettlement(result, purchase) {
+  const settlement = validatePurchase(purchase);
+  verifyTransfer(result, settlement.transaction, settlement.payer, MERCHANT);
   return { network: 'Solana Devnet', slot: result.slot, transaction: settlement.transaction,
     mint: MINT, payer: settlement.payer, merchant: MERCHANT,
     payer_delta_base_units: String(-AMOUNT), merchant_delta_base_units: String(AMOUNT), decimals: 6 };
 }
 
-export async function querySettlement(purchase, fetcher = fetch) {
-  const settlement = validatePurchase(purchase);
+export function refundMemo(purchase) {
+  const original = validatePurchase(purchase);
+  if (!/^[0-9a-f]{16}$/.test(purchase.purchase_id ?? '')) throw new Error('Refund requires the original purchase ID.');
+  return `fieldproof:refund:${purchase.purchase_id}:${original.transaction}`;
+}
+
+export function verifyRefund(result, purchase, transaction) {
+  const original = validatePurchase(purchase);
+  if (!/^[1-9A-HJ-NP-Za-km-z]{64,88}$/.test(transaction ?? '') || transaction === original.transaction) {
+    throw new Error('Refund requires a separate transaction signature.');
+  }
+  verifyTransfer(result, transaction, MERCHANT, original.payer);
+  const instructions = [...result.transaction.message.instructions, ...(result.meta.innerInstructions || []).flatMap(group => group.instructions)];
+  if (!instructions.some(ix => ix.programId === 'MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr' && ix.parsed === refundMemo(purchase))) {
+    throw new Error('Refund memo does not bind this original purchase and payment.');
+  }
+  return { network: 'Solana Devnet', slot: result.slot, transaction, original_transaction: original.transaction,
+    mint: MINT, payer: original.payer, merchant: MERCHANT,
+    payer_delta_base_units: '1000', merchant_delta_base_units: '-1000', decimals: 6 };
+}
+
+async function queryTransaction(transaction, fetcher) {
   let response;
   try {
     response = await fetcher(DEVNET_RPC, { method: 'POST', headers: { 'Content-Type': 'application/json' },
       signal: AbortSignal.timeout(15000), body: JSON.stringify({ jsonrpc: '2.0', id: 'fieldproof-payment-check',
-        method: 'getTransaction', params: [settlement.transaction,
+        method: 'getTransaction', params: [transaction,
           { commitment: 'confirmed', encoding: 'jsonParsed', maxSupportedTransactionVersion: 0 }] }) });
   } catch (error) {
     if (error instanceof TypeError) throw new Error('The browser cannot reach Solana Devnet. Check internet access, then try again.', { cause: error });
@@ -118,7 +142,41 @@ export async function querySettlement(purchase, fetcher = fetch) {
   if (!body || body.jsonrpc !== '2.0' || body.id !== 'fieldproof-payment-check' || Object.hasOwn(body, 'error')) {
     throw new Error('The Devnet RPC did not return a correlated transaction result.');
   }
-  return verifySettlement(body.result, purchase);
+  return body.result;
+}
+
+export async function querySettlement(purchase, fetcher = fetch) {
+  const settlement = validatePurchase(purchase);
+  return verifySettlement(await queryTransaction(settlement.transaction, fetcher), purchase);
+}
+
+export async function queryRefund(purchase, transaction, fetcher = fetch) {
+  refundMemo(purchase);
+  if (!/^[1-9A-HJ-NP-Za-km-z]{64,88}$/.test(transaction ?? '') || transaction === purchase.settlement.transaction) {
+    throw new Error('Use a separate refund transaction signature.');
+  }
+  return verifyRefund(await queryTransaction(transaction, fetcher), purchase, transaction);
+}
+
+// Validate persisted results of independent chain queries. This function makes no RPC request.
+export function publicRefundResolution(input) {
+  const original = input?.original_payment, refund = input?.refund;
+  const valid = proof => proof?.network === 'Solana Devnet' && proof.mint === MINT && proof.decimals === 6 &&
+    Number.isSafeInteger(proof.slot) && proof.slot > 0 && proof.merchant === MERCHANT &&
+    /^[1-9A-HJ-NP-Za-km-z]{64,88}$/.test(proof.transaction ?? '') &&
+    /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(proof.payer ?? '') && proof.payer !== MERCHANT;
+  if (input?.schema !== 'fieldproof-refund-resolution-v1' || !/^[0-9a-f]{16}$/.test(input.purchase_id ?? '') ||
+      !valid(original) || !valid(refund) || original.payer !== refund.payer || refund.slot <= original.slot ||
+      original.transaction === refund.transaction || refund.original_transaction !== original.transaction ||
+      original.payer_delta_base_units !== '-1000' || original.merchant_delta_base_units !== '1000' ||
+      refund.payer_delta_base_units !== '1000' || refund.merchant_delta_base_units !== '-1000') {
+    throw new Error('Refund resolution requires matching original-payment and exact-return chain results.');
+  }
+  const select = proof => ({ network: proof.network, slot: proof.slot, transaction: proof.transaction,
+    mint: proof.mint, payer: proof.payer, merchant: proof.merchant,
+    payer_delta_base_units: proof.payer_delta_base_units, merchant_delta_base_units: proof.merchant_delta_base_units, decimals: 6 });
+  return { schema: input.schema, purchase_id: input.purchase_id, original_payment: select(original),
+    refund: { ...select(refund), original_transaction: original.transaction } };
 }
 
 // Public fields from the independent buyer. This never selects a verification key from input.
