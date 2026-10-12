@@ -29,3 +29,8 @@ It never charges funds or measures hardware. Authentic expired evidence remains 
 The optional RPC check needs internet access and trusts api.devnet.solana.com.
 The installed code and public pin are the buyer configuration trust root.
 Use the repository README for the complete live MVP and simulated purchase rehearsal.
+
+A reviewed job is included at evidence/current-job.json.
+Open jobs.html and select Load reviewed job from this export.
+The saved readbacks are recorded evidence. This export made no live chain query.
+The original capture timestamp remains unchanged. Old evidence remains expired.

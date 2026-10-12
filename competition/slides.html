@@ -13,29 +13,29 @@
 <section class="slide" aria-label="Slide 1: FieldProof">
 <h1>FieldProof</h1>
 <div class="hero"><div><p class="lead">Software pays for a fresh physical check.</p><p>The device signs its answer. The buyer verifies who answered and whether the answer is still fresh.</p><p class="minor">Working prototype: ESP32-C6 and Solana Devnet.</p></div><img src="assets/fieldproof-project.png" alt="FieldProof logo"></div>
-<footer>01 / A device signature authenticates a claim. It does not establish physical truth.</footer>
+<footer>01 / A signature identifies the claim’s source. Physical truth needs separate controls.</footer>
 </section>
 <section class="slide" aria-label="Slide 2: Buyer hypothesis">
 <h1>A remote inspection before a decision</h1>
 <div class="columns"><div><h2>Target workflow</h2><p>An operator pays someone to check a physical fact at another site.</p><p>Its software lacks a reliable answer from an existing API.</p></div><div><h2>FieldProof proposal</h2><p>Commission one check from a device already on site.</p><p>Get a new answer tied to that request.</p></div></div>
 <p class="next">Value test: does the check replace a manual check or change a costly decision?</p>
-<footer>02 / Buyer hypothesis. No customer or willingness to pay is validated. Use an existing API when it supplies the answer.</footer>
+<footer>02 / Buyer and pricing remain hypotheses. An existing reliable API can be sufficient.</footer>
 </section>
 <section class="slide" aria-label="Slide 3: Working transaction">
 <h1>What the prototype does</h1>
 <div class="steps"><div class="step"><h2>1. Request a check</h2><p>The buyer fixes the contact question, device key, price, and ten-second age limit.</p></div><div class="step"><h2>2. Pay the operator</h2><p>Solana x402 settles 0.001 test USDC before measurement.</p></div><div class="step"><h2>3. Measure and sign</h2><p>The ESP32 reads the physical input and signs a new answer for this request.</p></div><div class="step"><h2>4. Verify and decide</h2><p>The buyer verifies the source, request, signature, and age before its next action.</p></div></div>
-<footer>03 / OPEN and CLOSED both fulfill the paid check. The operator wallet receives test tokens. The buyer's next action is separate.</footer>
+<footer>03 / Both contact states fulfill the paid check. The operator receives test tokens.</footer>
 </section>
 <section class="slide" aria-label="Slide 4: Evidence and limits">
 <h1>The evidence has limits</h1>
 <div class="columns"><div><h2>The buyer can verify</h2><p>This approved device signed the answer to this request.</p><p>An old answer fails the age policy. An edited answer fails signature verification.</p></div><div><h2>The physical demonstration</h2><p>Release or hold BOOT. The contact changes between OPEN and CLOSED.</p><p>The contact does not prove contents, safety, or completed work.</p></div></div>
-<footer>04 / BOOT is a contact stand-in. No robot or real entrance is connected. The software buyer can serve an AI agent.</footer>
+<footer>04 / BOOT represents a contact. This software controls no door or robot.</footer>
 </section>
 <section class="slide" aria-label="Slide 5: peaq and next test">
 <h1>peaq's role and the next test</h1>
-<div class="columns"><div><h2>Solana: demonstrated</h2><p>Bounded Devnet payment and an original device-signed answer.</p><p class="minor">The public replay preserves the October 11 transaction and capture time.</p></div><div><h2 class="pending">peaq: live integration pending</h2><p>A machine identity binds the offered service to its device key.</p><p>An activity record links a completed check to payment and evidence.</p></div></div>
+<div class="columns"><div><h2>Solana: demonstrated</h2><p>Bounded Devnet payment and an original device-signed answer.</p><p class="minor">The public replay preserves the October 12 job and its original capture time.</p></div><div><h2>peaq Agung: verified</h2><p>A machine identity binds the offered service to its device key.</p><p>A finalized native Storage record links the unchanged job hash.</p></div></div>
 <p class="next">Next: one authorized operator, one repeated question, and a comparison with its current process.</p>
-<footer>05 / peaq code has tests. No live identity or activity event is established. Paid integration and inspection fees remain hypotheses.</footer>
+<footer>05 / Real Agung identity and Storage readbacks. Customer demand remains unvalidated.</footer>
 </section>
 </main>
 </body>

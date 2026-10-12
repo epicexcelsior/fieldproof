@@ -1,4 +1,4 @@
-import { inspectSource, loadTrustedPin } from './jobs.mjs?replay=20261011';
+import { inspectSource, loadTrustedPin, normalizeSource } from './jobs.mjs?replay=20261012';
 
 const el = id => document.getElementById(id);
 const text = (id, value) => { el(id).textContent = value; };
@@ -36,8 +36,9 @@ async function render() {
   lock(true);
   try {
     const source = structuredClone(original);
-    if (mode === 'changed') source.receipt.result.closed = !source.receipt.result.closed;
-    const now = mode === 'now' ? Math.floor(Date.now() / 1000) : original.receipt.completed_at;
+    const receipt = normalizeSource(source).receipt;
+    if (mode === 'changed') receipt.result.closed = !receipt.result.closed;
+    const now = mode === 'now' ? Math.floor(Date.now() / 1000) : normalizeSource(original).receipt.completed_at;
     const result = await inspectSource(source, { pin, now });
     const [label, title, copy, next, buyer, note, exchange, exchangeNote] = steps[step];
     for (const [id, value] of [['step-label', label], ['step-title', title], ['step-copy', copy],
@@ -98,13 +99,16 @@ for (const [id, selectedMode] of [['expire', 'now'], ['alter', 'changed'], ['res
 
 try {
   pin = await loadTrustedPin();
-  const response = await fetch(new URL('./evidence/device-signed-purchase-20261011.json', import.meta.url), { cache: 'no-store' });
+  const evidence = document.body?.dataset.fieldproofEvidence === 'peaq-20261012'
+    ? './evidence/current-job.json' : './evidence/device-signed-purchase-20261011.json';
+  const response = await fetch(new URL(evidence, import.meta.url), { cache: 'no-store' });
   if (!response.ok) throw new Error('Recorded evidence unavailable');
   const body = await response.text();
   if (body.length > 65536) throw new Error('Recorded evidence exceeds its size limit');
   original = JSON.parse(body);
-  const check = await inspectSource(original, { pin, now: original.receipt.completed_at });
-  if (!check.signature || !check.terms || !check.fresh || original.receipt.result.closed !== false) {
+  const receipt = normalizeSource(original).receipt;
+  const check = await inspectSource(original, { pin, now: receipt.completed_at });
+  if (!check.signature || !check.terms || !check.fresh || receipt.result.closed !== false) {
     throw new Error('Original evidence differs from this replay');
   }
   await render();

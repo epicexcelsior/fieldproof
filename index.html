@@ -23,13 +23,13 @@
     @media print{.action,.probes,.sequence,.skip{display:none}.shell{max-width:none}.more{break-inside:avoid}body{background:white}}
   </style>
 </head>
-<body data-fieldproof-page="feedback">
+<body data-fieldproof-page="feedback" data-fieldproof-evidence="peaq-20261012">
   <a class="skip" href="#main">Skip to the check</a>
   <header class="shell top"><span class="brand">FieldProof</span><a href="https://github.com/epicexcelsior/fieldproof">Source ↗</a></header>
   <main class="shell" id="main">
-    <section class="intro" aria-labelledby="title"><div class="eyebrow">Working prototype · Solana + a real ESP32</div><h1 id="title">Software buys a physical check.</h1><p>The device operator gets paid. The buyer gets a fresh, signed answer.</p></section>
+    <section class="intro" aria-labelledby="title"><div class="eyebrow">Working prototype · Solana + peaq + ESP32</div><h1 id="title">Buy fresh readings from sensors.</h1><p>The device operator gets paid. The buyer gets a fresh, signed answer.</p></section>
     <section class="replay" id="replay" data-step="0" aria-label="Guided replay of one actual paid check">
-      <div class="record"><b>Recorded check · Oct 11</b><span>Test tokens · No new payment or measurement</span></div>
+      <div class="record"><b>Recorded check · Oct 12</b><span>Test tokens · No new payment or measurement</span></div>
       <div class="scene">
         <div class="actor"><div class="eyebrow">Buyer</div><h3>Software buyer</h3>
           <svg class="computer" viewBox="0 0 280 160" role="img" aria-label="Software buyer on a computer">
@@ -53,19 +53,19 @@
     <p id="load-error" class="load-error" role="status" hidden></p>
     <div class="purpose">
       <article><div class="label">Buyer hypothesis</div><p><strong>Remote inspections:</strong> a paid device check can replace a manual check at another operator's site.</p><p class="small">Customer demand remains unvalidated.</p></article>
-      <article><div class="label pending">peaq · live integration pending</div><p><strong>Device identity → work history.</strong> The buyer checks the registered device key before paying.</p><p class="small">Prepared code and tests. Live identity and work records await Agung funding.</p></article>
+      <article><div class="label">peaq Agung · verified</div><p><strong>Device identity → work history.</strong> The buyer checked the registered key before paying.</p><p class="small">A finalized peaq Storage record links this completed job.</p></article>
     </div>
     <details class="more"><summary>Evidence, limits, and reviewer questions</summary>
       <p><strong>Real:</strong> a Solana Devnet transfer paid for a new signed ESP32 reading. The Seeker independently verified the signature and transfer.</p>
       <p><strong>Limits:</strong> the button represents a contact. No door or customer workflow connects to it. Payment precedes measurement. No escrow or automatic refund exists.</p>
-      <p><strong>peaq:</strong> no FieldProof identity or work record exists on chain yet. The prepared path uses registered identity and official native Storage, not a peaqOS EventRegistry event or credit rating.</p>
+      <p><strong>peaq:</strong> this job used a real registered identity before payment. Its finalized native Storage record links the unchanged job hash. Saved readbacks are recorded evidence. This page does not query current peaq state. Storage remains operator-controlled. No EventRegistry event or credit rating is claimed.</p>
       <p><strong>Business:</strong> the 0.001 test-USDC price demonstrates payment behavior. It does not establish commercial pricing or traction. A reliable existing API can be enough.</p>
       <p><strong>Feedback:</strong> is the buyer value clear? What one change matters most for this peaq entry?</p>
-      <div class="links"><a href="proof.html?record=20261011&amp;present=1">Inspect signature and payment ↗</a><a href="evidence/device-signed-purchase-20261011.json">Original receipt</a><a href="competition/fieldproof-pitch.pdf">Five-slide deck</a><a href="https://github.com/epicexcelsior/fieldproof/blob/main/docs/PEAQ_INTEGRATION.md">peaq evidence</a><a href="https://youtu.be/XRSp_4vJ5oU">Earlier founder video</a></div>
-      <p class="evidence-note">Device image: still from the earlier hardware recording. It does not depict the October 11 payment.</p>
+      <div class="links"><a href="jobs.html">Verify payment and inspect the linked job ↗</a><a href="evidence/current-job.json" download>Download original job</a><a href="competition/fieldproof-pitch.pdf">Five-slide deck</a><a href="https://github.com/epicexcelsior/fieldproof/blob/main/docs/PEAQ_INTEGRATION.md">peaq evidence</a><a href="proof.html?record=20261011&amp;present=1">Earlier receipt</a></div>
+      <p class="evidence-note">Device image: still from the earlier hardware recording. It does not depict this payment.</p>
     </details>
   </main>
   <footer class="shell"><div class="footer"><div><a href="https://github.com/epicexcelsior/fieldproof/blob/main/docs/competition/STORY.md">Full story and difference</a><a href="start.html">Founder materials</a></div><span>No wallet or installation required.</span></div></footer>
-  <script type="module" src="feedback.mjs?visual=20261012"></script>
+  <script type="module" src="feedback.mjs?visual=peaq-20261012"></script>
 </body>
 </html>
