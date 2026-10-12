@@ -43,6 +43,23 @@ async def test_provider_and_buyer_reject_replay():
 
 
 @pytest.mark.asyncio
+async def test_provider_error_explains_rejection_without_accepting_unsigned_evidence():
+    provider = SimulatedContactProvider()
+    contract = ObservationContract()
+    request = observation_request(provider.device_id, contract)
+    receipt = await provider.invoke(provider.device_id, request)
+    error = replace(receipt, status="error", nonce=None, provider=None, receipt_signature=None,
+                    error={"code": "AUTH_EXPIRED", "message": "/private/ignored-detail"})
+    with pytest.raises(EvidenceError, match="PROVIDER_ERROR: AUTH_EXPIRED") as caught:
+        verifier().verify(error, request, contract)
+    assert "/private/" not in str(caught.value)
+    with pytest.raises(EvidenceError, match="CHALLENGE_MISMATCH"):
+        verifier().verify(replace(error, request_id="other-request"), request, contract)
+    with pytest.raises(EvidenceError, match="PROVIDER_ERROR: UNSPECIFIED"):
+        verifier().verify(replace(error, error={"code": "/private/path"}), request, contract)
+
+
+@pytest.mark.asyncio
 @pytest.mark.parametrize("field,value", [("nonce", 0), ("completed_at", 0), ("started_at", 0),
                                          ("parameters", {"location": "elsewhere"}), ("provider", "fake")])
 async def test_receipt_fields_bind_to_challenge(field, value):

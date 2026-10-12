@@ -213,7 +213,12 @@ async function main() {
     if (values.keypair || values['output-directory'] || values['recover-stale-lock']) throw new Error('Wallet, output-directory, and recovery options require explicit execution.');
     if (values['check-device']) {
       try { console.log(JSON.stringify(await checkPhysicalContact(), null, 2)); }
-      catch (error) { throw new Error(`Real board check failed (${deviceFailure(error)}). Run scripts/check_execution_access.py. No wallet was read or payment started.`); }
+      catch (error) {
+        if (/PROVIDER_ERROR: AUTH_EXPIRED/.test(error?.message ?? '')) {
+          throw new Error('The device reports AUTH_EXPIRED. Release BOOT, restart the powered board, then repeat this unpaid check. No wallet was read or payment started.');
+        }
+        throw new Error(`Real board check failed (${deviceFailure(error)}). Run scripts/check_execution_access.py. No wallet was read or payment started.`);
+      }
     } else console.log(JSON.stringify({ ...contactToolPreview(`http://127.0.0.1:${port}`), requested: count,
       maximum_batch_base_units: String(count * 1000), physical_input_change_required: false }, null, 2));
     return;

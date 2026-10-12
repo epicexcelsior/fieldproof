@@ -236,7 +236,8 @@ export async function createGateway({ paymentServer, store, observe = observeHar
     } catch (error) {
       // Keep a useful failure category without exposing bridge stderr, device input, or local paths.
       const detail = String(error?.message ?? '');
-      const reason = /TimeoutError/.test(detail) ? 'Device operation timed out.'
+      const reason = /PROVIDER_ERROR: AUTH_EXPIRED/.test(detail) ? 'Device reported an expired authorization. Verify an unpaid check after device restart.'
+        : /TimeoutError/.test(detail) ? 'Device operation timed out.'
         : /(?:configured Bluetooth board|provisioned contact provider) is unavailable/.test(detail)
           ? 'Configured device is unavailable.' : 'Device answer is unavailable or failed verification.';
       console.error('Observation delivery failed:', { purchase_id: purchase.id, reason });

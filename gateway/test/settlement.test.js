@@ -1,11 +1,28 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { DEVNET_RPC, querySettlement, verifySettlement, publicBuyerRun, contactPolicy } from '../../docs/settlement.mjs';
+import { DEVNET_RPC, querySettlement, verifySettlement, publicBuyerRun, contactPolicy, verifyRefund, refundMemo } from '../../docs/settlement.mjs';
 
 // Minimal public RPC fixture derived from the recorded October 1 transaction.
 const fixture = JSON.parse(readFileSync(new URL('./fixtures/settlement-rpc.json', import.meta.url)));
 const purchase = JSON.parse(readFileSync(new URL('../../docs/evidence/device-signed-purchase.json', import.meta.url))).purchase;
+
+test('refund proves the reverse transfer and binds its memo to the original failed purchase', () => {
+  const p = { purchase_id: '0123456789abcdef', settlement: purchase.settlement };
+  const result = structuredClone(fixture), tx = '4'.repeat(88);
+  result.transaction.signatures[0] = tx;
+  [result.meta.preTokenBalances, result.meta.postTokenBalances] = [result.meta.postTokenBalances, result.meta.preTokenBalances];
+  const transfer = result.transaction.message.instructions.find(ix => ix.parsed?.type === 'transferChecked');
+  [transfer.parsed.info.source, transfer.parsed.info.destination] = [transfer.parsed.info.destination, transfer.parsed.info.source];
+  transfer.parsed.info.authority = 'CaQAKBcwf7G5vXeu2RNuNGJafnJ8724Uj4wv9ivfxfQA';
+  result.transaction.message.instructions.push({ programId: 'MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr', parsed: refundMemo(p) });
+  assert.equal(verifyRefund(result, p, tx).payer_delta_base_units, '1000');
+  assert.equal(verifyRefund(result, p, tx).merchant_delta_base_units, '-1000');
+  assert.throws(() => verifyRefund(result, p, p.settlement.transaction), /separate/);
+  assert.throws(() => verifyRefund(result, { ...p, purchase_id: 'fedcba9876543210' }, tx), /memo/);
+  transfer.parsed.info.tokenAmount.amount = '2000';
+  assert.throws(() => verifyRefund(result, p, tx), /transfer instruction/);
+});
 
 test('package view requires explicit new GPIO20 buyer terms and never relabels GPIO9 records', () => {
   assert.throws(() => publicBuyerRun(purchase, 'package-pickup'));

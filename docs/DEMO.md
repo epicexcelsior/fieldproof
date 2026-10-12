@@ -317,6 +317,46 @@ adb -s PHONE_SERIAL reverse --remove tcp:4021
 Back up `.local/purchases.sqlite` before a manual repair. Keep its WAL files with the database during an active process.
 Never edit a purchase record to make an unresolved settlement appear successful.
 
+### Resolve a returned test payment
+
+A failed delivery remains a failed delivery. A verified refund can resolve its buyer review without fulfilling the job.
+The operator must first return exactly 0.001 Devnet USDC to the original payer in a separate transaction.
+Include this exact memo, replacing the placeholders with the preserved purchase ID and original payment signature:
+
+```text
+fieldproof:refund:PURCHASE_ID:ORIGINAL_PAYMENT_SIGNATURE
+```
+
+This is a manual operator action. No refund service or escrow exists.
+Preserve the refund signature before broadcast. An unknown outcome must not start another transfer.
+After the return transaction confirms, stop the idle buyer with Ctrl+C in its original terminal.
+Run this read-only chain reconciliation from the repository root:
+
+```bash
+node gateway/reconcile-refund.js \
+  --operation ORIGINAL_OPERATION_UUID \
+  --purchase ORIGINAL_PURCHASE_ID \
+  --transaction REFUND_TRANSACTION_SIGNATURE \
+  --record
+```
+
+The command independently verifies the original transfer, reverse transfer, amount, mint, payer, and purchase-bound memo.
+It signs no transaction and makes no payment. A running buyer lock blocks reconciliation.
+It preserves the original review backup and records `refunded` in the buyer journal.
+The purchase database retains `delivery_failed` and no receipt. The operation still counts toward the spending limit.
+An unavailable query or mismatched refund retains the review block. Restart the buyer only after reconciliation passes.
+
+### Device authorization expires
+
+`PROVIDER_ERROR: AUTH_EXPIRED` is an unsigned device error report, not accepted measurement evidence.
+The prototype uses a temporary clock anchor from its first accepted request after startup.
+If the laptop clock changes or the board clock diverges, the device can reject later requests.
+Release BOOT, press Reset once, then run the unpaid device check. Keep the board powered.
+The restart clears the temporary clock anchor and volatile replay cache. It retains the stored device signing key.
+Use a new request after restart. Do not widen authorization expiry or reuse an earlier paid receipt.
+Verify the original public key and a fresh signed observation before another payment.
+This recovery does not establish the cause of clock divergence. The prototype has no independent trusted clock service.
+
 ## Wi-Fi route conflict
 
 A VPN can advertise the same subnet as the ESP32 access point.

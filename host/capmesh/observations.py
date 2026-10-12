@@ -70,6 +70,11 @@ class ObservationVerifier:
         key = self.provider_keys.get(request.device_id)
         if key is None:
             raise EvidenceError("UNKNOWN_PROVIDER: buyer has no provisioned key")
+        if receipt.status == "error" and receipt.protocol == request.protocol and receipt.request_id == request.request_id:
+            code = receipt.error.get("code") if isinstance(receipt.error, dict) else None
+            code = code if isinstance(code, str) and re.fullmatch(r"[A-Z][A-Z0-9_]{0,39}", code) else "UNSPECIFIED"
+            # Error responses explain rejection. They never authorize a decision.
+            raise EvidenceError(f"PROVIDER_ERROR: {code} (unsigned provider report, no accepted measurement)")
         if (receipt.protocol, receipt.request_id, receipt.provider, receipt.capability, receipt.nonce,
             receipt.parameters) != (request.protocol, request.request_id, request.device_id,
                                     "state.observe", request.nonce, {"location": contract.location}):

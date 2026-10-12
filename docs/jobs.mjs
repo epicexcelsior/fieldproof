@@ -329,6 +329,10 @@ if (typeof document !== 'undefined' && document.body?.dataset.fieldproofPage ===
       if (!response.ok) throw new Error(`Operation status unavailable. Preserve ID ${id}.`);
       const state = await response.json();
       if (state.status === 'review') throw new Error(`${state.error ?? 'Purchase requires review. No automatic retry.'} Preserve ID ${id} and purchase ${state.purchase_id ?? 'pending'}.`);
+      if (state.status === 'refunded') {
+        status(`${state.message} Refund transaction: ${state.resolution.refund.transaction}`, 'warn');
+        return;
+      }
       if (state.status === 'done') {
         status(`Paid reading delivered. Looking for job ${state.purchase_id}.`, 'warn');
         let jobResponse;

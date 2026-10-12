@@ -2,7 +2,7 @@
 import { randomBytes, randomUUID } from 'node:crypto';
 import { mkdirSync, openSync, writeFileSync, fsyncSync, closeSync, readdirSync, readFileSync, existsSync, renameSync, unlinkSync } from 'node:fs';
 import { join } from 'node:path';
-import { publicBuyerRun } from '../docs/settlement.mjs';
+import { publicBuyerRun, publicRefundResolution } from '../docs/settlement.mjs';
 
 // Shared lifetime cap for the browser, agent, and batch buyer using one wallet journal.
 export const DEFAULT_BUYER_MAXIMUM = 100;
@@ -24,6 +24,16 @@ function replacePrivate(path, value) {
 function processState(pid) {
   try { process.kill(pid, 0); return 'alive'; }
   catch (error) { return error.code === 'ESRCH' ? 'absent' : 'unknown'; }
+}
+
+function completedRecord(record, payer, payTo) {
+  try {
+    if (record.status === 'done') { publicBuyerRun(record.result); return true; }
+    if (record.status !== 'refunded') return false;
+    const resolution = publicRefundResolution(record.resolution);
+    return resolution.purchase_id === record.purchase_id && !record.result &&
+      (!payer || resolution.original_payment.payer === payer) && (!payTo || resolution.original_payment.merchant === payTo);
+  } catch { return false; }
 }
 
 // Diagnostic only. Arguments can contain wallet paths or credentials. Never return them.
@@ -60,8 +70,7 @@ export function inspectLocalBuyer({ directory, maximum = DEFAULT_BUYER_MAXIMUM, 
   for (const name of files) {
     try {
       const record = JSON.parse(readFileSync(join(directory, name), 'utf8'));
-      if (record.operation_id !== name.slice(0, -5) || record.status !== 'done') blocked = true;
-      else publicBuyerRun(record.result);
+      if (record.operation_id !== name.slice(0, -5) || !completedRecord(record)) blocked = true;
     } catch { blocked = true; }
   }
   const result = { operations: files.length, remaining: Math.max(0, maximum - files.length), blocked,
@@ -96,7 +105,7 @@ export function recoverCompletedBuyerLock({ directory, maximum = DEFAULT_BUYER_M
   } finally { unlinkSync(mutex); }
 }
 
-export function createLocalBuyer({ directory, payer, payTo, buy, maximum = DEFAULT_BUYER_MAXIMUM, readPurchaseState }) {
+export function createLocalBuyer({ directory, payer, payTo, buy, maximum = DEFAULT_BUYER_MAXIMUM, readPurchaseState, readPurchaseSettlement }) {
   if (!Number.isInteger(maximum) || maximum < 1 || maximum > DEFAULT_BUYER_MAXIMUM) {
     throw new Error(`Use a maximum from 1 to ${DEFAULT_BUYER_MAXIMUM} test purchases`);
   }
@@ -113,12 +122,14 @@ export function createLocalBuyer({ directory, payer, payTo, buy, maximum = DEFAU
     try { return JSON.parse(readFileSync(path, 'utf8')); }
     catch { return { operation_id: id, status: 'review', error: 'Incomplete buyer record. Review before another purchase.' }; }
   };
-  const needsReview = () => files().some(name => read(name.slice(0, -5))?.status !== 'done');
+  const needsReview = () => files().some(name => !completedRecord(read(name.slice(0, -5)), payer, payTo));
   const lastId = () => files().map(name => read(name.slice(0, -5))).filter(Boolean)
     .sort((a, b) => (b.started_ms ?? 0) - (a.started_ms ?? 0))[0]?.operation_id ?? null;
   const publicStatus = record => ({ operation_id: record.operation_id, status: record.status,
     elapsed_ms: record.elapsed_ms ?? 0, events: record.events ?? [], purchase_id: record.purchase_id ?? null,
     ...(record.status === 'done' ? { run: publicBuyerRun(record.result) } : {}),
+    ...(record.status === 'refunded' ? { resolution: publicRefundResolution(record.resolution),
+      message: 'The device answer was not delivered. The exact test payment was returned. No job was fulfilled.' } : {}),
     ...(record.status === 'review' ? { error: typeof record.purchase_id === 'string' && /^[0-9a-f]{16}$/.test(record.purchase_id) &&
       readPurchaseState?.(record.purchase_id) === 'delivery_failed'
       ? 'The gateway recorded a settled payment, but the device answer was not delivered. Refund review is required. No automatic retry.'
@@ -139,7 +150,7 @@ export function createLocalBuyer({ directory, payer, payTo, buy, maximum = DEFAU
       }
       const record = read(id);
       // A pending record without a live operation means its outcome needs manual review.
-      return record ? publicStatus(record.status === 'done' ? record : { ...record, status: 'review' }) : null;
+      return record ? publicStatus(completedRecord(record, payer, payTo) ? record : { ...record, status: 'review' }) : null;
     },
     start(id) {
       if (!operationId.test(id)) return { code: 400, error: 'Use a new UUID operation ID.' };
@@ -197,6 +208,40 @@ export function createLocalBuyer({ directory, payer, payTo, buy, maximum = DEFAU
         events: [...(record.events ?? []), { phase: 'review-completed', elapsed_ms: record.elapsed_ms ?? 0 }] };
       delete final.error;
       replacePrivate(join(directory, id + '.json'), final);
+      return this.status(id);
+    },
+    completeRefunded(id, input) {
+      // Only an operator who independently queried both transactions can call this local method.
+      // No HTTP route exposes it, and the original purchase remains delivery_failed.
+      if (active) throw new Error('Stop the active purchase before completing refund review.');
+      const record = read(id), resolution = publicRefundResolution(input);
+      const original = readPurchaseSettlement?.(resolution.purchase_id);
+      if (!record || record.operation_id !== id || record.purchase_id !== resolution.purchase_id ||
+          resolution.original_payment.payer !== payer || resolution.original_payment.merchant !== payTo ||
+          readPurchaseState?.(record.purchase_id) !== 'delivery_failed' || original?.success !== true ||
+          original.transaction !== resolution.original_payment.transaction || original.payer !== payer ||
+          original.network !== 'solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1') {
+        throw new Error('Refund does not match the preserved operation and failed purchase payment.');
+      }
+      if (record.status === 'refunded') {
+        if (JSON.stringify(publicRefundResolution(record.resolution)) !== JSON.stringify(resolution)) {
+          throw new Error('This operation binds another refund resolution.');
+        }
+        return this.status(id);
+      }
+      if (!['pending', 'review'].includes(record.status)) throw new Error('Only an unresolved operation can receive a refund resolution.');
+      if (files().some(name => name !== id + '.json' &&
+          read(name.slice(0, -5))?.resolution?.refund?.transaction === resolution.refund.transaction)) {
+        throw new Error('This refund transaction already resolves another operation.');
+      }
+      const backup = join(directory, '.review-' + id + '.json');
+      if (!existsSync(backup)) writePrivate(backup, record, true);
+      else if (JSON.stringify(JSON.parse(readFileSync(backup, 'utf8'))) !== JSON.stringify(record)) {
+        throw new Error('The preserved review backup differs. Inspect it before recovery.');
+      }
+      replacePrivate(join(directory, id + '.json'), { ...record, status: 'refunded', resolution,
+        recovered_at: new Date().toISOString(),
+        events: [...(record.events ?? []), { phase: 'refund-verified', elapsed_ms: record.elapsed_ms ?? 0 }] });
       return this.status(id);
     },
     close() {
