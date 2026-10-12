@@ -3,6 +3,15 @@ import { querySettlement } from './settlement.mjs';
 // This key comes from host/capmesh/protocol/receipt_keys.json, not from a job file.
 export const INSTALLED_PROVIDER = 'esp32-c6-96a2';
 export const INSTALLED_PIN = '046218c52391433f9a687743192c5558a121320b8fa664931e5aaa1b6e5fbf342f9411913c8b72c91a3e7b9762e34e77955ed6035b81fa27ab7770dd8d4922ed63';
+export function savedJobPath(search, hostname) {
+  const params = new URLSearchParams(search);
+  if (!params.has('job')) return null;
+  const ids = params.getAll('job');
+  if (hostname !== '127.0.0.1' || ids.length !== 1 || !/^[0-9a-f]{16}$/.test(ids[0])) {
+    throw new Error('Use one valid job ID on the configured local buyer.');
+  }
+  return `/jobs/${ids[0]}`;
+}
 const NETWORK = 'solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1';
 const USDC = '4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU';
 const RECIPIENT = 'CaQAKBcwf7G5vXeu2RNuNGJafnJ8724Uj4wv9ivfxfQA';
@@ -204,7 +213,9 @@ if (typeof document !== 'undefined' && document.body?.dataset.fieldproofPage ===
     } else el('explorer').removeAttribute('href');
     text('machine-id', job?.identity?.machine_id ?? 'No peaq identity in this historical run');
     const eventState = source.event?.status ?? source.event?.state;
-    const activityRoute = source.event?.reference?.route === 'storage' ? 'peaq Storage activity' : 'peaq event';
+    const storage = source.event?.reference?.route === 'storage' ||
+      source.event?.confirmation?.schema === 'fieldproof-peaq-storage-inspection-v1';
+    const activityRoute = storage ? 'peaq Storage work record' : 'peaq work record';
     text('event-status', eventState ? `Recorded ${activityRoute}: ${eventState}; no live query here` : 'No linked peaq activity shown');
     mark('pin-check', 'INSTALLED', 'ok');
     mark('signature-check', signature ? 'VALID' : 'REJECTED', signature ? 'ok' : 'bad');
@@ -317,7 +328,7 @@ if (typeof document !== 'undefined' && document.body?.dataset.fieldproofPage ===
       const response = await fetch(`/local-buyer/purchase/${encodeURIComponent(id)}`, { cache:'no-store' });
       if (!response.ok) throw new Error(`Operation status unavailable. Preserve ID ${id}.`);
       const state = await response.json();
-      if (state.status === 'review') throw new Error(`Purchase requires review. Preserve ID ${id} and purchase ${state.purchase_id ?? 'pending'}. No automatic retry.`);
+      if (state.status === 'review') throw new Error(`${state.error ?? 'Purchase requires review. No automatic retry.'} Preserve ID ${id} and purchase ${state.purchase_id ?? 'pending'}.`);
       if (state.status === 'done') {
         status(`Paid reading delivered. Looking for job ${state.purchase_id}.`, 'warn');
         let jobResponse;
@@ -389,5 +400,18 @@ if (typeof document !== 'undefined' && document.body?.dataset.fieldproofPage ===
     // An optional published packet cannot take down independent file inspection.
     try { await configurePublishedJob(); }
     catch (error) { status(`${error.message}. Recorded and manual file inspection remain available.`, 'error'); }
+    try {
+      const route = typeof window !== 'undefined' && window.location
+        ? savedJobPath(window.location.search, window.location.hostname) : null;
+      if (route) {
+        const response = await fetch(route, { cache: 'no-store' });
+        if (!response.ok) throw new Error(`Saved job unavailable (HTTP ${response.status}). No payment started.`);
+        const raw = await response.text();
+        if (raw.length > 65536) throw new Error('Saved job exceeds 64 KB.');
+        const candidate = JSON.parse(raw);
+        if (normalizeSource(candidate).id !== route.split('/').at(-1)) throw new Error('Saved job ID differs from the requested job.');
+        await render(candidate, 'Recorded completed job. No new measurement or payment.');
+      }
+    } catch (error) { status(error.message, 'error'); }
   })();
 }
