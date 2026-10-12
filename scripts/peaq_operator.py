@@ -353,6 +353,16 @@ def verify_solana_settlement(job, *, rpc_call=None):
     return {"slot": result["slot"], "block_time": result["blockTime"]}
 
 
+def activation_calldata(contract, params):
+    """Encode the exact guarded call with the SDK's ABI and DID document."""
+    from peaq_os_sdk.tokenomics._internal.encode_did import encode_did_document
+    # The public encoder aligns named tuple components. The private function
+    # encoder passes the DID mapping directly to eth-abi and fails before signing.
+    return contract.encode_abi("activateMachine", args=[
+        encode_did_document(params), params.machine_type, params.credential_subject,
+        params.manufacturer, params.tier])
+
+
 def execute_activation(policy, manufacturer, max_net_base_units, max_total_gas_wei, key_file, journal_path):
     """Use SDK's preflight, exact approval, activation, and post-state checks."""
     _bound(max_total_gas_wei, "max_total_gas_wei")
@@ -364,7 +374,6 @@ def execute_activation(policy, manufacturer, max_net_base_units, max_total_gas_w
         from web3 import Web3
         from peaq_os_sdk.tokenomics.abis import MACHINE_STATE_AND_SYNC_ABI
         from peaq_os_sdk.tokenomics.deployments import resolve_tokenomics20_deployment
-        from peaq_os_sdk.tokenomics._internal.encode_did import encode_did_document
         from peaq_os_sdk.tokenomics.activate_machine import activate_machine
 
         w3, provider = _operator_web3()
@@ -372,9 +381,7 @@ def execute_activation(policy, manufacturer, max_net_base_units, max_total_gas_w
         contracts = deployment.contracts
         state = w3.eth.contract(address=Web3.to_checksum_address(contracts.machine_state_and_sync),
                                 abi=MACHINE_STATE_AND_SYNC_ABI)
-        activation_data = state.functions.activateMachine(
-            encode_did_document(params), params.machine_type, params.credential_subject,
-            params.manufacturer, params.tier)._encode_transaction_data()
+        activation_data = activation_calldata(state, params)
         targets = {"approval": "", "activation": contracts.machine_state_and_sync,
                    "activation_data": activation_data, "spender": contracts.machine_subscription,
                    "max_net": max_net_base_units,

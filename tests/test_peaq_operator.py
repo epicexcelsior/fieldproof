@@ -146,6 +146,21 @@ def test_sdk_activation_inputs_match_approved_public_subject():
     assert params.service_endpoints[0].service_endpoint == policy()["service_endpoint"]
 
 
+def test_activation_guard_encodes_the_sdk_did_mapping_without_network():
+    pytest.importorskip("peaq_os_sdk", reason="Run the ABI regression in the isolated peaq environment")
+    from web3 import Web3
+    from peaq_os_sdk.tokenomics.abis import MACHINE_STATE_AND_SYNC_ABI
+    params = operator.activation_inputs(policy(), "0x" + "33" * 20, 400000000000000000)
+    contract = Web3().eth.contract(address="0x" + "11" * 20, abi=MACHINE_STATE_AND_SYNC_ABI)
+    data = operator.activation_calldata(contract, params)
+    function, decoded = contract.decode_function_input(data)
+    assert function.fn_name == "activateMachine"
+    values = list(decoded.values())
+    assert values[0]["controller"].lower() == policy()["controller"].lower()
+    assert values[0]["verificationMethods"][0]["publicKeyMultibase"] == params.verification_methods[0].public_key_multibase
+    assert values[1:] == [params.machine_type, params.credential_subject, params.manufacturer, params.tier]
+
+
 def test_signer_syncs_private_journal_before_authorizing_raw_send(tmp_path, monkeypatch):
     pytest.importorskip("eth_utils", reason="Run the signer check in the isolated peaq environment")
     root = tmp_path / "journals"
