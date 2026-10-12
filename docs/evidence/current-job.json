@@ -1,0 +1,140 @@
+{
+  "schema": "fieldproof-evidence-manifest-v1",
+  "job": {
+    "acceptance": {
+      "accepted": true,
+      "decision": "DISPATCH",
+      "verified_at": 1791808596
+    },
+    "identity": {
+      "authentication": true,
+      "available": true,
+      "block_hash": "0x7e4190fa7cc577fde4ee05780033611ed079341c23de4284da5282f66120b9c3",
+      "block_timestamp": 1791808530,
+      "chain_id": 9990,
+      "contracts": {
+        "cross_chain_mirror": "0xd5F8d5944c5d488B1cD698D642FC8156a8CD0c0c",
+        "info_desk": "0x72b66AF120c55371cA6e5Ce38D4e10dF1bA30Bb1",
+        "machine_bridge_adapter": "0x0406e7bE522AEa626aee54f6258D415215e59F76",
+        "machine_registry": "0x538da35489B1F0035799a8351E67835ae4ABb377",
+        "machine_state_and_sync": "0xA7D33726232aae30622643a18047f0Ca3e159da9",
+        "machine_subscription": "0xaDCc5dD8CD57E3198B881c3388F25D2fD69B5aDc",
+        "subscription_token_provision_pool": "0x8A3692Ad0AcF79BB89413514Af9957d95032e19B"
+      },
+      "controller": "0xAFAC49c440f32a6a7bd4a717cCB95e60cE4D7C12",
+      "deployment_id": "agung-2026-08-28",
+      "finalized_block": 11135508,
+      "homed_locally": true,
+      "key_id": "#receipt-key",
+      "machine_id": "2044618828586167349407969644236800133676464971368659651643404080491769435145",
+      "owner": "0xAFAC49c440f32a6a7bd4a717cCB95e60cE4D7C12",
+      "paused": false,
+      "peers_match": true,
+      "receipt_public_key": "046218c52391433f9a687743192c5558a121320b8fa664931e5aaa1b6e5fbf342f9411913c8b72c91a3e7b9762e34e77955ed6035b81fa27ab7770dd8d4922ed63",
+      "relocating": false,
+      "resolved_at": 1791808580,
+      "schema": "fieldproof-peaq-identity-v1",
+      "service": {
+        "endpoint": "urn:fieldproof:ble-contact:esp32-c6-96a2:gpio9-contact:state.observe",
+        "id": "#contact-observation",
+        "type": "FieldProofBLEContactV1"
+      },
+      "subscription": "active"
+    },
+    "job_id": "31be41e44b1e40c5",
+    "payment": {
+      "amount_base_units": "1000",
+      "asset": "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
+      "kind": "test-token",
+      "network": "solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1",
+      "payer": "2U7Bz5u4bVMsUtNcF4b4xdWG7K3N7WmbsGCqMQmjevMf",
+      "recipient": "CaQAKBcwf7G5vXeu2RNuNGJafnJ8724Uj4wv9ivfxfQA",
+      "transaction": "4URoDYxkuM3VRgE8AoPCXu896sotnPMReb6AMi4rW4Rr3pi3xtCEUbVBfVriRvmEdqX1mgzDPCkACHc2Cc7SPD2Y"
+    },
+    "provider": "esp32-c6-96a2",
+    "receipt": {
+      "authorization_ref": null,
+      "capability": "state.observe",
+      "completed_at": 1791808590,
+      "delivery_proof": null,
+      "error": null,
+      "nonce": 223564551,
+      "parameters": {
+        "location": "demo-gate"
+      },
+      "protocol": "capmesh/0.1",
+      "provider": "esp32-c6-96a2",
+      "receipt_signature": "v3:eQDIDlN/IB1F8twqy8nfLkeEmTynjERg2fvtYexZxrxb+m8Ntl1bFpJaj/17F9DTnRZbIWaO/LlAfKXZYAzCFQ==",
+      "request_id": "31be41e44b1e40c5",
+      "result": {
+        "closed": false,
+        "metric": "gate.closed",
+        "sensor": "gpio9-contact",
+        "stable_samples": 5,
+        "total_samples": 5
+      },
+      "started_at": 1791808590,
+      "status": "success"
+    },
+    "receipt_sha256": "4c741416362676e5679234c3e21ca317939cfb8286703983f93bd1ed3540817e",
+    "request": {
+      "contact": {
+        "provider": "esp32-c6-96a2",
+        "sensor": "gpio9-contact"
+      },
+      "created_at": 1791808580,
+      "id": "31be41e44b1e40c5",
+      "location": "demo-gate",
+      "max_age_seconds": 10,
+      "nonce": 223564551
+    },
+    "schema": "fieldproof-job-v1"
+  },
+  "job_sha256": "378db0e9bd94a685f500b0bf726673894a80cf274783f9eb85d5d13269155152",
+  "payment_verification": {
+    "network": "Solana Devnet",
+    "slot": 510265773,
+    "transaction": "4URoDYxkuM3VRgE8AoPCXu896sotnPMReb6AMi4rW4Rr3pi3xtCEUbVBfVriRvmEdqX1mgzDPCkACHc2Cc7SPD2Y",
+    "mint": "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
+    "payer": "2U7Bz5u4bVMsUtNcF4b4xdWG7K3N7WmbsGCqMQmjevMf",
+    "merchant": "CaQAKBcwf7G5vXeu2RNuNGJafnJ8724Uj4wv9ivfxfQA",
+    "payer_delta_base_units": "-1000",
+    "merchant_delta_base_units": "1000",
+    "decimals": 6
+  },
+  "peaq_event": {
+    "state": "confirmed",
+    "transaction_hash": "0xe88e808f6089fbbf91e5eb5e0a8997ab3e25859f94ce807f8cf8b88a0cb99fad",
+    "data_hash": "0x5f95e16c7becf2d9c8fdbc1afdcfa1b6a7dc68281d15e3cd5d41f7f9e512a61c",
+    "reference": {
+      "route": "storage",
+      "storage_address": "0x0000000000000000000000000000000000000801",
+      "key_utf8": "fieldproof.job:31be41e44b1e40c5"
+    },
+    "confirmation": {
+      "block_hash": "0x157370bec93fe69863acbae41a9a705f3fc11f7c204e3797f0b5362803db0cec",
+      "chain_id": 9990,
+      "data_hash": "0x5f95e16c7becf2d9c8fdbc1afdcfa1b6a7dc68281d15e3cd5d41f7f9e512a61c",
+      "deployment_id": "agung-2026-08-28",
+      "finalized_block": 11135611,
+      "job_sha256": "378db0e9bd94a685f500b0bf726673894a80cf274783f9eb85d5d13269155152",
+      "key_utf8": "fieldproof.job:31be41e44b1e40c5",
+      "machine_authority_at_request_verified": true,
+      "machine_authority_at_submission_verified": true,
+      "machine_credit_rating": false,
+      "machine_id": "2044618828586167349407969644236800133676464971368659651643404080491769435145",
+      "official_event_registry": false,
+      "owner": "0xAFAC49c440f32a6a7bd4a717cCB95e60cE4D7C12",
+      "route": "storage",
+      "schema": "fieldproof-peaq-storage-inspection-v1",
+      "storage_address": "0x0000000000000000000000000000000000000801",
+      "storage_mutable_by_owner": true,
+      "submission_block": 11135606,
+      "transaction_hash": "0xe88e808f6089fbbf91e5eb5e0a8997ab3e25859f94ce807f8cf8b88a0cb99fad",
+      "value_utf8": "{\"data_hash\":\"0x5f95e16c7becf2d9c8fdbc1afdcfa1b6a7dc68281d15e3cd5d41f7f9e512a61c\",\"machine_id\":\"2044618828586167349407969644236800133676464971368659651643404080491769435145\",\"v\":1}",
+      "verified": true
+    }
+  },
+  "commercial_revenue": false,
+  "verification_note": "Recorded evidence. This export validates signatures and byte bindings. It performs no independent live chain read."
+}

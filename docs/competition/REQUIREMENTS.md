@@ -17,7 +17,7 @@ The internal target is Monday, October 12, 18:00 CEST.
 
 | Entry | Requirements and judging focus | FieldProof gap |
 |---|---|---|
-| peaq Germany | Germany eligibility. English working demo or compelling prototype. Innovation, technical quality, Machine Economy impact, clarity | No live registered provider identity or activity event. Preserve pending labels |
+| peaq Germany | Germany eligibility. English working demo or compelling prototype. Innovation, technical quality, Machine Economy impact, clarity | Real Agung identity and Storage work record verified. Narrated physical demo and submission remain |
 | Germany Colosseum track | Solana project. Both Colosseum and Earn submissions. Select GERMANY when eligible. Defined user, early evidence, ecosystem impact, growth | No validated customer, commercial revenue, or submitted confirmations |
 | Colosseum World's Fair | Register each member. One team and project per entrant. English. Functionality, impact, novelty, UX, open source, business viability | Final founder videos, business-field evidence, prior-development disclosure, submission |
 
@@ -29,13 +29,18 @@ Sources: [peaq criteria](https://superteam.fun/earn/listing/build-solutions-adva
 The peaq listing permits promising prototypes. It does not impose Agung activation on every entry.
 It penalizes generic dashboards, superficial peaq additions, decks without working demos, and many incomplete features.
 Readiness reads and tested adapters do not establish activation or paid activity.
-No current evidence supports live identity, event, rating, or marketplace admission claims.
+The October 12 evidence supports real Agung identity and native Storage work claims.
+It supports no EventRegistry event, credit rating, or marketplace admission claim.
 [Official peaq examples and exclusions](https://superteam.fun/earn/listing/build-solutions-advancing-the-machine-economy-with-peaq).
 
 ## Prepare two Colosseum videos
 
 - **Presentation:** two to three minutes. Explain the problem, product, team, proposed market, and business assumptions.
 - **Product demo:** at most three minutes. Show the actual product and verified technical behavior.
+
+The [Germany checklist](https://de.superteam.fun/buildstation#submission-checklist) recommends a presentation under two minutes.
+The current Colosseum FAQ specifies two to three minutes. Use the primary competition requirement for the submitted presentation.
+Target approximately 2:05. A shorter feedback cut can precede it.
 
 The FAQ also requests team context, location, logo, repository, go-to-market strategy, demand validation, and distribution plans.
 Disclose prior development. The rules judge work within the competition period.

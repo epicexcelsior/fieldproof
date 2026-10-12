@@ -8,7 +8,9 @@ That route claims no peaq identity or event. This route must not relax its live 
 ## Current state
 
 The identity resolver, job envelope, bounded buyer tool, durable outbox, operator commands, and job workbench exist in code.
-Live peaq activation and activity submission remain unverified.
+On October 12, a real Agung identity, a new gated paid ESP32 job, and a finalized native Storage record passed independent readback.
+[Original job and recorded readbacks](evidence/current-job.json).
+The October 12 identity and Storage work record have finalized readbacks. No EventRegistry event is claimed.
 The coordinator has laptop and device access. Founder-held BOOT footage and unlocked Seeker rehearsal remain open.
 The public inspector still serves historical real evidence. It does not expose a funded signer.
 

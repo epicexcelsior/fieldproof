@@ -1,8 +1,32 @@
 # FieldProof verification record
 
-Current continuation: October 11, 2026, Europe/Berlin. Public paid evidence includes October 1, October 5, and October 11.
+Current continuation: October 12, 2026, Europe/Berlin. Public paid evidence includes October 1, October 5, and October 11.
 The historical local MVP completes a public Devnet purchase, a real ESP32 observation, and both human-controlled contact states.
 This record does not claim production security, safety certification, or standards compliance.
+
+## October 12 real peaq activation and paid work
+
+The approved operator received 3 AGUNG. The current preview matched the 0.4-token bond and approved gas bounds.
+The first activation guard stopped before signing because its private web3 encoder did not align the SDK DID mapping.
+The public ABI encoder fixes that failure. A no-network regression reproduced the failure and passed after the change.
+The approval transaction confirmed. Its journal contained no activation signature. The remaining activation then confirmed without another approval.
+The first finalized identity read preceded activation finality and reported an absent token. A later finalized read established the actual identity.
+
+- Activation: `0x1f49e3c0b4b35f2ced2026953184715c97d73b3ee3c4d36adc9ae81290d23ded`, block `11135495`.
+- Independent identity read: finalized block `11135503`, matching owner, controller, P-256 key, and GPIO9 service.
+- New job: `31be41e44b1e40c5`. The buyer resolved the actual identity before payment.
+- Solana Devnet payment: `4URoDYxkuM3VRgE8AoPCXu896sotnPMReb6AMi4rW4Rr3pi3xtCEUbVBfVriRvmEdqX1mgzDPCkACHc2Cc7SPD2Y`, slot `510265773`.
+- Real BLE reading: OPEN, five matching samples, original P-256 signature. No human button press was required.
+- Approved native Storage write: `0xe88e808f6089fbbf91e5eb5e0a8997ab3e25859f94ce807f8cf8b88a0cb99fad`, block `11135606`.
+- Independent Storage inspection: finalized block `11135611`. Exact job hash, storage bytes, successful transaction, and both historical authority checks passed.
+
+[The reviewed public packet](evidence/current-job.json) contains only public job fields and recorded readbacks.
+Private wallet files, signed-transaction journals, account data, founder working materials, and review messages remain local.
+The work record uses native peaq Storage. It does not claim an EventRegistry event, Machine Credit Rating, or commercial revenue.
+
+The full gateway suite passed 130 tests. The isolated SDK identity/event/Storage/operator/export subset passed 72 tests.
+The guided page now verifies this new job and rejects altered copies. Earlier receipts retain their original bytes.
+The reviewer can inspect the recorded job without a wallet. A live hardware purchase still requires the local gateway and authorized buyer.
 
 ## October 12 story and final priorities
 

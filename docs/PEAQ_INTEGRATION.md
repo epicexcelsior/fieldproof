@@ -1,12 +1,21 @@
 # peaq integration decision
 
-**October 11, 2026: keep Solana settlement. The optional peaq-linked job and operator paths exist in code. Live activation and events remain pending.**
+**October 12, 2026: real Agung machine identity and linked Storage work record verified. Solana remains the payment chain.**
+
+The buyer checked the registered ESP32 key before a new 0.001 test-USDC purchase.
+The board returned a signed OPEN reading. Native peaq Storage commits the unchanged job hash.
+[Original job and recorded readbacks](evidence/current-job.json).
+
+Activation transaction: `0x1f49e3c0b4b35f2ced2026953184715c97d73b3ee3c4d36adc9ae81290d23ded`.
+Work transaction: `0xe88e808f6089fbbf91e5eb5e0a8997ab3e25859f94ce807f8cf8b88a0cb99fad`.
+The native record is operator-controlled. It is not an EventRegistry event or Machine Credit Rating.
+The dated readiness notes below preserve earlier blockers.
 The [paid-job runbook](JOBS.md) owns execution commands, current policy, event bytes, and recovery.
 This document records the SDK/deployment decision and historical readiness evidence.
 In that optional path, the buyer connects the observer identity to its pinned key and service before payment.
 This document owns peaq interfaces, readiness, and activation gates.
 The [current requirements](competition/REQUIREMENTS.md) establish no general Agung transaction requirement.
-Use the [Solana rehearsal](competition/REHEARSAL.md) while activation is pending.
+Use the [physical rehearsal](competition/REHEARSAL.md) for recording. The Solana-only path remains a fallback.
 That path claims no peaq identity or event. The Agung path must retain its strict live authority gate.
 
 ## October 11 host preflight

@@ -1,7 +1,7 @@
 # Physical rehearsal: record one complete transaction
 
 Outcome: a paid hardware check, one legible recording, and preserved evidence.
-Keep this route on Solana. Agung remains optional and pending.
+The Solana-only fallback remains available. The peaq-linked route now has a real activated Agung identity and work record.
 Start from the repository root. Keep wallets, ledgers, and journals private.
 
 ## Show the feedback demo now
@@ -158,8 +158,8 @@ Each purchase costs at most 0.001 Devnet USDC. The shared controller permits at 
 7. Use the changed-state attack control. Record signature rejection.
 8. Restore the original. Verify that the original signature result returns.
 
-Only two operations remain under the existing cap. Record one paid check after the unpaid two-state rehearsal.
-Preserve the last operation for another state or a later take. Recheck readiness before each purchase.
+The shared cap permits 100 operations. Nine completed checks leave 91 available before the next take.
+Record one paid check after the unpaid rehearsal. Recheck readiness before another purchase.
 These are founder test jobs, not customer traction. Keep BOOT visible to show the physical input.
 Stop on any unknown payment outcome. Do not click again to diagnose it.
 The [demo runbook](../DEMO.md#pay-and-read-with-one-click) owns browser recovery.

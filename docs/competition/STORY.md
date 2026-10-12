@@ -66,11 +66,13 @@ Do not claim that ordinary APIs cannot implement these features.
 **Solana works now:** x402 settles the actual Devnet transfer before the ESP32 measurement. The chip signs evidence, not a Solana transaction.
 The configured operator wallet receives payment. No custom Solana program exists.
 
-**peaq role under implementation:** before purchase, the buyer checks a registered machine identity and its device key.
+**peaq works on Agung:** before purchase, the buyer checks a registered machine identity and its device key.
 After delivery, a linked work record attributes the paid check to that provider.
 This can make identity and work history inspectable across applications.
 
-No FieldProof identity or work record exists on peaq yet. Live activation, a new identity-gated purchase, and readback await completion.
+On October 12, activation and independent key/service readback passed. A new identity-gated paid ESP32 job completed.
+A finalized native Storage record commits that unchanged job hash.
+[Original job, payment, identity, and recorded work readbacks](../evidence/current-job.json).
 The prepared path uses official native Storage because the published Agung EventRegistry binds a different identity registry.
 Storage is operator-controlled. It does not supply a peaqOS activity event or a Machine Credit Rating.
 [Exact integration evidence and status](../PEAQ_INTEGRATION.md).
@@ -99,7 +101,7 @@ Payment precedes measurement. No escrow or automatic refund exists.
 
 ## Sell the competition entry honestly
 
-The peaq entry demonstrates a device providing a paid physical service. Live registered identity and linked work remain the main sponsor gap.
+The peaq entry demonstrates a device providing a paid physical service. Registered identity and linked work now have real Agung readbacks. Final narrated videos remain necessary.
 The [peaq criteria](https://superteam.fun/earn/listing/build-solutions-advancing-the-machine-economy-with-peaq) welcome promising prototypes and emphasize a working economic mechanism.
 
 Colosseum also evaluates insight, execution, communication, business viability, and traction.

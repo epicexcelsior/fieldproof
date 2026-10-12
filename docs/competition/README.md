@@ -1,7 +1,8 @@
 # FieldProof submission package
 
 **Open [the material hub](../start.html).** This package supports an honest paid-hardware prototype submission.
-Final founder videos, live peaq integration, and submitted confirmations remain incomplete.
+Real peaq identity and the linked Storage work record now have verified readbacks.
+Final founder videos and submitted confirmations remain incomplete.
 
 | Material | Use it for |
 |---|---|
@@ -21,4 +22,5 @@ Target Monday, October 12 at 18:00 CEST. Save three actual submission confirmati
 
 Read [current status](../FOCUS.md) before recording. Use [verification](../VERIFICATION.md) for executed claims.
 The prototype price uses Devnet test USDC. No commercial revenue or validated buyer exists.
-The current Solana route claims no live peaq identity or activity event.
+The October 12 job uses a real peaq identity gate and a finalized native Storage work record.
+It claims no EventRegistry event or Machine Credit Rating.

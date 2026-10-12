@@ -1,5 +1,7 @@
 # Follow one check, then inspect the evidence
 
+Start with [the two-minute reviewer path](TRY_IT.md) for the new peaq-linked job.
+
 Open [the visual replay](https://epicexcelsior.github.io/fieldproof/) first. No wallet, key, or login is required.
 
 1. Select **Show the request**.
@@ -11,7 +13,7 @@ Open [the visual replay](https://epicexcelsior.github.io/fieldproof/) first. No 
 7. Select **Restore original**. The original timestamp stays unchanged.
 
 Opening the replay creates no payment or measurement. The real device photo comes from earlier footage.
-The recorded answer is expired today. peaq identity and work-record writes remain pending.
+The recorded answer is expired today. The October 12 job now has verified Agung identity and native Storage readbacks.
 
 Explain who pays, what the operator supplies, and why the buyer rejects an old answer.
 If the reviewer cannot explain those three facts, record the confusing step before opening more materials.
@@ -21,7 +23,7 @@ Use [the founder material hub](../start.html) for recording and submission resou
 
 For a quick preview, watch the [58-second captioned feedback cut](../assets/fieldproof-paid-check-feedback.webm).
 It contains the real October 11 test payment and signed ESP32 answer. It makes no new measurement or payment.
-The clip labels live peaq integration pending. The final narrated hardware video remains open.
+This earlier clip labels peaq integration pending. The October 12 job supersedes that status. The final narrated hardware video remains open.
 
 Goal: determine whether the evidence supports a paid fresh contact check. No wallet, key, hardware, or login is needed for this public inspection. The public record is historical and expired.
 

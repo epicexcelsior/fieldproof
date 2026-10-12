@@ -91,6 +91,7 @@ export async function createGateway({ paymentServer, store, observe = observeHar
     '/receipt-keys.json': 'host/capmesh/protocol/receipt_keys.json',
     '/evidence/device-signed-purchase.json': 'docs/evidence/device-signed-purchase.json',
     '/evidence/device-signed-purchase-20261011.json': 'docs/evidence/device-signed-purchase-20261011.json',
+    '/evidence/current-job.json': 'docs/evidence/current-job.json',
     '/evidence/device-signed-contact-states.json': 'docs/evidence/device-signed-contact-states.json',
     '/assets/fieldproof-signed-receipt.webm': 'docs/assets/fieldproof-signed-receipt.webm',
     '/assets/fieldproof-real-device.webp': 'docs/assets/fieldproof-real-device.webp',

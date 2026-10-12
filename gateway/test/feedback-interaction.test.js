@@ -5,10 +5,11 @@ import { setTimeout as delay } from 'node:timers/promises';
 
 const markup = readFileSync(new URL('../../docs/feedback.html', import.meta.url), 'utf8');
 const recorded = JSON.parse(readFileSync(new URL('../../docs/evidence/device-signed-purchase-20261011.json', import.meta.url)));
+const peaqRecorded = JSON.parse(readFileSync(new URL('../../docs/evidence/current-job.json', import.meta.url)));
 const pins = JSON.parse(readFileSync(new URL('../../host/capmesh/protocol/receipt_keys.json', import.meta.url)));
 let sequence = 0;
 
-async function guide(t, fault, { delayedVerification = false } = {}) {
+async function guide(t, fault, { delayedVerification = false, peaq = false } = {}) {
   const previous = { document: globalThis.document, fetch: globalThis.fetch, now: Date.now };
   const elements = new Map(), stages = [], buttons = [], requests = [];
   for (const match of markup.matchAll(/<[^>]+\bid="([^"]+)"[^>]*>/g)) {
@@ -32,7 +33,7 @@ async function guide(t, fault, { delayedVerification = false } = {}) {
     stages.push(element);
     buttons.push(element);
   }
-  globalThis.document = { body: { dataset: { fieldproofPage: 'feedback' } },
+  globalThis.document = { body: { dataset: { fieldproofPage: 'feedback', ...(peaq ? {fieldproofEvidence:'peaq-20261012'} : {}) } },
     getElementById(id) { assert.ok(elements.has(id), `Missing guide element ${id}`); return elements.get(id); },
     querySelectorAll(selector) { return selector === '[data-stage]' ? stages : buttons; } };
   Date.now = () => (recorded.receipt.completed_at + 60) * 1000;
@@ -47,10 +48,10 @@ async function guide(t, fault, { delayedVerification = false } = {}) {
     if (String(url).endsWith('receipt-keys.json')) {
       return Response.json(fault === 'pin' ? { algorithm: pins.algorithm, providers: {} } : pins);
     }
-    assert.ok(String(url).endsWith('device-signed-purchase-20261011.json'), 'The guide must not access a buyer or payment endpoint');
+    assert.ok(String(url).endsWith(peaq ? 'current-job.json' : 'device-signed-purchase-20261011.json'), 'The guide must not access a buyer or payment endpoint');
     if (fault === 'missing') return new Response('', { status: 404 });
-    const source = structuredClone(recorded);
-    if (fault === 'forged') source.receipt.result.closed = true;
+    const source = structuredClone(peaq ? peaqRecorded : recorded);
+    if (fault === 'forged') (peaq ? source.job.receipt : source.receipt).result.closed = true;
     if (fault === 'oversized') return new Response(' '.repeat(65537));
     return Response.json(source);
   };
@@ -110,3 +111,23 @@ for (const fault of ['missing', 'forged', 'pin', 'oversized']) {
     assert.equal(el.get('result').hidden, true);
   });
 }
+
+test('peaq-linked guide verifies the actual new job and rejects a changed copy', async t => {
+  const {elements:el, requests, click}=await guide(t,undefined,{peaq:true});
+  assert.equal(el.get('next').disabled,false);
+  for(let i=0;i<4;i++)await click('next');
+  assert.equal(el.get('result').dataset.tone,'ok');
+  await click('alter');
+  assert.equal(el.get('result').dataset.tone,'bad');
+  await click('restore');
+  assert.equal(el.get('result').dataset.tone,'ok');
+  assert.equal(peaqRecorded.job.receipt.result.closed,false);
+  assert.ok(requests.some(r=>r.url.endsWith('current-job.json')));
+  assert.equal(requests.length,2);
+});
+
+test('peaq-linked guide fails closed on a forged published job', async t=>{
+  const {elements:el}=await guide(t,'forged',{peaq:true});
+  assert.equal(el.get('next').disabled,true);
+  assert.equal(el.get('load-error').hidden,false);
+});

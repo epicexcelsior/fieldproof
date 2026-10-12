@@ -6,7 +6,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 const base = (process.argv[2] ?? 'http://127.0.0.1:8791').replace(/\/$/, '');
 const output = process.argv[3] ?? '.local/competition/visual-story-20261011/browser';
 mkdirSync(output, { recursive: true });
-const original = JSON.parse(readFileSync(new URL('../docs/evidence/device-signed-purchase-20261011.json', import.meta.url)));
+const original = JSON.parse(readFileSync(new URL('../docs/evidence/current-job.json', import.meta.url)));
 const browser = await puppeteer.launch({ headless: true,
   ...(process.env.CHROME_BIN ? { executablePath: process.env.CHROME_BIN } : {}) });
 const errors = [], requests = [], guidedRequests = [];
@@ -80,7 +80,7 @@ try {
   await page.click('#next');
   await ready(page);
   assert.equal(await page.$eval('.exchange-packet', element => getComputedStyle(element).animationName), 'none');
-  const archive = await page.evaluate(async () => (await fetch('./evidence/device-signed-purchase-20261011.json')).json());
+  const archive = await page.evaluate(async () => (await fetch('./evidence/current-job.json')).json());
   assert.deepEqual(archive, original);
   guidedRequests.push(...requests.slice(reducedStart));
   for (const fault of ['missing', 'forged', 'pin-mismatch']) {
@@ -89,9 +89,9 @@ try {
     broken.on('request', request => {
       if (fault === 'pin-mismatch' && request.url().endsWith('/receipt-keys.json')) {
         void request.respond({ status: 200, contentType: 'application/json', body: JSON.stringify({ algorithm: 'ecdsa-p256-sha256', providers: {} }) });
-      } else if (fault !== 'pin-mismatch' && request.url().endsWith('/device-signed-purchase-20261011.json')) {
+      } else if (fault !== 'pin-mismatch' && request.url().endsWith('/current-job.json')) {
         const altered = structuredClone(original);
-        altered.receipt.result.closed = true;
+        altered.job.receipt.result.closed = true;
         void request.respond(fault === 'missing' ? { status: 404, body: 'Unavailable' }
           : { status: 200, contentType: 'application/json', body: JSON.stringify(altered) });
       } else { void request.continue(); }

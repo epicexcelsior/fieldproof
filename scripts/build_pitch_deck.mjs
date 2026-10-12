@@ -65,7 +65,7 @@ for (let index = 0; index < sections.length; index++) {
     if (next) text(slide, next.text, 72, 578, 1136, 62, 25, palette.blue);
   }
   text(slide, plain(section.match(/<footer>([\s\S]*?)<\/footer>/)?.[1] ?? ''), 72, 659, 1136, 44, 18, palette.muted);
-  slide.speakerNotes.textFrame.setText(`Content source: docs/competition/slides.html. Implementation and evidence: docs/VERIFICATION.md and docs/evidence/device-signed-purchase-20261011.json. Buyer value and commercial pricing are hypotheses. The Solana transaction uses test tokens. Live peaq activation and event readback remain pending. Slide ${index + 1} of 5.`);
+  slide.speakerNotes.textFrame.setText(`Content source: docs/competition/slides.html. Implementation and evidence: docs/VERIFICATION.md and docs/evidence/device-signed-purchase-20261011.json. Buyer value and commercial pricing are hypotheses. The Solana transaction uses test tokens. Real Agung identity and native Storage work readbacks passed on October 12. No EventRegistry event or credit rating is claimed. Slide ${index + 1} of 5.`);
 }
 const candidatePath = path.join(outputDirectory, 'candidate.pptx');
 const finalDirectory = path.join(outputDirectory, 'final');

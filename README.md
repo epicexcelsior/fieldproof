@@ -2,9 +2,12 @@
 
 **Pay a device for a fresh physical check. Verify its signed answer before using it.**
 
-[Follow one paid check visually](https://epicexcelsior.github.io/fieldproof/) · [Founder materials](https://epicexcelsior.github.io/fieldproof/start.html) · [Inspect the original receipt](https://epicexcelsior.github.io/fieldproof/proof.html?record=20261011&present=1)
+[Follow one paid check visually](https://epicexcelsior.github.io/fieldproof/) · [Founder materials](https://epicexcelsior.github.io/fieldproof/start.html) · [Inspect the linked paid job](https://epicexcelsior.github.io/fieldproof/jobs.html)
 
-Select **Show the request**, then follow the four steps. The page uses original recorded evidence and makes no payment.
+Allow two minutes. Select **Show the request**, then follow Ask, Pay, Check, and Verify.
+Try **Use this old answer now** and **Change the answer**. Open the linked job to verify the transfer.
+The page runs real signature verification on recorded evidence. It makes no new payment or measurement.
+[Two-minute reviewer instructions and independent reproduction](docs/competition/TRY_IT.md).
 
 A laptop buys a new contact reading from an ESP32-C6 through Solana x402.
 The device signs its answer. The buyer checks the device key, request, samples, signature, and answer's age.
@@ -52,9 +55,11 @@ The identity-linked job route resolves a registered device key before payment.
 Its activity outbox links the job, original receipt, and Solana transaction.
 Controlled tests cover the interfaces and recovery paths, including an explicit official peaq Storage activity route.
 
-**No live FieldProof peaq identity or activity event exists.**
-Current paid runs use Solana only and report peaq as not used.
-Faucet funding, activation, an identity-gated paid job, and independent activity readback remain open.
+**October 12: real Agung identity and linked work record verified.**
+A new buyer checked the registered ESP32 key before paying 0.001 test USDC on Solana Devnet.
+The real board returned a signed OPEN observation. A finalized peaq Storage record commits the unchanged job hash.
+[Inspect the original job and recorded readbacks](docs/evidence/current-job.json).
+Storage remains operator-controlled. No peaqOS EventRegistry event or credit rating is claimed.
 The published EventRegistry binds a different identity system. The Storage route retains genuine identity and settlement checks.
 [Integration facts](docs/PEAQ_INTEGRATION.md) · [Paid-job execution and recovery](docs/JOBS.md).
 

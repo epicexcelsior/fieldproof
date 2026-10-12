@@ -22,7 +22,7 @@ Do not wait for certainty about the whole market before recording the verified m
 - OPEN and CLOSED both fulfill the purchased observation. The buyer's next action is separate.
 - BOOT is an electrical-contact stand-in. It does not prove contents, safety, or completed physical work.
 - The signature authenticates the device's claim. It does not prove that the physical claim is true.
-- The live peaq identity and work record remain pending. Show them only after independent readback succeeds.
+- The October 12 identity and native Storage work record have independent readbacks. Show their actual evidence.
 - The buyer need, inspection price, and commercial revenue remain unvalidated.
 
 Label a historical capture **Recorded paid check: October 11, 2026**.
@@ -58,7 +58,7 @@ This pitch explains the proposed business. It is separate from the product demo.
 | 0:20–0:50 | Slide 2 | “The buyer hypothesis is remote-operations software. An operator already pays someone to check a physical fact at another site. Its software lacks a reliable answer from an existing API. FieldProof tests whether a device on site can provide that check.” |
 | 0:50–1:15 | Physical board and slide 3 | “The prototype uses an ESP32 contact input. A software buyer requests a new reading and prepays 0.001 test USDC on Solana Devnet. The operator receives the payment. The board signs the new answer for that request.” |
 | 1:15–1:40 | Fresh result, then expiry | “The buyer accepts the answer only within its age limit. The same answer becomes too old for the next decision. An edited answer fails signature verification. OPEN and CLOSED both complete the paid check.” |
-| 1:40–2:05 | Slides 4 and 5 | “Payment can stay final while the physical answer becomes too old to use. FieldProof connects the purchase to a new device reading and buyer verification. The peaq route checks the registered device key before purchase and links a work record afterward. Live peaq activation and readback remain pending.” |
+| 1:40–2:05 | Slides 4 and 5 | “Payment can stay final while the physical answer becomes too old to use. FieldProof connects the purchase to a new device reading and buyer verification. The peaq route checks the registered device key before purchase and links a work record afterward. The October 12 job passed real identity and native Storage readbacks.” |
 | 2:05–2:30 | Founder and slide 5 | “The next test is one authorized operator and one repeated physical question. I will compare useful answers, latency, failures, and integration effort with the current process. The business hypothesis is paid inspection and integration. No customer demand or commercial revenue is validated yet.” |
 
 If peaq readback succeeds before recording, replace its pending sentence with the verified identity and work-record references.
@@ -89,7 +89,7 @@ If a live screen does not support an edited-copy test, use the labeled public re
 
 The [58-second captioned feedback cut](../assets/fieldproof-paid-check-feedback.webm) is ready for review.
 It shows the original October 11 purchase, payment readback, signed answer, expiry, and altered-copy rejection.
-It contains no narration or new physical footage. Its last frame labels live peaq integration pending.
+It contains no narration or new physical footage. Its last frame labels the earlier peaq integration pending. The October 12 job supersedes that status.
 Use it tonight for concept feedback. The final founder pitch and hardware demo still need recording.
 
 For a founder-led cut, use this sequence:
