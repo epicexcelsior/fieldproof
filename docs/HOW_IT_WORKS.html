@@ -43,7 +43,7 @@ footer{font-size:13px;color:var(--dim);border-top:1px solid var(--line);margin-t
 <span class="tag">READ → REHEARSE → EXPLAIN · OFFLINE GUIDE</span>
 </header>
 <main>
-<div class="notice"><b>Detailed technical reference:</b> Open the <a href="start.html">material hub</a> first for the current story, deck, physical rehearsal, and submissions. This guide explains the protocol. Live peaq identity and activity remain pending. <a href="/jobs">Inspect a job</a> · <a href="JOBS.md">Job execution and recovery</a>.</div>
+<div class="notice"><b>Detailed technical reference:</b> Open the <a href="start.html">material hub</a> first for the current story, deck, physical rehearsal, and submissions. This guide explains the protocol. The October 12 job has verified Agung identity and a finalized Storage work record. <a href="/jobs">Inspect a job</a> · <a href="JOBS.md">Job execution and recovery</a>.</div>
 
 <section>
 <div class="label">Physical services across operator boundaries</div>
@@ -59,7 +59,7 @@ footer{font-size:13px;color:var(--dim);border-top:1px solid var(--line);margin-t
 <div class="label">The story to explain</div><h2>Software buys a new physical check.</h2>
 <p>FieldProof lets software pay a device for a fresh physical check. The device signs its answer so the buyer can verify the source, request, and age.</p>
 <p>The real prototype buys a contact reading from an ESP32. Payment settles first. The device then samples its input for that request.</p>
-<div class="grid3" aria-label="Three responsibilities"><div class="radio-card"><h3>Solana: payment</h3><p>Did the buyer pay the quoted operator?</p><span class="pill real">Actual Devnet transfer verified</span></div><div class="radio-card"><h3>FieldProof: evidence</h3><p>Does the answer match the request, selected key, and age limit?</p><span class="pill real">Real ESP32 receipt verified</span></div><div class="radio-card"><h3>peaq: provider identity</h3><p>Can the buyer resolve a registered key and attributed work history?</p><span class="pill sim">Adapters tested · live integration pending</span></div></div>
+<div class="grid3" aria-label="Three responsibilities"><div class="radio-card"><h3>Solana: payment</h3><p>Did the buyer pay the quoted operator?</p><span class="pill real">Actual Devnet transfer verified</span></div><div class="radio-card"><h3>FieldProof: evidence</h3><p>Does the answer match the request, selected key, and age limit?</p><span class="pill real">Real ESP32 receipt verified</span></div><div class="radio-card"><h3>peaq: provider identity</h3><p>Can the buyer resolve a registered key and attributed work history?</p><span class="pill real">Agung identity and Storage verified</span></div></div>
 <p>BOOT represents the contact. Both honest states fulfill the observation. The demo policy controls no equipment.</p>
 <div class="notice"><b>Buyer hypothesis:</b> remote-operations software needs a check at another operator's site where an existing API fails and manual checks cost money. No validated customer exists.</div>
 <p>A signature authenticates a claim, not physical truth. The current price uses test tokens, not commercial inspection pricing.</p>
@@ -205,10 +205,10 @@ python3 scripts/demo.py check</code></pre>
 <p>The payment and sensor response do not share an atomic transaction. A blockchain payment alone does not prove delivery.</p>
 <p>A retry returns the stored answer if delivery completed. It never silently purchases another answer or resets the evidence timestamp.</p>
 <h3>Where does peaq fit?</h3>
-<p>The proposed peaq role is the observer's registered identity and honest service history. Solana remains the demonstrated observation-payment rail.</p>
+<p>The October 12 job checked registered peaq identity before payment and linked its hash to a finalized Storage record. Solana settles the payment.</p>
 <p>The current Agung diagnostic reads the published machine registry and computes an ID from the public device pin. It does not activate a machine.</p>
-<p>It also checks ownership at the same finalized block. The recorded proposed ID was absent. Absence reserves nothing and grants no ownership.</p>
-<p>An activated identity can later connect an operator, verification method, and service endpoint. Registration alone cannot certify sensor truth or installation.</p>
+<p>It also checks ownership at the same finalized block. The earlier proposed-ID snapshot was absent. The October 12 job records the later successful activation.</p>
+<p>The activated identity connects an operator, verification method, and service endpoint. Registration alone cannot certify sensor truth or installation.</p>
 <p>See the <a href="PEAQ_INTEGRATION.md">peaq integration decision</a> for measured readiness, remaining inputs, and the documented Solana-onboarding limitation.</p>
 <h3>What creates a durable business?</h3>
 <p>The unvalidated opportunity is repeated physical-service use across operator boundaries. The first observation tests only the evidence-purchase step.</p>
@@ -597,7 +597,7 @@ metric|sensor|closed|stable_samples|total_samples|started_at|completed_at</pre>
 <tr><td><code>assets/fieldproof-walkthrough.webm</code></td><td>2:30</td><td>Historical simulator footage with explanatory title cards.</td></tr>
 <tr><td><code>assets/fieldproof-demo.webm</code></td><td>69 s</td><td>Historical simulator rehearsal and CLI adversarial results.</td></tr>
 </table></div>
-<div class="notice"><b>Use the current signed-receipt walkthrough.</b> It meets the technical video's length requirement. The separate founder presentation and public viewing links remain owner actions.</div>
+<div class="notice"><b>Use the current signed-receipt walkthrough.</b> It meets the technical video's length requirement. The submitted founder pitch and product demo are linked from the material hub.</div>
 </section>
 
 <section class="section" id="suite">
@@ -725,11 +725,7 @@ metric|sensor|closed|stable_samples|total_samples|started_at|completed_at</pre>
 <tr><td><code>VERIFICATION.md</code></td><td>Which checks actually ran, and what are the remaining gaps?</td></tr>
 <tr><td><code>DEMO.md</code></td><td>How do I demonstrate and recover from failure?</td></tr>
 <tr><td><code>STRATEGY.md</code></td><td>What product risks and decisions remain?</td></tr>
-<tr><td><code>MVP_PLAN.md</code></td><td>What does the MVP have to prove?</td></tr>
 <tr><td><code>SUBMISSION.md</code></td><td>What do the hackathon listings require, and which fields are still open?</td></tr>
-<tr><td><code>DECISIONS.md</code></td><td>Why was each direction chosen?</td></tr>
-<tr><td><code>FEASIBILITY_AND_HOLES.md</code></td><td>What is not yet proven?</td></tr>
-<tr><td><code>LEARNING.md</code></td><td>What was learned during the build?</td></tr>
 <tr><td><code>FOCUS.md</code></td><td>Which product decision governs current work?</td></tr>
 <tr><td><code>BOUNTY_PLAN.md</code></td><td>Which acceptance gate and owner action comes next?</td></tr>
 <tr><td><code>PEAQ_INTEGRATION.md</code></td><td>Which peaq path was checked, and what blocks activation?</td></tr>
@@ -741,25 +737,24 @@ metric|sensor|closed|stable_samples|total_samples|started_at|completed_at</pre>
 
 <section class="section" id="gaps">
 <div class="label">14 · Submission</div>
-<h2>Deadlines and open items</h2>
+<h2>Historical deadlines and submitted materials</h2>
 <div class="table-scroll"><table>
 <tr><th>Track</th><th>Deadline in UTC</th><th>Local</th></tr>
 <tr><td>Colosseum and Germany track</td><td>October 13, 2026 · 06:59:00 UTC</td><td>08:59 CEST</td></tr>
 <tr><td>peaq machine economy</td><td>October 13, 2026 · 06:59:00 UTC</td><td>08:59 CEST</td></tr>
 </table></div>
-<h3>Required fields</h3>
+<h3>Submission status</h3>
 <div class="table-scroll"><table>
 <tr><th>Field</th><th>State</th></tr>
 <tr><td>Public repository</td><td>Public at <code>https://github.com/epicexcelsior/fieldproof</code></td></tr>
 <tr><td>Test access</td><td>CLI and browser simulation run from the README without funding. The exported inspector needs no wallet. Live paid mode needs a disposable funded Devnet buyer.</td></tr>
 <tr><td>Payment evidence</td><td><code>docs/evidence/device-signed-purchase.json</code> records the current paid P-256 receipt.</td></tr>
 <tr><td>Contact-state evidence</td><td><code>docs/evidence/device-signed-contact-states.json</code> records both current device-signed states.</td></tr>
-<tr><td>Presentation link</td><td>Pending owner publication of the current technical walkthrough and recording of the founder presentation.</td></tr>
-<tr><td>Colosseum project</td><td>Missing: register under Germany and provide the link</td></tr>
-<tr><td>Team contact</td><td>Missing: supply it in the submission form</td></tr>
-<tr><td>peaq submission answer</td><td>Missing: answer truthfully at submission time</td></tr>
+<tr><td>Presentation link</td><td>The material hub links both uploaded videos.</td></tr>
+<tr><td>Colosseum project</td><td>Submitted, confirmed October 15, 2026. No public project URL is available from the account record.</td></tr>
+<tr><td>peaq submission answer</td><td>The separate Earn entry remains unverified.</td></tr>
 </table></div>
-<div class="notice"><b>Open work.</b> The technical walkthrough and public inspector package are ready for review. Final founder videos, live peaq integration, and submissions remain incomplete. The public inspector is deployed. Follow <a href="BOUNTY_PLAN.md">the bounty execution plan</a>.</div>
+<div class="notice"><b>Open work.</b> The technical walkthrough and public inspector package are ready for review. Final videos and the peaq-linked job are complete. Colosseum is submitted. Buyer demand and commercial viability remain unverified. The public inspector is deployed. Follow <a href="BOUNTY_PLAN.md">current next steps</a>.</div>
 </section>
 
 </details>

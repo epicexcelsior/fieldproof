@@ -1,8 +1,9 @@
-# FieldProof submission package
+# FieldProof submitted materials
 
 **Open [the material hub](../start.html).** This package supports an honest paid-hardware prototype submission.
 Real peaq identity and the linked Storage work record now have verified readbacks.
-The final videos are uploaded. The founder must complete all three submissions and save their confirmations.
+The final videos are uploaded. Colosseum reports FieldProof as submitted as of October 15, 2026.
+The separate Germany and peaq Earn entries remain unverified.
 
 | Material | Use it for |
 |---|---|
@@ -17,14 +18,13 @@ The final videos are uploaded. The founder must complete all three submissions a
 | [Present the deck](slides.html?present=1), [PDF](fieldproof-pitch.pdf), [editable PowerPoint](fieldproof-pitch.pptx) | Five slides from the supplied founder deck. A deck does not replace the required videos |
 | [Tester guide](TESTER_GUIDE.md) | Specific comprehension, verification, and buyer questions |
 | [Pilot questions](PILOT.md) | Falsifiable buyer and pricing research after the technical demonstration |
-| [Current requirements](REQUIREMENTS.md) | Exact deadlines, required fields, eligibility, and disclosures |
-| [Entry drafts](SUBMISSION_DRAFTS.md) | Reviewable text and field checklist for all three entries |
+| [Historical requirements](REQUIREMENTS.md) | Requirements for the submitted October 2026 competition |
 
 The supplied PowerPoint owns the deck. The PDF and browser slide images are rendered copies.
 The legacy HTML exporter cannot rebuild this deck.
 
-All three deadlines are Tuesday, October 13, 2026 at 08:59 CEST.
-Submit before the cutoff. Save three actual submission confirmations.
+The historical entry deadline was October 13, 2026 at 08:59 CEST.
+Private entry drafts remain local. The submitted source revision remains in Git history.
 
 Read [current status](../FOCUS.md) before recording. Use [verification](../VERIFICATION.md) for executed claims.
 The prototype price uses Devnet test USDC. No commercial revenue or validated buyer exists.

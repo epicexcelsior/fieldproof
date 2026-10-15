@@ -23,7 +23,7 @@ Use [the founder material hub](../start.html) for recording and submission resou
 
 For a quick preview, watch the [58-second captioned feedback cut](../assets/fieldproof-paid-check-feedback.webm).
 It contains the real October 11 test payment and signed ESP32 answer. It makes no new measurement or payment.
-This earlier clip labels peaq integration pending. The October 12 job supersedes that status. The final narrated hardware video remains open.
+This earlier clip labels peaq integration pending. The October 12 job supersedes that status. The final narrated hardware video is linked from [the submitted materials](README.md).
 
 Goal: determine whether the evidence supports a paid fresh contact check. No wallet, key, hardware, or login is needed for this public inspection. The public record is historical and expired.
 
@@ -71,7 +71,7 @@ Payment verification cannot refresh an expired contact answer. Neither result es
 ## Coordinator acceptance before recording
 
 Use the [paid-job runbook](../JOBS.md). Keep live evidence separate from controlled software checks.
-For the Solana-only route, use the [rehearsal](REHEARSAL.md). Identity and activity rows remain pending and are not acceptance claims.
+For the Solana-only route, use the [rehearsal](REHEARSAL.md). The October 12 job contains verified identity and Storage readbacks. Other jobs require their own checks.
 
 | Part | Acceptance result |
 |---|---|

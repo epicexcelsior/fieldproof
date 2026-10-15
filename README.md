@@ -17,6 +17,9 @@ The buyer hypothesis is remote-operations software that lacks a reliable answer 
 A validated buyer, commercial price, and customer revenue remain absent.
 [Plain-language explanation, alternatives, and business test](docs/competition/STORY.md).
 
+Colosseum status: **submitted**, confirmed October 15, 2026. The separate Earn entries remain unverified.
+See [next steps](TODO.md) for the next product gates.
+
 ## What works today
 
 ```text
@@ -37,7 +40,7 @@ The operator wallet receives tokens. The ESP32 does not hold the Solana wallet k
 The buyer is bounded software callable by an AI agent. No autonomous AI reasoning is demonstrated.
 DISPATCH and WAIT are recommendations. This prototype controls no equipment.
 
-## Understand, test, record, submit
+## Documentation and next steps
 
 | Task | Material |
 |---|---|
@@ -47,7 +50,7 @@ DISPATCH and WAIT are recommendations. This prototype controls no equipment.
 | Test the physical board and record a payment | [Physical rehearsal](docs/competition/REHEARSAL.md) |
 | Review the pitch and speaking scripts | [HTML deck](docs/competition/slides.html), [PDF](docs/competition/fieldproof-pitch.pdf), [PowerPoint](docs/competition/fieldproof-pitch.pptx), [scripts](docs/competition/VIDEO_SCRIPTS.md) |
 | Collect feedback without a wallet | [Tester guide](docs/competition/TESTER_GUIDE.md) |
-| Complete the three entries | [Requirements](docs/competition/REQUIREMENTS.md), [entry drafts](docs/competition/SUBMISSION_DRAFTS.md) |
+| Continue after submission | [Next steps](TODO.md), [current status](docs/FOCUS.md) |
 
 ## peaq integration status
 

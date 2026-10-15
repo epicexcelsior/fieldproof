@@ -9,84 +9,31 @@ The board returned a signed OPEN reading. Native peaq Storage commits the unchan
 Activation transaction: `0x1f49e3c0b4b35f2ced2026953184715c97d73b3ee3c4d36adc9ae81290d23ded`.
 Work transaction: `0xe88e808f6089fbbf91e5eb5e0a8997ab3e25859f94ce807f8cf8b88a0cb99fad`.
 The native record is operator-controlled. It is not an EventRegistry event or Machine Credit Rating.
-The dated readiness notes below preserve earlier blockers.
+Earlier funding and deployment blockers remain in Git history.
 The [paid-job runbook](JOBS.md) owns execution commands, current policy, event bytes, and recovery.
 This document records the SDK/deployment decision and historical readiness evidence.
 In that optional path, the buyer connects the observer identity to its pinned key and service before payment.
 This document owns peaq interfaces, readiness, and activation gates.
-The [current requirements](competition/REQUIREMENTS.md) establish no general Agung transaction requirement.
+The [historical requirements](competition/REQUIREMENTS.md) establish no general Agung transaction requirement.
 Use the [physical rehearsal](competition/REHEARSAL.md) for recording. The Solana-only path remains a fallback.
 That path claims no peaq identity or event. The Agung path must retain its strict live authority gate.
 
 ## October 11 host preflight
 
-The official operator guide publishes Agung EventRegistry `0x2DAD8905380993940e340C5cE6d313d5c2780040`.
-The revised diagnostic accepts that reviewed source without requiring an undocumented InfoDesk event peer.
-At finalized block `11124093`, the address contains 170 bytes of proxy code.
-Its `identityRegistryAddress()` returns legacy registry `0x9E9463a65c7B74623b3b6Cdc39F71be7274e5971`.
-Our approved Tokenomics 2.0 MachineRegistry is `0x538da35489B1F0035799a8351E67835ae4ABb377`.
-The live binding differs. Official publication alone does not authorize submission to that incompatible registry.
-Both inspection and signing retain the machine-binding check. No registry transaction occurred.
-[Official guide at the reviewed commit](https://github.com/peaqnetwork/peaq-os-skills/blob/d1f7e87db50f5f16c62527344673a470dcec3c39/skills/peaqos/GUIDE.md#network-reference)
-and [exact chain diagnostic](evidence/peaq-agung-event-registry-20261011.json).
+The recorded EventRegistry points to a different machine registry from the approved identity path.
+The adapter rejects that incompatible binding. This remains separate from the verified native Storage route.
+[Original registry diagnostic](evidence/peaq-agung-event-registry-20261011.json).
 
-The founder approved one testnet activation with a 0.4 AGUNG bond and a 0.04 AGUNG combined gas ceiling.
-The existing operator still needs faucet funding. The API request returned HTTP 403.
-The official browser form then reported its 24-hour limit. Latest and finalized balances still read zero.
-The founder requested manual testnet funding from peaq support. Funding remains unconfirmed.
-The signer remains unused. Activation and finalized identity readback remain pending.
-An October 12 read at 11:47 CEST again found both latest and finalized operator balances at zero.
-No private key or signing operation followed that read.
+The native Storage route uses precompile `0x0000000000000000000000000000000000000801`.
+It checks registered authority at the original identity block and the later work-record transaction block.
+The checks bind the registered key, owner, controller, block hash, and timestamp.
+The storage owner can update or remove an entry. The historical transaction remains independently inspectable.
+A write requires explicit approval and bounded gas. Past approval does not authorize a future transaction.
+[Execution and recovery](JOBS.md).
 
-peaq native storage supplies a separate activity-anchor path through precompile `0x0000000000000000000000000000000000000801`.
-That implemented path records a paid job hash under the current operator and verifies finalized storage and transaction data.
-It checks actual registered authority at the buyer's identity block and the later storage transaction block.
-It compares the registered key, owner, controller, block hash, and original block time.
-It does not represent a peaqOS EventRegistry event or contribute a verified Machine Credit Rating.
-Controlled tests cover this path. Live activation, a gated paid job, and activity readback remain pending.
-The repeated finalized no-signing probe found the official precompile at block `11124299` and verified its exact missing-key response.
-[Storage interface readback](evidence/peaq-agung-storage-readiness-20261011.json) establishes no activated identity or completed job.
-The storage owner can update or remove an entry. The successful historical transaction remains independently inspectable.
-The path requires explicit selection and separate write approval. One activity has a 0.01 AGUNG maximum gas ceiling.
-[Official peaq storage operations](https://docs.peaq.xyz/peaqchain/sdk-reference/javascript/storage-operations).
-
-### Earlier October 11 lookup
-
-The latest no-signing audit reached finalized block `11123336` and found the proposed identity absent.
-The existing testnet operator balance was zero. The full tier-0 bond remained 0.4 native test tokens, before gas.
-The activity peer remained unset. No activation or event followed these reads.
-The original project provenance gate required an InfoDesk event peer.
-That unsupported requirement caused the first discovery blocker. The revised diagnostic now uses the reviewed official source.
-The independent machine-binding check reveals a separate live compatibility blocker.
-
-The founder supplied logs from the laptop's normal terminal. Gateway checks passed 43 tests. Core Python checks passed 40, with nine SDK skips.
-Agung deployment reads passed at finalized block `11117566`, hash `0x94815e1969f93628682063b394361b3e368d584ae2fa37ba9c367071c2a21149`.
-The seven published contracts contain bytecode, and their documented peers match. The proposed observer identity remains absent at this block.
-The full tier-0 bond read remains `400000000000000000` base units. Operator credit, balance, allowance and gas still require preview.
-
-The activity adapter queried `InfoDesk.peer(keccak256("EVENT_REGISTRY"))` and received a zero address.
-This discovery convention was an unverified integration assumption. The SDK accepts a separately supplied EventRegistry address.
-The failed lookup does not establish that every Agung activity route is unavailable.
-The revised check uses the published address and preserves the incompatible-registry result above.
-No SDK upgrade, activation or activity write followed this failure.
-[Current SDK configuration and event routing](https://pypi.org/project/peaq-os-sdk/0.11.2/).
-
-## Other peaq surfaces reviewed October 11
-
-Agung identity and activity remain a prepared integration option. In that path, the buyer checks the registered device before spending.
-The current SDK documentation explicitly skips Agung MCR integration because no approved paired rating endpoint exists.
-Its Stream purchase surfaces remain in development. Its Verify surface supplies API reads and chip preflight, not phone camera attestation.
-These surfaces do not supply a verified shortcut for the current contact demonstration.
-[Current published SDK](https://pypi.org/project/peaq-os-sdk/).
-
-The official peaq x402 example requires native peaq gas and USDC/USDT balances.
-Retain the tested Solana Devnet settlement before adding a second payment path.
-[Official x402-peaq example](https://github.com/peaqnetwork/x402-peaq).
-
-A requested physical-check adapter remains the best bounded extension after live acceptance.
-The bounty explicitly suggests new robotic.sh services. Verify the extension interface and hosted admission before implementing a listing.
-No hosted FieldProof adapter or marketplace demand is established.
-[Official bounty](https://superteam.fun/earn/listing/build-solutions-advancing-the-machine-economy-with-peaq).
+The earlier unfunded-operator and absent-identity snapshots predate the successful October 12 activation.
+They do not describe the latest demonstrated state.
+[Full historical deployment and funding record](https://github.com/epicexcelsior/fieldproof/blob/a6f37abd2e903ff391cdaf1426505d530172072c/docs/PEAQ_INTEGRATION.md).
 
 ## What the diagnostic establishes
 

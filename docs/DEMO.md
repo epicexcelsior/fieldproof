@@ -157,7 +157,7 @@ The MVP track requires a 2–3 minute video. The [2:30 presentation](assets/fiel
 It combines unchanged simulator footage with explanatory title cards. It has no audio.
 Run `python3 scripts/build_walkthrough.py` to reproduce it with ffmpeg, ffprobe, and the system Lato fonts.
 The build checks the source hash and duration. It replaces the local artifact only after those checks pass.
-The [submission draft](SUBMISSION.md) contains its scene sequence and the unresolved submission fields.
+The [video scripts](competition/VIDEO_SCRIPTS.md) contain the scene sequence. [Submission status](SUBMISSION.md) records completed and unverified entries.
 
 The extended recorder expects gateways on ports 4021, 4022, 4023, and 4024.
 Port 4023 uses real BLE contact with simulated settlement. Port 4024 simulates a closed contact.

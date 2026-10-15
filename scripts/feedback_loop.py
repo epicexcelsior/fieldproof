@@ -125,7 +125,7 @@ class Handler(BaseHTTPRequestHandler):
         elif self.path in ("/", "/overview.html"):
             body = OVERVIEW.read_bytes()
             content_type = "text/html; charset=utf-8"
-        elif self.path in ("/README.md", "/docs/FEASIBILITY_AND_HOLES.md", "/docs/PROTOCOL.md"):
+        elif self.path in ("/README.md", "/docs/FOCUS.md", "/docs/PROTOCOL.md"):
             body = (ROOT / self.path.lstrip("/")).read_bytes()
             content_type = "text/markdown; charset=utf-8"
         else:

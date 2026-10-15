@@ -59,5 +59,5 @@ Do not describe that arithmetic as projected revenue or viable unit economics.
 | Why not an authenticated API? | A single trusted operator can use one. Cross-operator request, payment, and evidence reuse are the hypothesis |
 | Why a signature? | It binds the provisioned device key to the original request and claim. It does not prove physical truth |
 | Why Solana? | The prototype settles a bounded x402 purchase with no custom program or manual checkout per request |
-| Why peaq? | Machine earning and inspectable activity fit its principles. The live identity/event route remains pending |
+| Why peaq? | The October 12 job checks registered identity and links a finalized native Storage work record. No EventRegistry event is claimed |
 | What is traction? | Historical hardware and test-payment evidence establish functionality. Customer validation remains open |

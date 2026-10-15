@@ -1,6 +1,6 @@
 # FieldProof: current status
 
-Updated October 13, 2026. This page records product state. Internal recording priorities stay local.
+Updated October 15, 2026. This page records product state. Private planning stays local.
 
 ## Working prototype
 
@@ -18,11 +18,15 @@ The ESP32 signs the answer. The buyer verifies its source, request, signature, s
 [Original October 12 job and recorded readbacks](evidence/current-job.json).
 [Try the prototype in two minutes](competition/TRY_IT.md).
 
-## Remaining submission work
+## After submission
 
 [Product demo, 1:37](https://youtu.be/eDuEJVad3oY) and [founder pitch, 1:38](https://www.youtube.com/watch?v=LToCUlqJuao) are uploaded.
 Anonymous video metadata access passed. Both durations fit the current portal limits.
-The founder must complete Colosseum and both separate Earn entries, then save each confirmation.
+Colosseum reports FieldProof as submitted. The owner account confirmed this on October 15.
+The separate Germany and peaq Earn entries remain unverified.
+
+The next product gate is one recurring buyer decision with a measurable cost and an authorized pilot operator.
+Use [the pilot questions](competition/PILOT.md) and [the short task list](../TODO.md).
 
 Customer demand, pricing, and distribution remain hypotheses.
 One provider works today. Automatic discovery, reputation, and additional provider ports remain future work.
